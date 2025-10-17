@@ -43,11 +43,11 @@ cd SPTB-RiemannHypothesis
 # See data/README.md for instructions
 
 # 3. Run the analysis
-cd code
+cd numerical_analysis
 Rscript sptb_analysis.R
 
 # 4. View results
-ls ../results/
+ls ../sptb_out/
 ```
 
 ---
