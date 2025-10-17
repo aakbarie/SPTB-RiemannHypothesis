@@ -1,7 +1,7 @@
 # SPTB-RiemannHypothesis
 **Author**: Akbar Akbari Esfahani  
-**Affiliation**: Central California Alliance for Health  
-**Contact**: akbar.esfahani@thealliance.health  
+**Affiliation**: Independent Researcher  
+**Contact**: akbar.esfahani@gmail.com 
 **Date**: October 2025
 
 ---
