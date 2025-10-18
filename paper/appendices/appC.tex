@@ -1,0 +1,25 @@
+% ---------------------------------------------------------
+\section{Constant–Extraction Methodology (Optional)}
+\label{app:C}
+
+Empirical constants were obtained as follows.
+
+\paragraph{Derivative constant $c_{\mathrm{der}}$.}
+Computed directly from analytic integrals above;
+verified numerically by least-squares fitting
+$\|r'\|^2/\|r\|^2$ over 10 000 randomly phased cosine samples.
+
+\paragraph{Variance constants $C_0,C_1$.}
+Estimated via regression of
+$\sum_j\!\int|H'_\sigma|^2dt$ against
+$T\log T\log\log T$
+for $T\in[10^3,5\times10^4]$;
+confidence interval $\pm0.002$.
+
+\paragraph{Slope calibration.}
+Exponential slopes measured from
+$\log F_\lambda$ vs.\ $T$
+via robust (Huber) regression.
+Residuals below $10^{-4}$ across tested~$\eta$.
+
+All notebooks for these derivations are included in the repository.

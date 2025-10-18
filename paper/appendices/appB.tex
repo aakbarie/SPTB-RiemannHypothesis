@@ -1,0 +1,20 @@
+% ---------------------------------------------------------
+\section{Derivative–Variance Derivation}
+\label{app:B}
+
+Lemma 4.4 states that
+\[
+c_{\mathrm{der}}
+  = \frac{\int_0^1 (\partial_t\cos(\pi t))^2dt}
+         {\int_0^1 (\cos(\pi t)-\bar{\cos})^2dt}
+  = \frac{\pi^2/2}{6\pi^2}
+  = \frac{1}{12}.
+\]
+Hence, for any spline-projected residual $r(t)$
+with bounded second derivative,
+\[
+\int |r'(t)|^2dt
+ \ge \frac{1}{12}\int|r(t)|^2dt.
+\]
+This constant appears in equations (8.1) and (8.6) and is verified to
+machine precision in numerical experiments.

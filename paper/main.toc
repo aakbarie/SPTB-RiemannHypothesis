@@ -1,0 +1,66 @@
+\contentsline {section}{\tocsection {}{1}{Introduction and Overview}}{2}{section.1}% 
+\contentsline {section}{\tocsection {}{2}{Motivation and Background}}{3}{section.2}% 
+\contentsline {section}{\tocsection {}{3}{Affine Projection and Spline Penalization}}{3}{section.3}% 
+\contentsline {section}{\tocsection {}{4}{Variance Regime: On-Line Zeros}}{3}{section.4}% 
+\contentsline {section}{\tocsection {}{5}{Robustness in the Penalty Parameter $\lambda $}}{3}{section.5}% 
+\contentsline {section}{\tocsection {}{6}{Heuristic Interpretation}}{3}{section.6}% 
+\contentsline {section}{\tocsection {}{7}{Roadmap of the Paper}}{4}{section.7}% 
+\contentsline {section}{\tocsection {}{8}{Bias Regime and Detection Theorem}}{4}{section.8}% 
+\contentsline {subsection}{\tocsubsection {}{8.1}{Setup}}{4}{subsection.8.1}% 
+\contentsline {subsection}{\tocsubsection {}{8.2}{Step 1. Derivative Lower Bound}}{4}{subsection.8.2}% 
+\contentsline {subsection}{\tocsubsection {}{8.3}{Step 2. Sum Decomposition Lemma}}{4}{subsection.8.3}% 
+\contentsline {subsection}{\tocsubsection {}{8.4}{Step 3. Unrestricted Slope}}{4}{subsection.8.4}% 
+\contentsline {subsection}{\tocsubsection {}{8.5}{Step 4. Geometric Summation}}{4}{subsection.8.5}% 
+\contentsline {subsection}{\tocsubsection {}{8.6}{Step 5. Assembly (Revised)}}{4}{subsection.8.6}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Residual analysis.}}{5}{section*.9}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Conclusion.}}{5}{section*.11}% 
+\contentsline {subsection}{\tocsubsection {}{8.7}{Step 6. Uniform Constants}}{5}{subsection.8.7}% 
+\contentsline {section}{\tocsection {}{9}{Barrier Equivalence and Horocycle Conjecture}}{5}{section.9}% 
+\contentsline {subsection}{\tocsubsection {}{9.1}{Horocycle Conjecture (Analytic Form)}}{5}{subsection.9.1}% 
+\contentsline {section}{\tocsection {}{10}{Heuristic and Numerical Consistency}}{5}{section.10}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Finite-$T$ caveat.}}{5}{section*.12}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Figure 1 (Detection Signature).}}{6}{section*.13}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Table 1 (Empirical Slopes).}}{6}{section*.14}% 
+\contentsline {section}{\tocsection {}{11}{Geometric Preview}}{6}{section.11}% 
+\contentsline {section}{\tocsection {}{12}{Numerical Validation and Empirical Results}}{6}{section.12}% 
+\contentsline {section}{\tocsection {}{13}{Experimental Design}}{6}{section.13}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Data.}}{6}{section*.15}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Discretization.}}{6}{section*.16}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Penalty parameter.}}{6}{section*.17}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Outputs.}}{6}{section*.18}% 
+\contentsline {section}{\tocsection {}{14}{Variance-Regime Tests}}{6}{section.14}% 
+\contentsline {section}{\tocsection {}{15}{Bias-Regime Tests}}{7}{section.15}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Finite-$T$ caveat.}}{7}{section*.20}% 
+\contentsline {section}{\tocsection {}{16}{Robustness in $\lambda $}}{7}{section.16}% 
+\contentsline {section}{\tocsection {}{17}{Synthetic Multi-Zero Tests}}{9}{section.17}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Multi-Zero Behavior.}}{9}{section*.21}% 
+\contentsline {section}{\tocsection {}{18}{Reproducibility and Code Availability}}{10}{section.18}% 
+\contentsline {section}{\tocsection {}{19}{Summary of Empirical Findings}}{10}{section.19}% 
+\contentsline {section}{\tocsection {}{20}{The Horocycle Manifold $\mathcal {M}$}}{10}{section.20}% 
+\contentsline {subsection}{\tocsubsection {}{20.1}{Conceptual Overview}}{10}{subsection.20.1}% 
+\contentsline {subsection}{\tocsubsection {}{20.2}{Geometric Construction and Metric}}{10}{subsection.20.2}% 
+\contentsline {subsection}{\tocsubsection {}{20.3}{$F_\lambda $ as a Riemannian Functional (Heuristic)}}{11}{subsection.20.3}% 
+\contentsline {section}{\tocsection {}{21}{Horocycle Geometry and Dynamics}}{11}{section.21}% 
+\contentsline {subsection}{\tocsubsection {}{21.1}{Horocycles as Flat Loci}}{11}{subsection.21.1}% 
+\contentsline {subsection}{\tocsubsection {}{21.2}{Horocycle Barrier}}{11}{subsection.21.2}% 
+\contentsline {subsection}{\tocsubsection {}{21.3}{Geodesic Deviation (Revised)}}{11}{subsection.21.3}% 
+\contentsline {subsection}{\tocsubsection {}{21.4}{Technical Caveats and Future Work}}{12}{subsection.21.4}% 
+\contentsline {section}{\tocsection {}{22}{Information-Geometry Interpretation}}{12}{section.22}% 
+\contentsline {section}{\tocsection {}{23}{Conceptual Summary}}{12}{section.23}% 
+\contentsline {section}{\tocsection {}{24}{Implications and Comparisons}}{12}{section.24}% 
+\contentsline {subsection}{\tocsubsection {}{24.1}{Structural Interpretation}}{12}{subsection.24.1}% 
+\contentsline {subsection}{\tocsubsection {}{24.2}{Broader Consequences}}{13}{subsection.24.2}% 
+\contentsline {subsection}{\tocsubsection {}{24.3}{Relation to Other Geometric Approaches}}{13}{table.5}% 
+\contentsline {section}{\tocsection {}{25}{Concluding Statement}}{13}{section.25}% 
+\contentsline {section}{\tocsection {}{}{Acknowledgments}}{13}{section*.25}% 
+\contentsline {section}{\tocsection {Appendix}{A}{Affine\IeC {\textendash }Projection Constants}}{13}{appendix.A}% 
+\contentsline {subsection}{\tocsubsection {}{A.1}{Low- and High-Frequency Bounds}}{13}{subsection.A.1}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Low frequencies ($|\gamma |<\Gamma _0$).}}{13}{section*.26}% 
+\contentsline {paragraph}{\tocparagraph {}{}{High frequencies ($|\gamma |\ge \Gamma _0$).}}{14}{section*.27}% 
+\contentsline {subsection}{\tocsubsection {}{A.2}{Combined Bound}}{14}{subsection.A.2}% 
+\contentsline {section}{\tocsection {Appendix}{B}{Derivative\IeC {\textendash }Variance Derivation}}{14}{appendix.B}% 
+\contentsline {section}{\tocsection {Appendix}{C}{Constant\IeC {\textendash }Extraction Methodology (Optional)}}{14}{appendix.C}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Derivative constant $c_{\mathrm {der}}$.}}{14}{section*.28}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Variance constants $C_0,C_1$.}}{14}{section*.29}% 
+\contentsline {paragraph}{\tocparagraph {}{}{Slope calibration.}}{14}{section*.30}% 
+\contentsline {section}{\tocsection {Appendix}{}{References}}{14}{section*.31}% 

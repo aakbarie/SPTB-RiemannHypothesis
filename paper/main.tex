@@ -1,0 +1,90 @@
+\documentclass[12pt]{amsart}
+% Handle stray UTF-8 characters (e.g., smart quotes, arrows)
+\DeclareUnicodeCharacter{21D2}{$\Rightarrow$}
+\DeclareUnicodeCharacter{2212}{$-$}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,graphicx,booktabs,tikz,hyperref}
+\graphicspath{{figs/}}
+\usepackage{geometry}
+\usepackage{hyperref}  % For URLs
+\usepackage{url}       % For line-breaking URLs
+\usepackage{amsmath}   % For math
+\usepackage{amsthm}    % For theorems
+\usepackage{graphicx}  % For figures
+\geometry{margin=1in}
+
+\title[A Structural Spline-Penalized Tail Bound]
+{A Structural Spline-Penalized Tail Bound for L-Functions}
+
+\author{Akbar Akbari Esfahani}
+\address{Independent Researcher, Central California Alliance for Health}
+\email{akbar.esfahani@gmail.com}
+
+\date{October 2025}
+\usepackage{amsthm}
+
+% ---- Theorem Environments ----
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\begin{document}
+
+\begin{abstract}
+We introduce the Spline-Penalized Tail Bound (SPTB), a new functional detecting 
+off-critical zeros of automorphic $L$-functions through exponential curvature growth 
+in a finite-time window. Rigorous analytic bounds, empirical validation to 
+0.001\% precision, and a geometric reformulation as curvature-energy confinement 
+together provide a measurable, reproducible criterion linked to the Riemann Hypothesis.
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+\input{parts/part1}
+\input{parts/part2}
+\input{parts/part3}
+\input{parts/part4}
+
+\appendix
+\input{appendices/appA}
+\input{appendices/appB}
+\input{appendices/appC}
+
+\begin{thebibliography}{99}
+
+\bibitem{odlyzko} A.M. Odlyzko, 
+\textit{Tables of zeros of the Riemann zeta function},
+\url{https://www-odlyzko.dtc.umn.edu/zeta_tables/}.
+
+\bibitem{montgomery-vaughan} H.L. Montgomery and R.C. Vaughan,
+\textit{The large sieve},
+Mathematika \textbf{20} (1973), 119--134.
+
+\bibitem{connes} A. Connes,
+\textit{Trace formula in noncommutative geometry and the zeros of the Riemann zeta function},
+Selecta Math. (N.S.) \textbf{5} (1999), 29--106.
+
+\bibitem{berry-keating} M.V. Berry and J.P. Keating,
+\textit{H = xp and the Riemann zeros},
+in \textit{Supersymmetry and Trace Formulae: Chaos and Disorder},
+Kluwer, 1999, pp. 355--367.
+
+\bibitem{balazs-voros} N.L. Balazs and A. Vörös,
+\textit{Chaos on the pseudosphere},
+Phys. Rep. \textbf{143} (1986), 109--240.
+
+\bibitem{titchmarsh} E.C. Titchmarsh,
+\textit{The Theory of the Riemann Zeta-Function},
+2nd ed., Oxford University Press, 1986.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite it as below."
+authors:
+  - family-names: "Esfahani"
+    given-names: "Akbar Akbari"
+    email: "akbar.esfahani@thealliance.health"
+    affiliation: "Central California Alliance for Health"
+title: "SPTB: A Structural Spline-Penalized Tail Bound for L-Functions"
+version: 1.0.0
+date-released: 2025-10-16
+url: "https://github.com/YOUR_USERNAME/SPTB-RiemannHypothesis"
+repository-code: "https://github.com/YOUR_USERNAME/SPTB-RiemannHypothesis"
+keywords:
+  - Riemann Hypothesis
+  - L-functions
+  - spline approximation
+  - numerical analysis
+  - analytic number theory
+license: MIT
+abstract: >
+  We introduce the Spline-Penalized Tail Bound (SPTB) functional,
+  a measurable criterion for detecting off-critical zeros of
+  automorphic L-functions through exponential curvature growth.
+  Rigorous analytic bounds, empirical validation to 0.001% precision,
+  and a geometric reformulation provide a reproducible detection
+  criterion linked to the Riemann Hypothesis.

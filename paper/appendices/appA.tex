@@ -1,0 +1,50 @@
+% =========================================================
+% APPENDICES
+% =========================================================
+
+\appendix
+
+\section{Affine–Projection Constants}
+\label{app:A}
+
+This appendix lists the explicit constants used in Theorem 6.1 and the
+proofs of Lemmas 4.3–4.4.
+
+\subsection{Low- and High-Frequency Bounds}
+
+Let $H_\sigma(t)=\sum_\rho a_\rho e^{i\gamma t}$ with
+$a_\rho=|\rho|^{-\alpha} e^{(\beta-\sigma)t}$.
+Partition the spectrum at a frequency cutoff
+$\Gamma_0=(\log T)^2$.
+
+\paragraph{Low frequencies ($|\gamma|<\Gamma_0$).}
+Using the mean–variance lemma,
+\[
+\int_{I_j}|H'_\sigma|^2dt
+  \ge c_1 \frac{e^{2\eta t_j}}{|\rho|^{2\alpha}}\Delta ,
+\]
+where $c_1=1/48$.
+
+\paragraph{High frequencies ($|\gamma|\ge\Gamma_0$).}
+The short-interval inequality of Montgomery–Vaughan gives
+\[
+\int_{I_j}|H'_\sigma|^2dt
+  \ge c_2 \frac{e^{2\eta t_j}}{|\rho|^{2\alpha}}\frac{\Delta}{\gamma^2},
+\]
+with $c_2=1/(8\pi^2)$.
+
+\subsection{Combined Bound}
+
+Averaging the two regimes yields
+\[
+C_1\!=\!\min\{c_1,c_2\},\qquad
+C_0\!=\!\max\{c_1,c_2\},
+\]
+so that
+\[
+C_1\,T\log T\log\log T
+ \le \sum_j\!\int_{I_j}\!|H'_\sigma|^2dt
+ \le C_0\,T\log T\log\log T.
+\]
+All constants are verified numerically in the notebooks referenced in
+Section 14.

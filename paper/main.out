@@ -1,0 +1,50 @@
+\BOOKMARK [1][-]{section.1}{1. Introduction and Overview}{}% 1
+\BOOKMARK [1][-]{section.2}{2. Motivation and Background}{}% 2
+\BOOKMARK [1][-]{section.3}{3. Affine Projection and Spline Penalization}{}% 3
+\BOOKMARK [1][-]{section.4}{4. Variance Regime: On-Line Zeros}{}% 4
+\BOOKMARK [1][-]{section.5}{5. Robustness in the Penalty Parameter }{}% 5
+\BOOKMARK [1][-]{section.6}{6. Heuristic Interpretation}{}% 6
+\BOOKMARK [1][-]{section.7}{7. Roadmap of the Paper}{}% 7
+\BOOKMARK [1][-]{section.8}{8. Bias Regime and Detection Theorem}{}% 8
+\BOOKMARK [2][-]{subsection.8.1}{8.1. Setup}{section.8}% 9
+\BOOKMARK [2][-]{subsection.8.2}{8.2. Step 1. Derivative Lower Bound}{section.8}% 10
+\BOOKMARK [2][-]{subsection.8.3}{8.3. Step 2. Sum Decomposition Lemma}{section.8}% 11
+\BOOKMARK [2][-]{subsection.8.4}{8.4. Step 3. Unrestricted Slope}{section.8}% 12
+\BOOKMARK [2][-]{subsection.8.5}{8.5. Step 4. Geometric Summation}{section.8}% 13
+\BOOKMARK [2][-]{subsection.8.6}{8.6. Step 5. Assembly \(Revised\)}{section.8}% 14
+\BOOKMARK [2][-]{subsection.8.7}{8.7. Step 6. Uniform Constants}{section.8}% 15
+\BOOKMARK [1][-]{section.9}{9. Barrier Equivalence and Horocycle Conjecture}{}% 16
+\BOOKMARK [2][-]{subsection.9.1}{9.1. Horocycle Conjecture \(Analytic Form\)}{section.9}% 17
+\BOOKMARK [1][-]{section.10}{10. Heuristic and Numerical Consistency}{}% 18
+\BOOKMARK [1][-]{section.11}{11. Geometric Preview}{}% 19
+\BOOKMARK [1][-]{section.12}{12. Numerical Validation and Empirical Results}{}% 20
+\BOOKMARK [1][-]{section.13}{13. Experimental Design}{}% 21
+\BOOKMARK [1][-]{section.14}{14. Variance-Regime Tests}{}% 22
+\BOOKMARK [1][-]{section.15}{15. Bias-Regime Tests}{}% 23
+\BOOKMARK [1][-]{section.16}{16. Robustness in }{}% 24
+\BOOKMARK [1][-]{section.17}{17. Synthetic Multi-Zero Tests}{}% 25
+\BOOKMARK [1][-]{section.18}{18. Reproducibility and Code Availability}{}% 26
+\BOOKMARK [1][-]{section.19}{19. Summary of Empirical Findings}{}% 27
+\BOOKMARK [1][-]{section.20}{20. The Horocycle Manifold M}{}% 28
+\BOOKMARK [2][-]{subsection.20.1}{20.1. Conceptual Overview}{section.20}% 29
+\BOOKMARK [2][-]{subsection.20.2}{20.2. Geometric Construction and Metric}{section.20}% 30
+\BOOKMARK [2][-]{subsection.20.3}{20.3. F as a Riemannian Functional \(Heuristic\)}{section.20}% 31
+\BOOKMARK [1][-]{section.21}{21. Horocycle Geometry and Dynamics}{}% 32
+\BOOKMARK [2][-]{subsection.21.1}{21.1. Horocycles as Flat Loci}{section.21}% 33
+\BOOKMARK [2][-]{subsection.21.2}{21.2. Horocycle Barrier}{section.21}% 34
+\BOOKMARK [2][-]{subsection.21.3}{21.3. Geodesic Deviation \(Revised\)}{section.21}% 35
+\BOOKMARK [2][-]{subsection.21.4}{21.4. Technical Caveats and Future Work}{section.21}% 36
+\BOOKMARK [1][-]{section.22}{22. Information-Geometry Interpretation}{}% 37
+\BOOKMARK [1][-]{section.23}{23. Conceptual Summary}{}% 38
+\BOOKMARK [1][-]{section.24}{24. Implications and Comparisons}{}% 39
+\BOOKMARK [2][-]{subsection.24.1}{24.1. Structural Interpretation}{section.24}% 40
+\BOOKMARK [2][-]{subsection.24.2}{24.2. Broader Consequences}{section.24}% 41
+\BOOKMARK [2][-]{table.5}{24.3. Relation to Other Geometric Approaches}{section.24}% 42
+\BOOKMARK [1][-]{section.25}{25. Concluding Statement}{}% 43
+\BOOKMARK [1][-]{section*.25}{Acknowledgments}{}% 44
+\BOOKMARK [1][-]{appendix.A}{Appendix A. Affine\205Projection Constants}{}% 45
+\BOOKMARK [2][-]{subsection.A.1}{A.1. Low- and High-Frequency Bounds}{appendix.A}% 46
+\BOOKMARK [2][-]{subsection.A.2}{A.2. Combined Bound}{appendix.A}% 47
+\BOOKMARK [1][-]{appendix.B}{Appendix B. Derivative\205Variance Derivation}{}% 48
+\BOOKMARK [1][-]{appendix.C}{Appendix C. Constant\205Extraction Methodology \(Optional\)}{}% 49
+\BOOKMARK [1][-]{section*.31}{References}{}% 50
