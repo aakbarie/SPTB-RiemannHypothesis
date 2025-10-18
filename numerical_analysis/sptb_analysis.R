@@ -7,6 +7,8 @@ suppressPackageStartupMessages({
   library(ggrepel)
   library(readr)
   library(stringr)
+  library(scales)
+  library(MASS)   # for robust rlm; set cfg$use_huber = FALSE to avoid
 })
 
 # ============================================================
@@ -28,7 +30,7 @@ cfg <- list(
   mpfr_bits        = 192L,            # if precision="mpfr"
   
   # Sampling/grid
-  m_min            = 12L,             # target samples per block in variance runs
+  m_min            = 12L,             # target samples per block (variance)
   min_nt           = 4000L,
   max_nt           = 30000L,          # variance runs
   
@@ -60,6 +62,7 @@ cfg <- list(
   kappa_bias_min   = 2*pi,            # clamp κ for bias
   kappa_bias_max   = 60*pi,
   max_nt_bias      = 120000L,         # allow denser grid for bias runs
+  use_huber        = TRUE,            # robust tail slope via MASS::rlm
   
   # Output
   out_dir          = "numerical_analysis/sptb_out",
@@ -111,6 +114,14 @@ thin_zeros <- function(zeros, cap = 5000L,
     if (nrow(z) > cap) z <- z[1:cap]
     return(z)
   }
+}
+
+# Optional: contribution-aware thinning (can replace thin_zeros in bias runs)
+thin_by_weight <- function(z, cap = 6000L, sigma = 0.6, alpha = 1, Tref = 2e4) {
+  if (nrow(z) <= cap) return(z)
+  w <- (sqrt(z$beta^2 + z$gamma^2))^(-alpha) * exp((z$beta - sigma) * Tref)
+  idx <- order(w, decreasing = TRUE)[1:cap]
+  z[idx]
 }
 
 trapz <- function(x, y) {
@@ -176,7 +187,7 @@ build_H_sigma <- function(zeros, sigma = 0.6, alpha = 1,
 }
 
 # ============================================================
-# 4) Blockwise affine fit + action
+# 4) Blockwise affine fit + action (with CENTRAL differences)
 # ============================================================
 fit_affine_block <- function(t_block, f_block, ridge = 1e-12) {
   n <- length(t_block)
@@ -196,6 +207,16 @@ fit_affine_block <- function(t_block, f_block, ridge = 1e-12) {
   list(a = a, b = b)
 }
 
+central_diff <- function(x, t) {
+  n <- length(x); out <- numeric(n)
+  if (n == 1) return(0*x)
+  if (n == 2) return(c( (x[2]-x[1])/(t[2]-t[1]), (x[2]-x[1])/(t[2]-t[1]) ))
+  out[2:(n-1)] <- (x[3:n] - x[1:(n-2)]) / (t[3:n] - t[1:(n-2)])
+  out[1] <- (x[2] - x[1]) / (t[2] - t[1])
+  out[n] <- (x[n] - x[n-1]) / (t[n] - t[n-1])
+  out
+}
+
 blockwise_functionals <- function(series, Delta, lambda) {
   t <- series$t; f <- series$H
   blk <- floor(t / Delta)
@@ -212,12 +233,9 @@ blockwise_functionals <- function(series, Delta, lambda) {
       S   <- ab$a + ab$b * tb
       eps <- fb - S
       
-      dt <- diff(tb)
-      if (length(dt) == 0L || any(dt <= 0)) {
-        return(tibble(int_eps2 = trapz(tb, eps^2), int_deps2 = 0))
-      }
-      dS   <- c(diff(S) / dt, NA);  dS[length(dS)]  <- dS[length(dS)-1]
-      df_  <- c(diff(fb) / dt, NA); df_[length(df_)] <- df_[length(df_)-1]
+      # CENTRAL differences (stable), then trapezoid norms
+      dS   <- central_diff(S,  tb)
+      df_  <- central_diff(fb, tb)
       deps <- df_ - dS
       
       tibble(
@@ -314,10 +332,17 @@ run_bias_once <- function(zeros, sigma, alpha, Tmax, eta, kappa, c_lambda,
   n_t     <- choose_nt(Tmax, Delta, m_min = m_min, min_nt = min_nt, max_nt = max_nt_bias)
   
   lambda <- c_lambda / (log(Tmax)^2)
-  if (gamma_mode == "auto") gamma0 <- gamma0_factor / Delta
   
+  # Synthetic zero frequency: auto + Nyquist guard (γ0 < 0.9 * π / Δt)
+  if (gamma_mode == "auto") gamma0 <- gamma0_factor / Delta
+  dt  <- Tmax / max(1, n_t - 1)
+  nyq <- pi / dt
+  gamma0 <- min(gamma0, 0.9 * nyq)
+  
+  # Thin zeros (keep your method; swap to thin_by_weight() if desired)
   z_use <- thin_zeros(zeros, cap = zeros_cap, method = zeros_pick, gamma_max = gamma_max)
   
+  # Baseline series
   H0 <- build_H_sigma(z_use, sigma, alpha, Tmax, n_t, chunk = chunk)
   mu0 <- mean(H0$H); sd0 <- sd(H0$H)
   trf <- switch(standardize,
@@ -326,6 +351,7 @@ run_bias_once <- function(zeros, sigma, alpha, Tmax, eta, kappa, c_lambda,
                 zscore = function(x) if (sd0 > 0) (x - mu0)/sd0 else (x - mu0))
   H0$H <- trf(H0$H)
   
+  # Biased series (inject off-line zero)
   z1 <- inject_offline_zero(z_use, sigma, eta = eta, gamma0 = gamma0)
   H1 <- build_H_sigma(z1, sigma, alpha, Tmax, n_t, chunk = chunk)
   H1$H <- trf(H1$H)
@@ -333,8 +359,8 @@ run_bias_once <- function(zeros, sigma, alpha, Tmax, eta, kappa, c_lambda,
   P0 <- blockwise_functionals(H0, Delta, lambda)$per_block %>% arrange(blk)
   P1 <- blockwise_functionals(H1, Delta, lambda)$per_block %>% arrange(blk)
   
-  # Per-block difference, then compensated cumulation (key to avoid cancellation)
-  inc_diff_total <- pmax(P1$total_block - P0$total_block, 0)
+  # Per-block TOTAL difference (NO CLIPPING)
+  inc_diff_total <- P1$total_block - P0$total_block
   cum_diff_total <- kahan_cumsum(inc_diff_total)
   
   out_blocks <- tibble(
@@ -351,7 +377,7 @@ run_bias_once <- function(zeros, sigma, alpha, Tmax, eta, kappa, c_lambda,
 }
 
 # ============================================================
-# 9) Bias sweep across (η, T)
+# 9) Bias sweep across (η, T) with tail-slope on last third
 # ============================================================
 run_bias_sweep <- function(zeros, cfg) {
   grid <- expand.grid(eta = cfg$bias_eta_list, Tmax = cfg$bias_T_list)
@@ -370,14 +396,23 @@ run_bias_sweep <- function(zeros, cfg) {
     meta   <- res$meta
     
     # Tail slope on TOTAL-Δ cumulative (last third of blocks)
-    eps <- 1e-18
     tail_mask <- blocks$block_start > (max(blocks$block_start) * 2/3)
-    emp_rate <- tryCatch(
-      { if (any(tail_mask)) coef(lm(log(cum_total_diff + eps) ~ block_start, data = blocks[tail_mask, ]))[2] else NA_real_ },
-      error = function(e) NA_real_
-    )
+    eps <- 1e-18
     
-    rows[[i]] <- cbind(meta, tibble(emp_tail_rate = emp_rate, theory_2eta = 2*eta))
+    emp_rate <- tryCatch({
+      if (!any(tail_mask)) NA_real_ else {
+        if (cfg$use_huber) {
+          fit <- MASS::rlm(log(pmax(cum_total_diff, eps)) ~ block_start,
+                           data = blocks[tail_mask, ], psi = MASS::psi.huber)
+          coef(fit)[2]
+        } else {
+          coef(lm(log(pmax(cum_total_diff, eps)) ~ block_start,
+                  data = blocks[tail_mask, ]))[2]
+        }
+      }
+    }, error = function(e) NA_real_)
+    
+    rows[[i]] <- cbind(meta, tibble(emp_tail_rate = as.numeric(emp_rate), theory_2eta = 2*eta))
     all_blocks[[i]] <- blocks
   }
   list(summary = bind_rows(rows), blocks = bind_rows(all_blocks))
@@ -427,11 +462,11 @@ p_var2 <- ggplot(var_tbl, aes(T_log2T, F_lambda)) +
   theme_minimal(base_size = 13)
 
 p_bias_grid <- ggplot(bias_res$blocks,
-                      aes(block_start, cum_total_diff + 1e-18)) +
+                      aes(block_start, pmax(cum_total_diff, 1e-18))) +
   geom_line(linewidth = 0.8, color = "steelblue") +
   scale_y_log10() +
   facet_grid(rows = vars(paste0("eta=", format(eta, digits = 3))),
-             cols = vars(paste0("T=", scales::label_number(accuracy=1)(Tmax)))) +
+             cols = vars(paste0("T=", label_number(accuracy=1)(Tmax)))) +
   labs(title = "TOTAL action Δ (β>σ − baseline), semilog",
        x = "t (block start)",
        y = expression(paste("Δ cum ( ‖ε‖^2 + ", lambda, "‖∂", t, "ε‖^2 )"))) +
@@ -439,7 +474,7 @@ p_bias_grid <- ggplot(bias_res$blocks,
 
 p_bias_summary <- ggplot(bias_res$summary,
                          aes(theory_2eta, emp_tail_rate,
-                             label = paste0("T=", scales::label_number(accuracy=1)(Tmax)))) +
+                             label = paste0("T=", label_number(accuracy=1)(Tmax)))) +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
   geom_point(size = 2) +
   geom_text_repel(size = 3, min.segment.length = 0) +
