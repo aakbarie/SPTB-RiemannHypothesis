@@ -1,0 +1,130 @@
+% ---------------------------------------------------------
+\section{Short Appendix: Dirichlet \texorpdfstring{$L(s,\chi)$}{L(s,χ)} Example}
+\label{app:dirichlet}
+
+This appendix records the assumptions and standard inputs needed to extend
+Theorems~\ref{thm:variance} and~\ref{thm:bias} from $\zeta(s)$ to primitive
+Dirichlet $L$–functions $L(s,\chi)$ (mod~$q$). The statements and proofs
+carry over \emph{verbatim}, with the same canonical parameter regime
+$\Delta\asymp(\log T)^{-1}$ and $\lambda\asymp(\log T)^{-2}$, after replacing
+the zero–counting function and the Montgomery–Vaughan short–interval bound by
+their Dirichlet analogues and allowing the variance constant $C_0$ to depend
+on $q$ only through $\log(qT)$.
+
+\subsection*{Assumptions and analytic normalization}
+Let $\chi$ be a primitive Dirichlet character modulo $q\ge 1$, and let
+\[
+L(s,\chi)=\sum_{n=1}^\infty \frac{\chi(n)}{n^s}, \qquad \Re s>1.
+\]
+Write the completed $L$–function in the standard form
+\[
+\Lambda(s,\chi)
+=\Bigl(\frac{q}{\pi}\Bigr)^{\frac{s+a}{2}}
+\Gamma\!\Bigl(\frac{s+a}{2}\Bigr)\,L(s,\chi),
+\qquad
+a=\begin{cases}
+0,& \chi(-1)=1,\\
+1,& \chi(-1)=-1,
+\end{cases}
+\]
+so that $\Lambda(s,\chi)=\varepsilon(\chi)\,\Lambda(1-s,\overline\chi)$ with
+$|\varepsilon(\chi)|=1$. The nontrivial zeros $\rho_\chi=\beta_\chi+i\gamma_\chi$
+lie in the critical strip and are symmetric with respect to $1/2$ and the real axis.
+Along a fixed abscissa $\Re s=\sigma\in[1/2,1)$ we define the smoothed remainder
+$H_{\sigma,\chi}(t)$ exactly as in Part~1, with the same truncation and spline
+block structure. The Dirichlet–series coefficients $\chi(n)$ are bounded and
+square–summable in the truncated ranges used here.
+
+\subsection*{Zero–counting}
+Let $N_\chi(T)$ denote the number of zeros $\rho_\chi=\beta_\chi+i\gamma_\chi$
+with $0<\gamma_\chi\le T$. For primitive $\chi$ one has the classical formula
+\begin{equation}
+N_\chi(T)
+=\frac{T}{\pi}\log\!\Bigl(\frac{qT}{2\pi}\Bigr)-\frac{T}{\pi}
++O(\log(qT)),
+\label{eq:Nchi}
+\end{equation}
+uniformly in $q\ge 1$ and $T\ge 2$.
+This is the direct analogue of the Riemann–von~Mangoldt formula and can be found,
+for example, in Davenport~\cite[Ch.~20]{titchmarsh} or Iwaniec–Kowalski.
+
+\subsection*{Short–interval (Montgomery–Vaughan) inequality for Dirichlet polynomials}
+For Dirichlet polynomials $D(t)=\sum_{n\le N} a_n n^{-it}$ one has the mean–value
+estimate
+\[
+\int_{x}^{x+H}\!\!\bigl|D(t)\bigr|^2\,dt
+\;\le\;
+\bigl(H + O(N)\bigr)\sum_{n\le N}|a_n|^2,
+\]
+uniformly in $x\in\mathbb{R}$ and $H>0$; see Montgomery–Vaughan, \emph{Multiplicative Number Theory~I}, or
+the original short–interval inequalities. In our setting, after freezing slowly varying
+weights on a block $I_j$ and applying the inequality to $\partial_t H_{\sigma,\chi}$,
+one obtains the same per–block control as in Appendix~\ref{app:A}, with the identical
+$\min\{\Delta,(\gamma^2 \Delta)^{-1}\}$ structure. Summing over blocks and using
+\eqref{eq:Nchi} yields the global variance bound
+\begin{equation}
+\sum_j \int_{I_j}\!|H'_{\sigma,\chi}(t)|^2\,dt
+\;\le\;
+C_0(\sigma,\alpha;q)\,T\log(qT)\log\log(qT),
+\label{eq:dirichlet-variance}
+\end{equation}
+where $C_0(\sigma,\alpha;q)=\frac{1}{8\pi^2}\,C^\star_\chi(\sigma,\alpha)$ is explicit and
+depends on $q$ only through $\log(qT)$.
+
+\subsection*{Transfer of the variance and bias theorems}
+With \eqref{eq:dirichlet-variance} in place, the proofs of Theorems~\ref{thm:variance}
+and~\ref{thm:bias} go through without change for $L(s,\chi)$:
+\begin{itemize}
+\item \textbf{Variance regime.} If all zeros satisfy $\beta_\chi\le \sigma$, then
+\[
+F_\lambda\bigl(H_{\sigma,\chi};T,\Delta\bigr)
+=O_{\sigma,\alpha}\!\bigl(T\log(qT)\log\log(qT)\bigr),
+\]
+uniformly for $\kappa_1/\log T\le \Delta\le \kappa_2/\log T$ and
+$c_1(\log T)^{-2}\le \lambda\le c_2(\log T)^{-2}$.
+\item \textbf{Bias/detection regime.} If there is a zero $\rho_\chi$ with
+$\eta:=\beta_\chi-\sigma>0$, then the same assembly as in Part~2 yields
+\[
+F_\lambda\bigl(H_{\sigma,\chi};T,\Delta\bigr)
+\;\gg\;
+\lambda\,
+\frac{\eta^{2}}{|\,\rho_\chi\,|^{2\alpha}}\,
+\min\!\Bigl\{\Delta,\tfrac{1}{|\gamma_\chi|}\Bigr\}\,
+\frac{e^{2\eta T}}{\eta\Delta},
+\]
+with implied constants absolute and $C_0$ replaced by $C_0(\sigma,\alpha;q)$.
+\end{itemize}
+
+\paragraph{Remark on possible exceptional (Siegel) zeros.}
+For real characters $\chi$ there may exist a \emph{Siegel zero}
+$\beta_\chi=1-\delta(q)$ with $\delta(q)\ll (\log q)^{-A}$. Such an off–line zero
+(when $\sigma<\beta_\chi$) is \emph{exactly} the kind of input detected by the
+bias theorem: the exponential rate $2(\beta_\chi-\sigma)$ appears unchanged.
+Our arguments do not assume the nonexistence of such zeros; they merely show that
+their presence forces exponential growth of $F_\lambda$.
+
+\medskip
+\noindent
+\textbf{Conclusion.}
+All statements of Parts~1–2 extend to $L(s,\chi)$ with the single substitution
+$\log T\rightsquigarrow \log(qT)$ in the variance scale and with a possibly different
+variance constant $C_0(\sigma,\alpha;q)$; the detection direction and exponential
+rate $2(\beta_\chi-\sigma)$ are unchanged.
+
+\medskip
+\begin{thebibliography}{9}
+\setlength{\itemsep}{2pt}
+\bibitem{MV_book}
+H.~L.~Montgomery and R.~C.~Vaughan,
+\emph{Multiplicative Number Theory I: Classical Theory},
+Cambridge Studies in Advanced Mathematics, 2007.
+
+\bibitem{IwaniecKowalski}
+H.~Iwaniec and E.~Kowalski,
+\emph{Analytic Number Theory},
+AMS Colloquium Publications, 2004.
+
+\bibitem{Davenport}
+H.~Davenport,
+\emph{Multiplicative Number Theory}, 3rd ed., Springer GTM, 2000.
+\end{thebibliography}

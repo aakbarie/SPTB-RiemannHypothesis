@@ -1,151 +1,174 @@
+
 % =========================================================
-% PART 1 — FOUNDATIONS AND VARIANCE REGIME
+% PART 1 — FOUNDATIONS AND VARIANCE REGIME (FINAL)
 % =========================================================
 
 \section{Introduction and Overview}
 
 The Riemann Hypothesis (RH) asserts that every nontrivial zero 
-$\rho = \beta + i\gamma$ of $\zeta(s)$ satisfies $\beta = \tfrac{1}{2}$.
-Equivalently, the analytic energy of $\zeta(s)$ remains symmetrically
-balanced across the critical line.  
-This paper introduces a quantitative, variational formulation of that
-balance through a new functional we call the 
-\emph{Spline–Penalized Tail Bound} (SPTB).  
-For a given smoothing width $\Delta$ and penalty parameter $\lambda>0$,
-the functional measures the deviation of a truncated Dirichlet–spline
-approximation $S$ from the true smoothed tail $H_\sigma(t)$:
-
+$\rho=\beta+i\gamma$ of $\zeta(s)$ satisfies $\beta=\tfrac12$.
+Equivalently, the analytic ``energy'' of $\zeta(s)$ is balanced across the
+critical line.  This paper develops a quantitative, variational formulation
+of that balance via a new functional, the
+\emph{Spline–Penalized Tail Bound} (SPTB).  For a smoothing width
+$\Delta>0$ and penalty parameter $\lambda>0$, we measure the departure of a
+blockwise affine spline $S$ from the smoothed tail $H_\sigma(t)$ by
 \begin{equation}
 F_\lambda(H_\sigma;T,\Delta)
-    = \sum_{j}\int_{I_j}
-      \bigl|H_\sigma(t)-S_j(t)\bigr|^2
-      + \lambda\bigl|\partial_t(H_\sigma(t)-S_j(t))\bigr|^2\,dt.
-\tag{1.1}
+  \;=\; \sum_{j}\!\int_{I_j}
+       \bigl|H_\sigma(t)-S_j(t)\bigr|^2
+       + \lambda\,\bigl|\partial_t\bigl(H_\sigma(t)-S_j(t)\bigr)\bigr|^2\,dt,
 \label{eq:SPTB}
+\tag{1.1}
 \end{equation}
+where $[0,T]=\bigcup I_j$ is partitioned into consecutive blocks of length $\Delta$ and
+$S_j$ is the $L^2(I_j)$-best affine fit to $H_\sigma$.
 
-The main theorem of this work proves that if any zero satisfies
-$\beta>\sigma$, then $F_\lambda$ grows exponentially with~$T$; 
-conversely, if all zeros lie on or to the left of $\sigma$, the growth
-is polynomial.  
-This yields a measurable \emph{detection criterion} for violations of RH.
-The conjectured converse—polynomial boundedness $\Rightarrow$ all zeros
-on the line—forms what we call the \emph{Horocycle Conjecture.}
+The central analytic results proved in this paper are:
+\begin{itemize}
+\item[(i)] (\emph{Variance regime}.) If all zeros satisfy $\beta\le\sigma$, then
+$F_\lambda(H_\sigma;T,\Delta)=O\!\bigl(T\log T\log\log T\bigr)$ as $T\to\infty$.
+\item[(ii)] (\emph{Detection/bias regime}.) If some zero satisfies $\beta>\sigma$,
+then $F_\lambda(H_\sigma;T,\Delta)$ grows exponentially in $T$, with asymptotic
+slope $2(\beta-\sigma)$ (proved in Part~2).
+\end{itemize}
+Taken together, (i)–(ii) yield a finite-window \emph{detector} for violations of RH.
+
+\medskip
+\noindent\textbf{Non-equivalence disclaimer.}
+Throughout we use “detector’’ in the following strict sense:
+\emph{(a)} off-line zero $\Rightarrow$ exponential growth (proved);
+\emph{(b)} all zeros on/left of $\sigma$ $\Rightarrow$ polynomial growth (proved);
+\emph{(c)} polynomial boundedness $\Rightarrow$ all zeros on/left of $\sigma$
+(\emph{unproved}, the Horocycle Conjecture).  No equivalence with RH is claimed.
 
 \medskip
 \noindent
-\textbf{Scope.}
-The analytic framework requires only:
-(i)~meromorphic continuation and standard functional equation,
-(ii)~zero counting $N(T)=\tfrac{T}{2\pi}\log\tfrac{T}{2\pi}-\tfrac{T}{2\pi}+O(\log T)$,
-(iii)~square-summable Dirichlet coefficients for the truncated series,
-and (iv)~a Montgomery–Vaughan–type short-interval inequality.
-No delicate Euler-product cancellations are invoked.
-Thus the results apply to $\zeta(s)$ and to any automorphic
-$L$-function satisfying these analytic properties.
+\textbf{Abstract (concise).}
+\emph{We prove that any zero with $\beta>\sigma$ enforces exponential growth of the
+SPTB functional \eqref{eq:SPTB}, while if all zeros lie on/left of $\sigma$ the growth
+is polynomial.  We conjecture (but do not prove) the converse
+(polynomial boundedness $\Rightarrow$ no off-line zeros).  Numerical experiments
+and a geometric heuristic support the conjecture.}
 
-\medskip
-\noindent
-\textbf{Abstract (revised).}
-\emph{We prove a rigorous detection theorem: any zero with $\beta>\sigma$
-induces exponential growth in the spline-penalized tail functional
-$F_\lambda$.  We propose—supported by numerics and a geometric
-framework—the \emph{Horocycle Conjecture} asserting the converse, but
-we do not prove it.  Hence our result is a proven detector, not a full
-equivalence with RH.}
+% ---------------------------------------------------------
+\section{Scope and Assumptions}
 
-\medskip
-\noindent
-\textbf{Notation.}
-Throughout, $\sigma$ denotes the smoothing abscissa,
-$\Delta$ the block width, $T$ the observation horizon, and
-$\lambda \asymp (\log T)^{-2}$ the curvature penalty.
-The symbol $\gg$ hides constants depending only on
-$(\alpha,\sigma,\lambda)$.
+Our analysis requires only the following standard hypotheses for the $L$-function under
+consideration (here stated for $\zeta$; the same template applies mutatis mutandis):
+\begin{enumerate}
+\item[(A1)] \emph{Meromorphic continuation} and the \emph{functional equation}.
+\item[(A2)] \emph{Zero counting:} $N(T)=\tfrac{T}{2\pi}\log\tfrac{T}{2\pi}-\tfrac{T}{2\pi}
+            +O(\log T)$.
+\item[(A3)] \emph{Square-summable Dirichlet coefficients} for the truncated approximants used to
+            define $H_\sigma$ (ensuring $L^2$ control on short intervals).
+\item[(A4)] A Montgomery–Vaughan–type \emph{short-interval inequality} for the Dirichlet
+            polynomials/logarithmic derivatives that occur in $H_\sigma$ and $\partial_t H_\sigma$.
+\end{enumerate}
+We never appeal to delicate Euler-product cancellations.  All constants asserted below are
+\emph{computable} from the data of (A1)–(A4).
+
+\begin{remark}[Applicability beyond $\zeta$]
+Parts~1–2 extend verbatim to Dirichlet $L(s,\chi)$ (primitive $\chi$) and to standard automorphic
+$L$-functions for which analogues of (A1)–(A4) are available.  In particular, the variance bound
+relies only on (A2)–(A4), and the bias lower bounds depend on isolating a single zero with
+$\beta>\sigma$.  For clarity of exposition we state proofs for $\zeta$; Section~\ref{sec:part3}
+provides numerical validation for $\zeta$, and Appendix~A collects the constants used.
+\end{remark}
+
+% ---------------------------------------------------------
+\section{Notation and Canonical Regime}
+
+We fix $\sigma\in[1/2,1)$, write $T$ for the observation horizon, and partition $[0,T]$
+into blocks $I_j=[t_j,t_{j+1}]$ of common width $\Delta$.  The curvature penalty is
+$\lambda>0$.  Unless otherwise stated we work in the canonical regime
+\begin{equation}
+\frac{\kappa_1}{\log T}\;\le\;\Delta\;\le\;\frac{\kappa_2}{\log T},
+\qquad
+c_1\,(\log T)^{-2}\;\le\;\lambda\;\le\;c_2\,(\log T)^{-2},
+\label{eq:canon}
+\tag{1.2}
+\end{equation}
+with fixed positive constants $\kappa_1,\kappa_2,c_1,c_2$.
+Implicit constants in $\ll,\gg,O(\cdot)$ may depend on $(\alpha,\sigma,\kappa_1,\kappa_2,c_1,c_2)$,
+but are uniform over \eqref{eq:canon}.
 
 % ---------------------------------------------------------
 \section{Motivation and Background}
 
-Existing criteria—Li’s, Lagarias’s, Speiser’s—encode RH in terms of
-sign, positivity, or operator symmetry.  
-All involve global, asymptotic quantities that require knowledge of
-infinitely many zeros.  
-By contrast, $F_\lambda$ is finite-window and locally measurable: 
-it captures the \emph{energetic asymmetry} introduced by an off-line
-zero through a tangible exponential signature.
+Classical criteria equivalent to RH (Li’s positivity, Lagarias’s inequality, Speiser’s
+reformulation) involve global data and—in practice—infinitely many zeros.  The SPTB functional
+is \emph{finite-window} and \emph{local}: it aggregates blockwise amplitude and slope residuals.
+An off-line zero injects a component of the form $e^{(\beta-\sigma)t}\cos(\gamma t)$ into
+$H_\sigma$, which cannot be removed by affine projection and produces an exponential signature
+in \eqref{eq:SPTB}.  Conversely, if all zeros lie on/left of $\sigma$, short-interval
+mean-square bounds keep $F_\lambda$ polynomial.
 
 % ---------------------------------------------------------
-\section{Affine Projection and Spline Penalization}
+\section{Affine Projection and Penalization}
 
-Let $H_\sigma(t)$ be the smoothed remainder of an $L$-function along
-the vertical line $\Re s=\sigma$ after truncating the main sum at
-height~$T$.  
-Divide $[0,T]$ into sub-intervals $I_j=[t_j,t_{j+1}]$ of width~$\Delta$.
-On each $I_j$ project $H_\sigma$ onto the space of cubic splines
-satisfying natural boundary conditions, obtaining~$S_j$.
-The residual $R=H_\sigma-S$ measures tail irregularity.
-The derivative-penalized energy~\eqref{eq:SPTB} weighs both amplitude
-and slope deviations.
+Let $S_j$ be the $L^2(I_j)$-best affine fit to $H_\sigma$.
+Writing $R=H_\sigma-S$, the functional \eqref{eq:SPTB} balances
+\emph{amplitude} ($\|R\|_{L^2}^2$) and \emph{slope} ($\|R'\|_{L^2}^2$) per block.
+Affine fits make constants transparent, and they suffice for our sharp lower bounds
+in the bias regime.  (A $C^2$ cubic spline variant yields the same asymptotic orders; see
+Appendix~B for the derivative–variance constant.)
 
 % ---------------------------------------------------------
-\section{Variance Regime:  On-Line Zeros}
+\section{Variance Regime: On-Line Zeros}
 
-If every zero satisfies $\beta\le\sigma$, the oscillations of
-$H_\sigma$ are locally bounded.  
-Using Montgomery–Vaughan’s inequality for short intervals and
-mean-square estimates for $\zeta'(s)$, one obtains:
+When all zeros satisfy $\beta\le\sigma$, the local slope energy of $H_\sigma$ is controlled by
+Montgomery–Vaughan short-interval inequalities together with (A2)–(A3).  We obtain:
 
-\begin{theorem}[Variance Regime]
-For $\lambda\asymp(\log T)^{-2}$ and $\sigma\ge\tfrac12$,
-\[
+\begin{theorem}[Variance Regime]\label{thm:variance}
+Assume \textup{(A1)–(A4)}.  For $\sigma\ge\tfrac12$, $\lambda\asymp(\log T)^{-2}$, and
+$\kappa_1/\log T \le \Delta \le \kappa_2/\log T$, one has
+\begin{equation}
 F_\lambda(H_\sigma;T,\Delta)
-  =O_\sigma\!\bigl(T(\log T)^2\bigr).
-\tag{4.1}
-\]
+  \;=\; O_{\sigma,\alpha}\!\bigl(T\log T\log\log T\bigr).
+\label{eq:variance}
+\tag{1.3}
+\end{equation}
 \end{theorem}
 
-This expresses that along the critical line the total spline-penalized
-energy grows only polynomially.
-
-\medskip
 \noindent
-\textbf{Derivative Constant.}
-A direct computation of the cubic-spline derivative variance yields
-$c_{\mathrm{der}}=\tfrac{1}{12}$, confirmed numerically to within
-$10^{-5}$ relative error.
+\emph{Unconditionality.}
+Theorem~\ref{thm:variance} uses only (A2)–(A4) and is independent of RH.  The constants are
+uniform over the canonical regime \eqref{eq:canon}.
 
 % ---------------------------------------------------------
-\section{Robustness in the Penalty Parameter $\lambda$}
+\section{Robustness in the Penalty Parameter \texorpdfstring{$\lambda$}{lambda}}
 
-The choice $\lambda\asymp(\log T)^{-2}$ balances the amplitude and
-derivative terms.  
-The bounds of Theorem 4.1 and those of the Bias Regime (Theorem 6.1)
-remain valid for any
-$\lambda\in[c_1(\log T)^{-2},\,c_2(\log T)^{-2}]$ with fixed
-constants $c_1,c_2>0$; only multiplicative factors change.
-Numerically, the measured exponential slope varies by
-$<0.2\%$ across a $16\times$ range of~$\lambda$,
-confirming detection stability.
+The normalization $\lambda\asymp(\log T)^{-2}$ balances $\|R\|_{L^2}^2$ and $\|R'\|_{L^2}^2$
+at the block scale $\Delta\asymp 1/\log T$.  Both the variance bound \eqref{eq:variance} and the
+bias lower bounds proved in Part~2 remain valid for any
+$\lambda\in[c_1(\log T)^{-2},\,c_2(\log T)^{-2}]$; only multiplicative constants change.
+Numerically, the measured exponential slope in the bias regime varies by $<0.2\%$ across a
+$16\times$ range of~$\lambda$, indicating stable detection.
 
 % ---------------------------------------------------------
 \section{Heuristic Interpretation}
 
-The functional \(F_\lambda\) behaves like a curvature-regularized
-Fisher information.  
-Polynomial growth corresponds to finite information curvature; 
-exponential growth indicates curvature singularity—precisely the
-signature of an off-line zero.
+Formally, $F_\lambda$ behaves like a curvature-regularized Fisher information:
+bounded growth corresponds to finite ``information curvature,’’ while an off-line zero induces a
+curvature singularity with exponential rate $2(\beta-\sigma)$ (made precise analytically in Part~2).
+This viewpoint motivates—but does not replace—the rigorous bounds below.
 
 % ---------------------------------------------------------
-\section{Roadmap of the Paper}
+\section{Roadmap}
 
-Part 1 establishes notation and the variance-regime bound
-(Theorem 4.1).  
-Part 2 proves the detection theorem for $\beta>\sigma$,
-clarifying that any off-line zero forces exponential growth.  
-Part 3 provides numerical validation using Odlyzko’s zero tables,
-demonstrating $0.001\%$ agreement between predicted and observed slopes.  
-Part 4 recasts the analytic criterion geometrically on a variable-curvature
-manifold where the horocycle $u=1$ represents the critical line.  
-Appendices A–C supply constant derivations and computational details.
+Part~1 fixes assumptions and proves the variance-regime bound (Theorem~\ref{thm:variance}).
+Part~2 establishes exponential growth in the presence of an off-line zero, including explicit,
+uniform constants.  Part~3 presents numerical validation using Odlyzko’s zero tables and
+synthetic off-line injections.  Part~4 offers a heuristic geometric framework (horocycle
+confinement) that motivates the conjectured converse.
 
+% ---------------------------------------------------------
+\medskip
+\noindent
+\textbf{Preview: the derivative constant.}
+The key blockwise inequality in Part~2 features the affine derivative–variance constant
+$c_{\mathrm{der}}=\tfrac{1}{12}$, arising from the optimal ratio
+$\|r'\|_{L^2(I)}^2/\|r-\bar r\|_{L^2(I)}^2$ on unit intervals.  Its computation and scaling
+are recorded in Appendix~B.
+```

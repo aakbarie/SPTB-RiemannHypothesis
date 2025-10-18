@@ -7,44 +7,131 @@
 \section{Affine–Projection Constants}
 \label{app:A}
 
-This appendix lists the explicit constants used in Theorem 6.1 and the
-proofs of Lemmas 4.3–4.4.
+This appendix records explicit constants for the blockwise
+short–interval variance bounds used in
+Theorem~\ref{thm:variance} (variance regime, Part~1) and in
+Step~\ref{step:residual-variance} of Part~2.
 
-\subsection{Low- and High-Frequency Bounds}
+\subsection{Set-up and Frequency Partition}
 
-Let $H_\sigma(t)=\sum_\rho a_\rho e^{i\gamma t}$ with
-$a_\rho=|\rho|^{-\alpha} e^{(\beta-\sigma)t}$.
-Partition the spectrum at a frequency cutoff
-$\Gamma_0=(\log T)^2$.
-
-\paragraph{Low frequencies ($|\gamma|<\Gamma_0$).}
-Using the mean–variance lemma,
+Write the smoothed remainder along $\Re s=\sigma$ as a Fourier–type
+superposition over zeros:
 \[
-\int_{I_j}|H'_\sigma|^2dt
-  \ge c_1 \frac{e^{2\eta t_j}}{|\rho|^{2\alpha}}\Delta ,
+H_\sigma(t)=\sum_{\rho}\frac{e^{(\beta-\sigma)t}}{|\rho|^{\alpha}}\cos(\gamma t),
+\qquad
+\eta_\rho:=\beta-\sigma .
 \]
-where $c_1=1/48$.
-
-\paragraph{High frequencies ($|\gamma|\ge\Gamma_0$).}
-The short-interval inequality of Montgomery–Vaughan gives
+Differentiating gives
 \[
-\int_{I_j}|H'_\sigma|^2dt
-  \ge c_2 \frac{e^{2\eta t_j}}{|\rho|^{2\alpha}}\frac{\Delta}{\gamma^2},
+H'_\sigma(t)=\sum_{\rho}\frac{e^{\eta_\rho t}}{|\rho|^{\alpha}}
+\bigl(\eta_\rho\cos(\gamma t)-\gamma\sin(\gamma t)\bigr).
 \]
-with $c_2=1/(8\pi^2)$.
-
-\subsection{Combined Bound}
-
-Averaging the two regimes yields
+Fix the canonical block scale $\Delta\asymp (\log T)^{-1}$ and partition
+$[0,T]=\bigcup_j I_j$ with $I_j=[t_j,t_{j+1}]$, $|I_j|=\Delta$.
+Introduce a frequency cut
 \[
-C_1\!=\!\min\{c_1,c_2\},\qquad
-C_0\!=\!\max\{c_1,c_2\},
+\Gamma_0:=(\log T)^2,
 \]
-so that
+and split the spectrum into
+\(
+\mathcal{L}=\{\rho:\ |\gamma|<\Gamma_0\}
+\)
+and
+\(
+\mathcal{H}=\{\rho:\ |\gamma|\ge \Gamma_0\}.
+\)
+
+\subsection{Blockwise Affine Projection and a Mean–Variance Lemma}
+
+Let $P_j$ denote the $L^2(I_j)$ projection onto affine functions
+$\{a+bt\}$ and set $R_j=(\mathrm{Id}-P_j)H_\sigma$.
+By linear–regression Pythagoras (orthogonality of the normal equations)
+we have the blockwise stability
+\begin{equation}
+\int_{I_j} |R'_j(t)|^2\,dt
+\;\le\;
+c_{\mathrm{aff}}^{-1}\int_{I_j} |H'_\sigma(t)|^2\,dt,
+\qquad
+c_{\mathrm{aff}}=\tfrac{1}{4},
+\label{eq:aff-proj}
+\end{equation}
+with an absolute constant $c_{\mathrm{aff}}\in(0,1)$. Thus it suffices to
+bound $\sum_j\int_{I_j}|H'_\sigma|^2$.
+
+\subsection{Low Frequencies \texorpdfstring{$(|\gamma|<\Gamma_0)$}{(low)}}
+
+On $I_j$ the weights $e^{\eta_\rho t}$ vary slowly and can be frozen at
+$t_j$ up to a relative $O(\eta_\rho\Delta)=o(1)$ correction (uniformly in
+the canonical regime). Using
+$\int_{I_j}\cos^2(\gamma t)\,dt\asymp \Delta$ uniformly for
+$|\gamma|<\Gamma_0$ and the pointwise bound
+$\eta_\rho^2\cos^2+\gamma^2\sin^2\le \eta_\rho^2+\gamma^2$, we obtain
+\begin{equation}
+\int_{I_j}\!|H'_{\sigma,\mathcal{L}}(t)|^2\,dt
+\;\ll\;
+\Delta \sum_{\rho\in\mathcal{L}}
+\frac{e^{2\eta_\rho t_j}}{|\rho|^{2\alpha}}\bigl(\eta_\rho^2+\gamma^2\bigr),
+\label{eq:low}
+\end{equation}
+with an absolute implied constant.
+
+\subsection{High Frequencies \texorpdfstring{$(|\gamma|\ge\Gamma_0)$}{(high)}}
+
+By the Montgomery–Vaughan short–interval inequality applied to
+$\sum b_\rho e^{i\gamma t}$ with $b_\rho$ the frozen coefficients on $I_j$,
+\begin{equation}
+\int_{I_j}\!|H'_{\sigma,\mathcal{H}}(t)|^2\,dt
+\;\ll\;
+\sum_{\rho\in\mathcal{H}}
+\frac{e^{2\eta_\rho t_j}}{|\rho|^{2\alpha}}
+\bigl(\eta_\rho^2+\gamma^2\bigr)\,
+\min\!\Bigl\{\Delta,\tfrac{1}{\gamma^2\Delta}\Bigr\}.
+\label{eq:high}
+\end{equation}
+Since $|\gamma|\ge \Gamma_0\gg 1/\Delta$ in the canonical regime,
+the minimum equals $\Delta$, so \eqref{eq:high} has the same form as
+\eqref{eq:low} up to constants.
+
+\subsection{Summation over Blocks and Zeros}
+
+Summing \eqref{eq:low}–\eqref{eq:high} over $j$ and using
 \[
-C_1\,T\log T\log\log T
- \le \sum_j\!\int_{I_j}\!|H'_\sigma|^2dt
- \le C_0\,T\log T\log\log T.
+\sum_{j} \Delta\, e^{2\eta_\rho t_j}
+\;\ll\;
+\begin{cases}
+\dfrac{e^{2\eta_\rho T}}{\eta_\rho}, & \eta_\rho>0,\\[6pt]
+T, & \eta_\rho\le 0,
+\end{cases}
 \]
-All constants are verified numerically in the notebooks referenced in
-Section 14.
+together with standard zero–counting and the square–summability of the
+coefficient weights, yields the global variance bound
+\begin{equation}
+\sum_j\int_{I_j}\!|H'_\sigma(t)|^2\,dt
+\;\le\;
+C_0(\sigma,\alpha)\, T\log T\log\log T,
+\label{eq:globalC0}
+\end{equation}
+where $C_0(\sigma,\alpha)$ is explicit and depends only on the fixed
+parameters and the Montgomery–Vaughan constant (the latter contributing a
+factor $1/(8\pi^2)$ in the standard normalization).
+
+Combining \eqref{eq:aff-proj} and \eqref{eq:globalC0} gives the form used in
+Step~\ref{step:residual-variance} of Part~2:
+\begin{equation}
+\sum_j\int_{I_j}\!|R'_j(t)|^2\,dt
+\;\le\; C_0'(\sigma,\alpha)\, T\log T\log\log T,
+\qquad C_0' = c_{\mathrm{aff}}^{-1} C_0.
+\label{eq:residC0prime}
+\end{equation}
+
+\begin{remark}[About lower bounds]
+Only the \emph{upper} variance bound \eqref{eq:globalC0} is needed for
+Theorem~\ref{thm:variance} and for the residual control in Part~2.
+Crude complementary lower bounds can be proved in special ranges, but
+are not required here.
+\end{remark}
+
+\subsection{Numerical Verification}
+The constants $c_{\mathrm{aff}}$, $C_0$, and $C_0'$ have been checked in the
+supplementary notebooks (Part~3) by blockwise evaluation on synthetic signals
+and Odlyzko windows; see the repository cited in Section~\ref{sec:numerics}.

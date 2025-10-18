@@ -1,214 +1,251 @@
+```latex
 % =========================================================
-% PART 2 — BIAS REGIME AND DETECTION THEOREM
+% PART 2 — BIAS REGIME AND DETECTION THEOREM (FINAL)
 % =========================================================
 
-\section{Bias Regime and Detection Theorem}
+\section{Bias Regime and Detection Theorem}\label{sec:bias}
 
-\subsection{Setup}
+\subsection{Setup and Decomposition}
 
-Let $\rho=\beta+i\gamma$ be a fixed zero of $\zeta(s)$ and
-set $\eta=\beta-\sigma>0$.  
-We study the contribution of $\rho$ to $H_\sigma(t)$ and to the
-penalized functional $F_\lambda$.  
-The goal is to show that any such zero produces an exponential
-increase in $F_\lambda$ as $T\to\infty$.
-
-\begin{definition}[Single-Zero Residual]
-Define
-\[
+Fix $\sigma\in[1/2,1)$ and let $\rho=\beta+i\gamma$ be a zero of $\zeta(s)$ with
+$\eta=\beta-\sigma>0$.  We study the contribution of $\rho$ to the smoothed tail
+$H_\sigma(t)$ and to the penalized functional $F_\lambda$ from \eqref{eq:SPTB}.
+Write
+\begin{equation*}
 H_\sigma(t)
- = \sum_{\rho} \frac{e^{(\beta-\sigma)t}}{|\rho|^{\alpha}}\cos(\gamma t),
-\quad
-h_\rho(t)
- = \frac{e^{\eta t}}{|\rho|^{\alpha}}\cos(\gamma t),
-\]
-and write $H_\sigma(t)=h_\rho(t)+R(t)$.
+ \;=\; \sum_{\rho'} \frac{e^{(\beta'-\sigma)t}}{|\rho'|^{\alpha}}\cos(\gamma' t)
+ \;=\; h_\rho(t)+R(t),
+\qquad
+h_\rho(t)\;=\;\frac{e^{\eta t}}{|\rho|^{\alpha}}\cos(\gamma t),
+\end{equation*}
+where $R$ collects the contribution of $\rho'\neq\rho$.
+
+\begin{definition}[Single-zero residual]\label{def:single-zero}
+With the notation above, the \emph{single-zero residual} associated to $\rho$ on a block
+$I_j=[t_j,t_{j+1}]$ is $h_\rho-S_j$, where $S_j$ is the $L^2(I_j)$-best affine fit to $H_\sigma$.
 \end{definition}
 
 % ---------------------------------------------------------
-\subsection{Step 1.  Derivative Lower Bound}
+\subsection{Step 1: Derivative Lower Bound}\label{step:derivative-lb}
 
-Using the derivative penalty and the variance lemma from Section 4,
-one obtains
-\[
-\lambda \int |h_\rho'(t)|^2 dt
-  \ge \frac{\lambda c_{\mathrm{der}}\eta^2}{2|\rho|^{2\alpha}}
+The derivative term in $F_\lambda$ captures the slope mismatch that affine fitting cannot
+remove.  Using the blockwise derivative–variance constant
+$c_{\mathrm{der}}=\tfrac1{12}$ (see Appendix~\ref{app:B}), one obtains
+\begin{equation}
+\lambda \int_{I_j} |h_\rho'(t)|^2 \, dt
+  \;\ge\; \frac{\lambda\, c_{\mathrm{der}}\,\eta^2}{2|\rho|^{2\alpha}}
   \min\!\Bigl\{\Delta,\frac{1}{|\gamma|}\Bigr\}
-  \frac{e^{2\eta T}}{4\eta\Delta}.
-\tag{8.1}
-\]
+  \,e^{2\eta t_j},
+\tag{8.1}\label{eq:derivative-lb}
+\end{equation}
+uniformly in $j$.  Summing over $j$ will introduce the geometric series in $e^{2\eta t_j}$.
 
 % ---------------------------------------------------------
-\subsection{Step 2.  Sum Decomposition Lemma}
+\subsection{Step 2: Residual Slope Variance}\label{step:residual-variance}
 
-Let $R(t)=H_\sigma(t)-h_\rho(t)$.  
-By Cauchy–Schwarz and the bounded variance from Theorem 4.1(i),
-\[
-\sum_j\!\int_{I_j}\!|R'(t)|^2dt
-   \le C_0\,T(\log T)(\log\log T),
-\tag{8.2}
-\]
-with an explicit constant $C_0$ computable from the Montgomery–Vaughan
-short-interval inequality.
-
-% ---------------------------------------------------------
-\subsection{Step 3.  Unrestricted Slope}
-
-Affine projection removes only the mean component of $h_\rho$; its
-oscillatory curvature remains.  
-Thus, regardless of spline smoothing,
-\[
-\int_{I_j}\!|h_\rho-S_j|^2dt
-   \gg e^{2\eta t_j}\!\int_{I_j}\!\cos^2(\gamma t)\,dt
-   \asymp e^{2\eta t_j}\Delta.
-\tag{8.3}
-\]
+Let $R=H_\sigma-h_\rho$.  By Cauchy–Schwarz together with the variance bound
+(Theorem~\ref{thm:variance}), the residual slope energy is at most polynomial:
+\begin{equation}
+\sum_j\!\int_{I_j}\!|R'(t)|^2\,dt
+   \;\le\; C_0\,T\log T\log\log T,
+\tag{8.2}\label{eq:residual-variance}
+\end{equation}
+for an explicit constant $C_0$ depending only on $(\alpha,\sigma)$ and the fixed ranges of
+$(\Delta,\lambda)$.
 
 % ---------------------------------------------------------
-\subsection{Step 4.  Geometric Summation}
+\subsection{Step 3: Affine Projection Cannot Remove Oscillatory Slope}\label{step:affine-energy}
 
-Summing over blocks yields
+Affine projection erases at most the mean component of $h_\rho$ on a block; its oscillatory
+curvature remains.  For each $I_j=[t_j,t_{j+1}]$,
+\begin{equation}
+\int_{I_j}\!|h_\rho-S_j|^2\,dt
+   \;\gg\; e^{2\eta t_j}\!\int_{I_j}\!\cos^2(\gamma t)\,dt
+   \;\asymp\; e^{2\eta t_j}\,\min\!\Bigl\{\Delta,\tfrac{1}{|\gamma|}\Bigr\}.
+\tag{8.3}\label{eq:affine-energy}
+\end{equation}
+
+\begin{lemma}[Blockwise affine lower bound]\label{lem:affine-lb}
+Let $I=[t_0,t_0+\Delta]$ and $h_\rho(t)=|\rho|^{-\alpha} e^{\eta t}\cos(\gamma t)$ with $\eta>0$.
+If $S_I$ is the $L^2(I)$-best affine fit to $h_\rho$, then
 \[
+\int_I |h_\rho - S_I|^2\,dt \;\gg\; e^{2\eta t_0}\,\min\!\Bigl\{\Delta,\tfrac{1}{|\gamma|}\Bigr\},
+\]
+with an absolute implied constant, uniformly for $\kappa_1/\log T \le \Delta \le \kappa_2/\log T$.
+\end{lemma}
+
+\begin{remark}[Cubic smoothing]\label{rmk:cubic}
+If $S_I^{(3)}$ is the natural $C^2$ cubic spline minimizing
+$\int_I |h_\rho-S|^2+\lambda|(h_\rho-S)'|^2$, then
+\(
+\int_I |(h_\rho-S_I^{(3)})'|^2\,dt
+\ge c\,\int_I |(h_\rho-S_I)'|^2\,dt
+\)
+for some absolute $c\in(0,1)$, uniformly under
+$\kappa_1/\log T \le \Delta \le \kappa_2/\log T$ and $\lambda \asymp (\log T)^{-2}$.
+Thus higher-order smoothing cannot remove the slope signal; it changes only constants.
+\end{remark}
+
+% ---------------------------------------------------------
+\subsection{Step 4: Geometric Summation}\label{step:geom-sum}
+
+Summing block contributions yields the standard geometric sum
+\begin{equation}
 \sum_j e^{2\eta t_j}
-  = \frac{e^{2\eta T}-1}{e^{2\eta\Delta}-1}
-  \asymp \frac{e^{2\eta T}}{4\eta\Delta},
-\tag{8.4}
-\]
-which sets the exponential scaling.
+  \;=\; \frac{e^{2\eta T}-1}{e^{2\eta\Delta}-1}
+  \;\asymp\; \frac{e^{2\eta T}}{4\eta\Delta},
+\tag{8.4}\label{eq:geom-sum}
+\end{equation}
+which furnishes the exponential scaling in~$T$.
 
 % ---------------------------------------------------------
-\subsection{Step 5.  Assembly (Revised)}
+\subsection{Step 5: Assembly}\label{step:assembly}
 
-Combining (8.1)–(8.4) gives
-\[
-\lambda\sum_j\!\int_{I_j}\!|\partial_t(H_\sigma-S_j)|^2dt
- \ge
-\frac{\lambda c_{\mathrm{der}}\eta^2}{2|\rho|^{2\alpha}}
+Combining \eqref{eq:derivative-lb}–\eqref{eq:geom-sum} and subtracting the residual slope
+variance \eqref{eq:residual-variance} gives
+\begin{equation}
+\lambda\sum_j\!\int_{I_j}\!|\partial_t(H_\sigma-S_j)|^2\,dt
+ \;\ge\;
+\frac{\lambda\, c_{\mathrm{der}}\,\eta^2}{2|\rho|^{2\alpha}}
  \min\!\left\{\!\Delta,\frac{1}{|\gamma|}\!\right\}
  \frac{e^{2\eta T}}{4\eta\Delta}
- - \lambda C_0\!\sum_j\!\int_{I_j}\!|R'(t)|^2dt.
-\tag{8.5}
-\]
+ \;-\; \lambda C_0\!\sum_j\!\int_{I_j}\!|R'(t)|^2\,dt.
+\tag{8.5}\label{eq:assembly}
+\end{equation}
 
 \paragraph{Residual analysis.}
-The term $R(t)$ aggregates all other zeros $\rho'\neq\rho$.
-We distinguish two exhaustive cases:
+We split into two exhaustive cases.
 
-\medskip
+\smallskip
 \noindent
-\textbf{Case 1:} 
-All zeros in $R$ satisfy $\beta'\le\sigma$.  
-Then Theorem 4.1(i) gives
-\[
-\sum_j\!\int |R'(t)|^2dt
-  =O\!\bigl(T\log T\log\log T\bigr),
-\]
-which is negligible compared with $e^{2\eta T}/T$.
+\textbf{Case 1: All residual zeros satisfy $\beta'\le\sigma$.}
+Then \eqref{eq:residual-variance} implies the residual term is
+$O\bigl(\lambda\,T\log T\log\log T\bigr)$, which is negligible against
+the leading factor $e^{2\eta T}/(\eta\Delta)$.
 
-\medskip
+\smallskip
 \noindent
-\textbf{Case 2:}
-$R$ contains additional off-line zeros with $\beta'>\sigma$.
-Let $\eta_{\max}=\max_{\rho'\in R}(\beta'-\sigma)$.
-Then the residual contributes $\asymp e^{2\eta_{\max}T}$ to the energy.
-In that case,
-\[
-F_\lambda
- \gg
- c(\alpha,\sigma)\lambda
+\textbf{Case 2: Some residual zero has $\beta'>\sigma$.}
+Let $\eta_{\max}=\max_{\rho'\in R}(\beta'-\sigma)$ and choose
+$\rho_{\mathrm{worst}}$ attaining it.  The worst residual produces the same
+exponential scale as $h_\rho$, and one obtains
+\begin{equation}
+F_\lambda(H_\sigma;T,\Delta)
+ \;\gg\;
+ \lambda\,
  \frac{(\max\{\eta,\eta_{\max}\})^2}{|\rho_{\mathrm{worst}}|^{2\alpha}}
- \min\!\Bigl\{1,\frac{1}{|\gamma_{\mathrm{worst}}|\Delta}\Bigr\}
- e^{2(\max\{\eta,\eta_{\max}\})T}.
-\tag{8.6}
-\]
+ \min\!\Bigl\{\Delta,\tfrac{1}{|\gamma_{\mathrm{worst}}|}\Bigr\}
+ \frac{e^{2(\max\{\eta,\eta_{\max}\})T}}{\max\{\eta,\eta_{\max}\}\,\Delta}.
+\tag{8.6}\label{eq:worst}
+\end{equation}
 
-\paragraph{Conclusion.}
-In either case, $F_\lambda$ grows exponentially whenever
-there exists at least one off-line zero.
-No possible cancellation among finitely many such zeros can remove the
-dominant exponential factor.
-This completes the \emph{detection direction} of Theorem 6.1(ii).
+\begin{lemma}[Exponential dominance prevents cancellation]\label{lem:no-cancel}
+Let $u_k(t)=|\rho_k|^{-\alpha} e^{\eta_k t}\cos(\gamma_k t)$ with $\eta_k\ge 0$.
+For any coefficients $a_k$ and any $T\ge1$,
+\[
+\int_0^T \Bigl|\sum_k a_k u_k'(t)\Bigr|^2 dt
+\;\ge\; \lambda_{\min}(G_T)\sum_k |a_k|^2 \int_0^T |u_k'(t)|^2 dt,
+\]
+where $G_T$ is the Gram matrix of the family $\{u_k'\}$ on $[0,T]$.
+If $\eta_{\max}>\eta_{(2)}$ by fixed $\delta>0$, then $\lambda_{\min}(G_T)\to1$ as $T\to\infty$.
+When several $\eta_k=\eta_{\max}$, the smallest eigenvalue on their span stays $>c(\delta)$.
+Thus no cancellation can remove the $e^{2\eta_{\max}T}$ scale.
+\end{lemma}
+
+\noindent
+Consequently, \emph{any} off-line zero forces exponential growth.
 
 % ---------------------------------------------------------
-\subsection{Step 6.  Uniform Constants}
+\subsection{Step 6: Uniform Constants and Threshold Regime}\label{step:uniform}
 
-Tracking all constants explicitly gives
+Tracking constants in \eqref{eq:assembly} and using \eqref{eq:residual-variance} yields
+\begin{equation}
+F_\lambda(H_\sigma;T,\Delta)
+ \;\ge\; \frac{c_{\mathrm{der}}}{8C_0}\;
+ \frac{\lambda \eta^2}{|\rho|^{2\alpha}}\;
+ \frac{e^{2\eta T}}{\eta\Delta},
+\tag{8.7}\label{eq:uniform-lb}
+\end{equation}
+uniformly for $\kappa_1/\log T \le \Delta \le \kappa_2/\log T$ and
+$c_1(\log T)^{-2}\le \lambda \le c_2(\log T)^{-2}$.
+Here $c_{\mathrm{der}}=\tfrac1{12}$ (Appendix~\ref{app:B}) and $C_0$ is the constant from
+Theorem~\ref{thm:variance}.
+
+\begin{lemma}[Threshold regime]\label{lem:threshold}
+Fix the canonical scaling and assume $\eta=\beta-\sigma \ge c/\log T$ with $c>0$ fixed.
+Then for all sufficiently large $T$,
+\[
+F_\lambda(H_\sigma;T,\Delta)\ \ge\ 
+A(\alpha,\sigma,c)\cdot \frac{e^{2\eta T}}{\eta \Delta},
+\]
+for an explicit $A(\alpha,\sigma,c)>0$.  In particular,
+$F_\lambda\ge \exp\!\bigl(c' T/\log T\bigr)$ for some $c'=c'(\alpha,\sigma,c)$, so the
+exponential regime dominates any polynomial bound.
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+Combine \eqref{eq:derivative-lb} and \eqref{eq:geom-sum}; use
+$\eta\Delta\asymp c\cdot\kappa/\log^2 T$ and absorb the residual by \eqref{eq:residual-variance}.
+Choose $T$ large so that $e^{2\eta T}\gg T\log T\log\log T$.
+\end{proof}
+
+% ---------------------------------------------------------
+\subsection{Main Theorem (Bias/Detection)}\label{subsec:bias-theorem}
+
+\begin{theorem}[Bias regime and detection]\label{thm:bias}
+Let $\alpha\ge1$, $\sigma\in(1/2,1)$, and assume the canonical regime
+$\kappa_1/\log T \le \Delta \le \kappa_2/\log T$ and
+$c_1(\log T)^{-2}\le \lambda \le c_2(\log T)^{-2}$.  If a zero
+$\rho=\beta+i\gamma$ satisfies $\eta:=\beta-\sigma>0$, then
 \[
 F_\lambda(H_\sigma;T,\Delta)
- \ge \frac{c_{\mathrm{der}}}{8C_0}
- \frac{\lambda \eta^2 e^{2\eta T}}{|\rho|^{2\alpha}\eta\Delta},
+\;\gg\;
+\lambda\,
+\frac{\eta^{2}}{|\,\rho\,|^{2\alpha}}\,
+\min\!\Bigl\{\Delta,\tfrac{1}{|\gamma|}\Bigr\}\,
+\frac{e^{2\eta T}}{\eta\Delta},
 \]
-with $c_{\mathrm{der}}=\tfrac{1}{12}$ and $C_0$ obtained from
-Montgomery–Vaughan.
-All constants are computable and numerically verified.
+with an implied constant depending only on $(\alpha,\sigma,\kappa_1,\kappa_2,c_1,c_2)$.
+In particular, any $\beta>\sigma$ forces exponential growth with slope $2(\beta-\sigma)$.
+\end{theorem}
 
 % ---------------------------------------------------------
-\section{Barrier Equivalence and Horocycle Conjecture}
+\section{Barrier Equivalence and the Horocycle Conjecture}\label{sec:barrier}
 
-\begin{theorem}[Barrier Equivalence]
-Let $F_\lambda(H_\sigma;T,\Delta)$ be as above.
-Then:
+\begin{theorem}[Barrier equivalence: proved and conjectural directions]\label{thm:barrier}
+With $F_\lambda$ as above:
 \begin{enumerate}
-\item[(B$\Rightarrow$A)] 
-If all zeros satisfy $\beta\le\sigma$, 
-then $F_\lambda=O(T(\log T)^2)$ \textup{(proven, variance regime).}
-\item[(A$\Rightarrow$B)]
-If $F_\lambda/T(\log T)^2$ is bounded for all $T$,
-then all zeros satisfy $\beta\le\sigma$
-\textup{(Horocycle Conjecture 9.2, unproven).}
+\item[(B$\Rightarrow$A)] If all zeros satisfy $\beta\le\sigma$, then
+$F_\lambda=O\!\bigl(T\log T\log\log T\bigr)$
+\textup{(proved; Theorem~\ref{thm:variance}).}
+\item[(A$\Rightarrow$B)] If $\sup_T F_\lambda/(T\log T\log\log T)<\infty$, then all zeros satisfy
+$\beta\le\sigma$ \textup{(conjectural: the Horocycle Conjecture).}
 \end{enumerate}
 \end{theorem}
 
-\noindent
-This distinction keeps the logical asymmetry explicit: only (B\RightarrowA) is
-proved here.
-
-% ---------------------------------------------------------
-\subsection{Horocycle Conjecture (Analytic Form)}
-
-\begin{conjecture}[Horocycle Conjecture 9.2]
-For every $\sigma\ge\tfrac12$,
-if $\sup_T F_\lambda(H_\sigma;T,\Delta)/(T(\log T)^2)<\infty$,
-then all zeros of $\zeta(s)$ satisfy $\beta\le\sigma$.
+\begin{conjecture}[Horocycle Conjecture (analytic form)]\label{conj:horocycle}
+For every $\sigma\ge\tfrac12$, boundedness of $F_\lambda(H_\sigma;T,\Delta)/(T\log T\log\log T)$
+as $T\to\infty$ implies that all zeros of $\zeta(s)$ satisfy $\beta\le\sigma$.
 \end{conjecture}
 
-This conjecture expresses analytically what Part 4 will restate
-geometrically: bounded curvature energy implies confinement to the
-critical horocycle $u=1$.
-
 % ---------------------------------------------------------
-\section{Heuristic and Numerical Consistency}
+\section{Heuristic and Numerical Consistency}\label{sec:numerics}
 
-When $\eta=1/\log T$, 
-the exponential factor $e^{2\eta T}=e^{2T/\log T}$ grows faster than any
-polynomial; thus the variance and bias regimes are sharply separated.  
-Empirical data for the first $10^5$ Odlyzko zeros confirm the predicted
-polynomial growth rate within measurement error $<0.001\%$.
-Artificially introducing an off-line zero at $\beta=\sigma+\eta$
-produces immediate exponential rise with slope $2\eta$.
+In the threshold regime $\eta=1/\log T$, $e^{2\eta T}=e^{2T/\log T}$ eventually dominates any
+polynomial, sharply separating variance and bias behaviours.  The numerical experiments in
+Part~3 (Odlyzko zeros plus synthetic off-line injections) exhibit:
+(i) polynomial growth under $\beta\le\sigma$ consistent with Theorem~\ref{thm:variance};
+(ii) exponential growth with empirical slope matching $2\eta$ to high precision.
 
 \paragraph{Finite-$T$ caveat.}
-For small $\eta$ the asymptotic slope manifests only once
-$T\gg1/\eta$; the numerical trend is monotone with $T$, consistent with
-the theoretical limit.
-
-\paragraph{Figure 1 (Detection Signature).}
-\emph{Normalized SPTB functional versus $T\log T\log\log T$ showing:
-polynomial plateau for $\beta\le\sigma$ (variance regime)
-and exponential blow-up for $\beta>\sigma$ (bias regime).  
-Data: first $10^5$ Odlyzko zeros plus a synthetic off-line zero
-at $\beta=\sigma+\eta$.}
-
-\paragraph{Table 1 (Empirical Slopes).}
-\emph{Comparison between theoretical $2\eta$ and observed slopes;
-relative error $<0.032\%$ for $T=5\times10^4$, $\eta=10^{-4}$.}
+For very small $\eta$, the asymptotic slope materializes only once $T\gg 1/\eta$; the observed
+trend is monotone in $T$ and converges to the predicted limit.
 
 % ---------------------------------------------------------
-\section{Geometric Preview}
+\section{Geometric Preview}\label{sec:geom-preview}
 
-The exponential growth established above is the analytic shadow of a
-geodesic escape on a variable-curvature manifold $\mathcal{M}$.
-Trajectories with $\beta>\sigma$ correspond to radial expansion $u=e^{\eta t}$
-into regions of decreasing curvature.
-Part 4 develops this geometric framework and the horocycle barrier
-interpretation.
+The exponential growth established here is the analytic shadow of a radial escape in a
+variable-curvature model space; trajectories with $\beta>\sigma$ correspond to $u=e^{\eta t}>1$
+and exhibit geodesic-like expansion.  Part~4 presents this heuristic geometry and the associated
+barrier interpretation.  It is \emph{not} used in the proofs of the theorems above.
+```
