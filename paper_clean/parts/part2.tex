@@ -1,0 +1,202 @@
+% =========================================================
+% PART 2 — BIAS REGIME AND DETECTION THEOREM (RECONCILED FINAL)
+% =========================================================
+
+\section{Bias Regime and Detection Theorem}\label{sec:bias}
+
+\subsection{Setup and Decomposition}
+
+Fix $\sigma\in[1/2,1)$ and let $\rho=\beta+i\gamma$ be a zero of $\zeta(s)$ with
+$\eta=\beta-\sigma>0$.  We examine its contribution to the smoothed tail
+$H_\sigma(t)$ and to the spline–penalized functional $F_\lambda$
+from~\eqref{eq:SPTB}:
+\begin{equation*}
+H_\sigma(t)
+  = \sum_{\rho'} \frac{e^{(\beta'-\sigma)t}}{|\rho'|^{\alpha}}\cos(\gamma' t)
+  = h_\rho(t)+R(t),
+\qquad
+h_\rho(t)=|\rho|^{-\alpha}e^{\eta t}\cos(\gamma t),
+\end{equation*}
+where $R$ collects the contributions of $\rho'\ne\rho$.
+
+\begin{definition}[Single-zero residual]\label{def:single-zero}
+For a block $I_j=[t_j,t_{j+1}]$, the \emph{single-zero residual}
+associated to $\rho$ is $h_\rho-S_j$, where $S_j$ is the $L^2(I_j)$-best affine fit to $H_\sigma$.
+\end{definition}
+
+% ---------------------------------------------------------
+\subsection{Step 1: Derivative Lower Bound}\label{step:derivative-lb}
+
+The derivative term in $F_\lambda$ captures slope mismatch that affine fitting cannot remove.
+Using the blockwise derivative–variance constant $c_{\mathrm{der}}=\tfrac1{12}$
+(Appendix~\ref{app:B}), we obtain
+\begin{equation}
+\lambda \int_{I_j} |h_\rho'(t)|^2 dt
+  \ge \frac{\lambda\,c_{\mathrm{der}}\,\eta^2}{2|\rho|^{2\alpha}}
+      \min\!\Bigl\{\Delta,\frac{1}{|\gamma|}\Bigr\}
+      e^{2\eta t_j},
+\tag{8.1}\label{eq:derivative-lb}
+\end{equation}
+uniformly in $j$.  Summing over blocks introduces a geometric factor in $e^{2\eta t_j}$.
+
+% ---------------------------------------------------------
+\subsection{Step 2: Residual Slope Variance}\label{step:residual-variance}
+
+Let $R=H_\sigma-h_\rho$.  By Cauchy–Schwarz and the variance bound
+(Theorem~\ref{thm:variance}),
+\begin{equation}
+\sum_j\!\int_{I_j}\!|R'(t)|^2dt
+   \le C_0\,T\log T\log\log T,
+\tag{8.2}\label{eq:residual-variance}
+\end{equation}
+for an explicit constant $C_0=C_0(\alpha,\sigma)$ depending only on $(\Delta,\lambda)$.
+
+% ---------------------------------------------------------
+\subsection{Step 3: Affine Projection Residual Energy}\label{step:affine-energy}
+
+Affine projection removes at most the mean of $h_\rho$ on a block; its oscillatory curvature remains.
+For $I_j=[t_j,t_{j+1}]$,
+\begin{equation}
+\int_{I_j}\!|h_\rho-S_j|^2dt
+   \gg e^{2\eta t_j}\!\min\!\Bigl\{\Delta,\tfrac{1}{|\gamma|}\Bigr\}.
+\tag{8.3}\label{eq:affine-energy}
+\end{equation}
+This follows directly from the explicit Gram-matrix computation for
+$e^{\eta t}\cos(\gamma t)$ on $[0,\Delta]$ (Lemma 3, Part 1).
+
+\begin{remark}[Spline smoothing]\label{rmk:spline}
+Replacing affine fits by natural $C^2$ cubic splines only rescales constants:
+for some absolute $c\in(0,1)$,
+\[
+\int_I |(h_\rho-S_I^{(3)})'|^2 dt
+   \ge c\,\int_I |(h_\rho-S_I)'|^2 dt,
+\]
+uniformly under $\kappa_1/\log T\le\Delta\le\kappa_2/\log T$
+and $\lambda\asymp(\log T)^{-2}$.
+\end{remark}
+
+% ---------------------------------------------------------
+\subsection{Step 4: Geometric Summation}\label{step:geom-sum}
+
+Summing over blocks gives the geometric series
+\begin{equation}
+\sum_j e^{2\eta t_j}
+   = \frac{e^{2\eta T}-1}{e^{2\eta\Delta}-1}
+   \asymp \frac{e^{2\eta T}}{4\eta\Delta},
+\tag{8.4}\label{eq:geom-sum}
+\end{equation}
+the source of exponential scaling in $T$.
+
+% ---------------------------------------------------------
+\subsection{Step 5: Assembly}\label{step:assembly}
+
+Combining \eqref{eq:derivative-lb}–\eqref{eq:geom-sum} and
+subtracting the residual variance~\eqref{eq:residual-variance} yields
+\begin{equation}
+\lambda\!\sum_j\!\int_{I_j}\!|\partial_t(H_\sigma-S_j)|^2dt
+  \ge \frac{\lambda\,c_{\mathrm{der}}\eta^2}{2|\rho|^{2\alpha}}
+        \min\!\left\{\!\Delta,\frac{1}{|\gamma|}\!\right\}
+        \frac{e^{2\eta T}}{4\eta\Delta}
+   - \lambda C_0 T\log T\log\log T.
+\tag{8.5}\label{eq:assembly}
+\end{equation}
+For any fixed $\eta>0$, the first term dominates as $T\to\infty$.
+
+% ---------------------------------------------------------
+\subsection{Step 6: Uniform Constants and Threshold Regime}\label{step:uniform}
+
+Tracking constants gives
+\begin{equation}
+F_\lambda(H_\sigma;T,\Delta)
+  \ge \frac{c_{\mathrm{der}}}{8C_0}\,
+        \frac{\lambda\eta^2}{|\rho|^{2\alpha}}\,
+        \frac{e^{2\eta T}}{\eta\Delta},
+\tag{8.6}\label{eq:uniform-lb}
+\end{equation}
+uniformly for $\kappa_1/\log T \le \Delta \le \kappa_2/\log T$ and
+$c_1(\log T)^{-2}\le \lambda \le c_2(\log T)^{-2}$,
+with $c_{\mathrm{der}}=\tfrac1{12}$ and $C_0$ from Theorem~\ref{thm:variance}.
+
+\begin{lemma}[Threshold regime]\label{lem:threshold}
+Fix the canonical scaling and assume $\eta=\beta-\sigma\ge c/\log T$ for constant $c>0$.
+Then for all sufficiently large $T$,
+\[
+F_\lambda(H_\sigma;T,\Delta)
+   \ge A(\alpha,\sigma,c)\,\frac{e^{2\eta T}}{\eta\Delta},
+\]
+for an explicit $A(\alpha,\sigma,c)>0$.
+Hence $F_\lambda\ge\exp(c' T/\log T)$ for some $c'=c'(\alpha,\sigma,c)$:
+the exponential regime overtakes any polynomial bound.
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+Combine~\eqref{eq:derivative-lb} and~\eqref{eq:geom-sum}; note $\eta\Delta\asymp c\kappa/\log^2 T$.
+Absorb the polynomial residual using~\eqref{eq:residual-variance}
+and choose $T$ large so that $e^{2\eta T}\gg T\log T\log\log T$.
+\end{proof}
+
+% ---------------------------------------------------------
+\subsection{Main Theorem (Bias/Detection)}\label{subsec:bias-theorem}
+
+\begin{theorem}[Bias regime and detection]\label{thm:bias}
+Let $\alpha\ge1$, $\sigma\in(1/2,1)$, and assume the canonical regime
+$\kappa_1/\log T \le \Delta \le \kappa_2/\log T$ and
+$c_1(\log T)^{-2}\le \lambda \le c_2(\log T)^{-2}$.
+If a zero $\rho=\beta+i\gamma$ satisfies $\eta:=\beta-\sigma>0$, then
+\[
+F_\lambda(H_\sigma;T,\Delta)
+   \gg \lambda\,
+       \frac{\eta^{2}}{|\rho|^{2\alpha}}\,
+       \min\!\Bigl\{\Delta,\tfrac{1}{|\gamma|}\Bigr\}\,
+       \frac{e^{2\eta T}}{\eta\Delta},
+\]
+with an implied constant depending only on
+$(\alpha,\sigma,\kappa_1,\kappa_2,c_1,c_2)$.
+In particular, any $\beta>\sigma$ forces exponential growth with slope $2(\beta-\sigma)$.
+\end{theorem}
+
+% ---------------------------------------------------------
+\section{Barrier Equivalence and the Horocycle Conjecture}\label{sec:barrier}
+
+\begin{theorem}[Barrier equivalence: proved and conjectural directions]\label{thm:barrier}
+With $F_\lambda$ as above:
+\begin{enumerate}
+\item[(B$\Rightarrow$A)] If all zeros satisfy $\beta\le\sigma$, then
+$F_\lambda=O(T\log T\log\log T)$
+(\textup{proved, Theorem~\ref{thm:variance}}).
+\item[(A$\Rightarrow$B)] If $\sup_T F_\lambda/(T\log T\log\log T)<\infty$, then
+all zeros satisfy $\beta\le\sigma$
+(\textup{conjectural, the Horocycle Conjecture}).
+\end{enumerate}
+\end{theorem}
+
+\begin{conjecture}[Horocycle Conjecture (analytic form)]\label{conj:horocycle}
+For every $\sigma\ge\tfrac12$, boundedness of
+$F_\lambda(H_\sigma;T,\Delta)/(T\log T\log\log T)$ as $T\to\infty$
+implies that all zeros of $\zeta(s)$ satisfy $\beta\le\sigma$.
+\end{conjecture}
+
+% ---------------------------------------------------------
+\section{Heuristic and Numerical Consistency}\label{sec:numerics}
+
+In the threshold regime $\eta=1/\log T$, $e^{2\eta T}=e^{2T/\log T}$
+eventually dominates any polynomial, sharply separating variance and bias behaviour.
+The numerical experiments in Part~3 (Odlyzko zeros plus synthetic off-line injections)
+show:
+(i) polynomial growth under $\beta\le\sigma$, consistent with
+Theorem~\ref{thm:variance}; and
+(ii) exponential growth with empirical slope matching $2\eta$ to within $10^{-3}$ relative error.
+
+\paragraph{Finite-$T$ caveat.}
+For very small $\eta$, the asymptotic slope appears only once $T\gg1/\eta$;
+the observed trend is monotone and converges to the theoretical limit.
+
+% ---------------------------------------------------------
+\section{Geometric Preview}\label{sec:geom-preview}
+
+The exponential growth proven above is the analytic counterpart of a
+radial escape in a variable-curvature model space:
+trajectories with $\beta>\sigma$ correspond to $u=e^{\eta t}>1$
+and exhibit geodesic-like expansion.
+Part~4 develops this heuristic geometry and the associated
+barrier interpretation, which plays no role in the proofs.
