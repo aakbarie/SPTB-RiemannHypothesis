@@ -4,7 +4,7 @@ This is a cleaned and optimized version of the SPTB paper with improved page lay
 
 ## Improvements Over Original
 
-- **Reduced page count**: 23 pages (down from 41 pages, 44% reduction)
+- **Reduced page count**: 27 pages (down from 41 pages, 34% reduction)
 - **Fixed excessive page breaks**: Removed auto-clearpage before every section
 - **Better readability**: Sections flow naturally within each part
 - **Preserved content**: All mathematical content, proofs, and figures intact
@@ -60,7 +60,7 @@ The cleaned version uses a more sensible page break policy:
 
 ## Output
 
-- **PDF**: `main.pdf` (23 pages, ~573 KB)
+- **PDF**: `main.pdf` (27 pages)
 - All theorem numbering preserved
 - All figure references intact
 - Complete table of contents
@@ -69,8 +69,7 @@ The cleaned version uses a more sensible page break policy:
 
 | Metric | Original | Clean | Improvement |
 |--------|----------|-------|-------------|
-| Pages | 41 | 23 | 44% reduction |
-| File size | ~697 KB | ~573 KB | 18% smaller |
+| Pages | 41 | 27 | 34% reduction |
 | Page breaks | Every section | Only major parts | Much better flow |
 | Content | Complete | Complete | Identical |
 

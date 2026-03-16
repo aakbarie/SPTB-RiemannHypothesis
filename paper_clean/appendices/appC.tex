@@ -31,12 +31,16 @@ We use the affine Poincaré inequality on a block $I$ of length $\Delta$:
 \int_I |r'(t)|^2\,dt \;\ge\; \frac{12}{\Delta^2}\int_I |r(t)|^2\,dt.
 \]
 Thus $c_{\mathrm{der}}=\tfrac{1}{12}$ in the normalization of Part~2
-(see Appendix~\ref{app:B}).  Numerically, we verify sharpness by
-projection onto the affine subspace on each block and computing
+(see Appendix~\ref{app:B}).  Numerically, we verify the bound by
+projection onto the affine subspace on a block of length~$\Delta$
+and computing the ratio
 $\|r'\|_{L^2(I)}^2 / \|r\|_{L^2(I)}^2$ over $10^4$ randomly phased test
 signals $\sum_{m=1}^M a_m\cos(\omega_m t+\phi_m)$ with $M\in[1,8]$,
-$\omega_m\Delta\in[0.1,10]$.  The empirical minimum equals
-$1/(12\Delta^2)$ to machine precision.
+$\omega_m\Delta\in[0.1,10]$.  Every ratio exceeds the lower bound
+$12/\Delta^2$; the empirical minimum lies near the sharp constant
+$4\pi^2/\Delta^2\approx 39.5/\Delta^2$ (see Appendix~\ref{app:B}),
+confirming that $c_{\mathrm{der}}=\tfrac1{12}$ is a valid but conservative
+choice.
 
 \medskip
 \noindent\textbf{2) Variance constants $C_0,\,C_0'$.}
@@ -57,12 +61,18 @@ with $c_{\mathrm{aff}}=\tfrac14$.
 
 \medskip
 \noindent\textbf{3) Slope calibration (bias regime).}
-For each $\eta$ we compute $F_\lambda(H_\sigma;T,\Delta)$ on a grid
-$T\in\{10^4,2\times10^4,5\times10^4\}$ and fit
+For each $(\eta,T)$ pair we compute the blockwise SPTB functional for
+both the baseline (on-line) and biased (off-line zero injected) series.
+We form the cumulative difference
+$\Delta F_{\le j}=\sum_{k\le j}(F_{\lambda,k}^{\mathrm{bias}}-F_{\lambda,k}^{\mathrm{base}})$
+and fit
 \[
-\log F_\lambda(T) \;=\; s\,T + b \;+\; \varepsilon
+\log\bigl(\Delta F_{\le j}\bigr) \;=\; s\,t_j + b + \varepsilon
 \]
-using Huber regression (tuning $k=1.345$) to reduce leverage from the
-smallest $T$.  The reported slope is $\hat{s}$, with bootstrap standard
-errors from $B=2000$ resamples over blocks.  Relative errors against the
-theoretical $2\eta$ are recorded in the bias-regime tables of Part~3.
+over the last third of blocks (tail window)
+using Huber regression (\texttt{MASS::rlm}, tuning $k=1.345$)
+to reduce leverage from early-$t$ transients.
+The differencing removes the $O(T\log T\log\log T)$ polynomial background,
+so the extracted slope $\hat{s}$ estimates~$2\eta$.
+Relative errors against the theoretical $2\eta$ are recorded in the
+bias-regime tables of Part~3.

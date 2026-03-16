@@ -510,3 +510,226 @@ print(
     mutate(across(c(emp_tail_rate, theory_2eta, Delta, lambda, gamma0, kappa_bias, n_t, blocks),
                   ~format(., digits = 6)))
 )
+
+# ============================================================
+# 13) λ-ROBUSTNESS SWEEP
+#     Paper §"Robustness in λ": test c_lambda ∈ {1/4, 1, 4}
+#     for η = 10⁻⁴, T = 5×10⁴ and verify slope variation < 0.2%
+# ============================================================
+run_lambda_robustness <- function(zeros, cfg, eta = 1e-4, Tmax = 5e4,
+                                   c_lambda_set = c(0.25, 1, 4)) {
+  map_dfr(c_lambda_set, function(cl) {
+    res <- run_bias_once(
+      zeros, cfg$sigma, cfg$alpha, Tmax, eta, cfg$kappa, cl,
+      cfg$m_min, cfg$min_nt, cfg$max_nt_bias,
+      cfg$zeros_cap, cfg$zeros_pick, cfg$gamma_max,
+      cfg$bias_gamma_mode, cfg$bias_gamma0, cfg$gamma0_factor,
+      cfg$standardize, cfg$chunk,
+      cfg$target_samples_per_block, cfg$kappa_bias_min, cfg$kappa_bias_max
+    )
+    blocks <- res$blocks
+    tail_mask <- blocks$block_start > (max(blocks$block_start) * 2/3)
+    eps <- 1e-18
+    emp_rate <- tryCatch({
+      if (cfg$use_huber) {
+        fit <- MASS::rlm(log(pmax(cum_total_diff, eps)) ~ block_start,
+                         data = blocks[tail_mask, ], psi = MASS::psi.huber)
+        coef(fit)[2]
+      } else {
+        coef(lm(log(pmax(cum_total_diff, eps)) ~ block_start,
+                data = blocks[tail_mask, ]))[2]
+      }
+    }, error = function(e) NA_real_)
+    tibble(c_lambda = cl, lambda_label = paste0(cl, " × (log T)^{-2}"),
+           eta = eta, Tmax = Tmax,
+           emp_tail_rate = as.numeric(emp_rate), theory_2eta = 2 * eta)
+  })
+}
+
+cat("\n=== λ-ROBUSTNESS SWEEP ===\n")
+lambda_robust <- run_lambda_robustness(zeros, cfg)
+lambda_robust <- lambda_robust %>%
+  mutate(deviation_pct = 100 * (emp_tail_rate - mean(emp_tail_rate)) / mean(emp_tail_rate))
+print(lambda_robust %>%
+  mutate(across(c(emp_tail_rate, theory_2eta, deviation_pct), ~format(., digits = 6))))
+
+if (isTRUE(cfg$save_tables)) {
+  write_csv(lambda_robust, file.path(cfg$out_dir, "lambda_robustness.csv"))
+}
+
+# ============================================================
+# 14) MULTI-ZERO TEST
+#     Paper §"Synthetic Multi-Zero Tests": inject two zeros
+#     η₁ = 10⁻⁴, η₂ = 5×10⁻⁵; verify slope ≈ 2·max(η) = 2×10⁻⁴
+# ============================================================
+inject_multiple_offline_zeros <- function(zeros, sigma, etas, gammas, weights = NULL) {
+  stopifnot(length(etas) == length(gammas))
+  if (is.null(weights)) weights <- rep(1.0, length(etas))
+  fakes <- data.table(beta = sigma + etas, gamma = gammas, weight = weights)
+  for (m in setdiff(names(zeros), names(fakes))) fakes[, (m) := NA]
+  setcolorder(fakes, names(zeros))
+  rbindlist(list(zeros, fakes), use.names = TRUE, fill = TRUE)
+}
+
+run_multi_zero_test <- function(zeros, cfg, etas = c(1e-4, 5e-5), Tmax = 5e4) {
+  z_use <- thin_zeros(zeros, cap = cfg$zeros_cap, method = cfg$zeros_pick,
+                       gamma_max = cfg$gamma_max)
+
+  # Adaptive κ / Δ / n_t (same logic as run_bias_once)
+  Delta0  <- cfg$kappa / log(Tmax)
+  n_t0    <- choose_nt(Tmax, Delta0, m_min = cfg$m_min,
+                        min_nt = cfg$min_nt, max_nt = cfg$max_nt_bias)
+  kappa_b <- choose_kappa_bias(Tmax, n_t0, cfg$target_samples_per_block,
+                                cfg$kappa_bias_min, cfg$kappa_bias_max)
+  Delta   <- kappa_b / log(Tmax)
+  n_t     <- choose_nt(Tmax, Delta, m_min = cfg$m_min,
+                        min_nt = cfg$min_nt, max_nt = cfg$max_nt_bias)
+  lambda  <- cfg$c_lambda / (log(Tmax)^2)
+
+  # Synthetic-zero frequencies: auto, with offset to avoid degeneracy
+  gamma_base <- cfg$gamma0_factor / Delta
+  dt <- Tmax / max(1, n_t - 1)
+  nyq <- pi / dt
+  gamma_base <- min(gamma_base, 0.9 * nyq)
+  gammas <- gamma_base * c(1.0, 1.1)  # slight offset for second zero
+
+  # Baseline
+  H0 <- build_H_sigma(z_use, cfg$sigma, cfg$alpha, Tmax, n_t, chunk = cfg$chunk)
+  mu0 <- mean(H0$H)
+  H0$H <- H0$H - mu0
+
+  # Multi-zero biased series
+  z_multi <- inject_multiple_offline_zeros(z_use, cfg$sigma, etas, gammas[1:length(etas)])
+  H1 <- build_H_sigma(z_multi, cfg$sigma, cfg$alpha, Tmax, n_t, chunk = cfg$chunk)
+  H1$H <- H1$H - mu0
+
+  P0 <- blockwise_functionals(H0, Delta, lambda)$per_block %>% arrange(blk)
+  P1 <- blockwise_functionals(H1, Delta, lambda)$per_block %>% arrange(blk)
+
+  inc_diff <- P1$total_block - P0$total_block
+  cum_diff <- kahan_cumsum(inc_diff)
+  blocks <- tibble(blk = P0$blk, block_start = P0$block_start,
+                   inc_total_diff = inc_diff, cum_total_diff = cum_diff)
+
+  tail_mask <- blocks$block_start > (max(blocks$block_start) * 2/3)
+  eps <- 1e-18
+  emp_rate <- tryCatch({
+    if (cfg$use_huber) {
+      fit <- MASS::rlm(log(pmax(cum_total_diff, eps)) ~ block_start,
+                       data = blocks[tail_mask, ], psi = MASS::psi.huber)
+      coef(fit)[2]
+    } else {
+      coef(lm(log(pmax(cum_total_diff, eps)) ~ block_start,
+              data = blocks[tail_mask, ]))[2]
+    }
+  }, error = function(e) NA_real_)
+
+  max_eta <- max(etas)
+  tibble(etas_str = paste(etas, collapse = ", "), max_eta = max_eta,
+         theory_2eta_max = 2 * max_eta, emp_tail_rate = as.numeric(emp_rate),
+         Tmax = Tmax, Delta = Delta)
+}
+
+cat("\n=== MULTI-ZERO TEST ===\n")
+multi_zero_res <- run_multi_zero_test(zeros, cfg, etas = c(1e-4, 5e-5), Tmax = 5e4)
+print(multi_zero_res %>%
+  mutate(across(c(emp_tail_rate, theory_2eta_max, max_eta, Delta), ~format(., digits = 7))))
+
+if (isTRUE(cfg$save_tables)) {
+  write_csv(multi_zero_res, file.path(cfg$out_dir, "multi_zero_test.csv"))
+}
+
+# ============================================================
+# 15) c_der NUMERICAL VERIFICATION
+#     Paper App C: "verify sharpness by projection onto the affine
+#     subspace on each block and computing ||r'||²/||r||² over
+#     10⁴ randomly phased test signals"
+# ============================================================
+verify_c_der <- function(Delta = 1, n_signals = 10000L, n_pts = 500L, seed = 42L) {
+  set.seed(seed)
+  t <- seq(0, Delta, length.out = n_pts)
+  ratios <- numeric(n_signals)
+
+  for (i in seq_len(n_signals)) {
+    M <- sample(1:8, 1)
+    a     <- rnorm(M)
+    omega <- runif(M, 0.1 / Delta, 10 / Delta)
+    phi   <- runif(M, 0, 2 * pi)
+
+    # Signal f(t) = Σ a_m cos(ω_m t + φ_m)
+    f <- rowSums(sapply(seq_len(M), function(m) a[m] * cos(omega[m] * t + phi[m])))
+
+    # Affine projection: S(t) = a + b*t minimizing ||f - S||²
+    ab <- fit_affine_block(t, f)
+    S  <- ab$a + ab$b * t
+    r  <- f - S
+
+    # Exact derivative: f'(t) = -Σ a_m ω_m sin(ω_m t + φ_m); r' = f' - b
+    f_prime <- rowSums(sapply(seq_len(M), function(m) -a[m] * omega[m] * sin(omega[m] * t + phi[m])))
+    r_prime <- f_prime - ab$b
+
+    norm_r2  <- trapz(t, r^2)
+    norm_rp2 <- trapz(t, r_prime^2)
+
+    ratios[i] <- if (norm_r2 > 1e-30) norm_rp2 / norm_r2 else Inf
+  }
+
+  ratios_fin <- ratios[is.finite(ratios)]
+  tibble(
+    Delta              = Delta,
+    n_signals          = n_signals,
+    empirical_min      = min(ratios_fin),
+    poincare_lb        = 12 / Delta^2,
+    sharp_constant     = 4 * pi^2 / Delta^2,
+    all_above_lb       = all(ratios_fin >= 12 / Delta^2 - 1e-6),
+    pct_above_sharp    = 100 * mean(ratios_fin >= 4 * pi^2 / Delta^2 - 1e-6)
+  )
+}
+
+cat("\n=== c_der VERIFICATION (10^4 random signals) ===\n")
+c_der_check <- verify_c_der(Delta = 1)
+cat(sprintf("  Empirical min ||r'||²/||r||² = %.4f\n", c_der_check$empirical_min))
+cat(sprintf("  Poincaré lower bound 12/Δ²   = %.4f\n", c_der_check$poincare_lb))
+cat(sprintf("  Sharp constant 4π²/Δ²        = %.4f\n", c_der_check$sharp_constant))
+cat(sprintf("  All signals above 12/Δ²?     = %s\n", c_der_check$all_above_lb))
+
+if (isTRUE(cfg$save_tables)) {
+  write_csv(c_der_check, file.path(cfg$out_dir, "c_der_verification.csv"))
+}
+
+# ============================================================
+# 16) C₀ BOOTSTRAP (B=2000 nonparametric percentile)
+#     Paper App C: "nonparametric percentile bootstrap (B=2000
+#     resamples over T), typically Ĉ₀ ± 0.002"
+# ============================================================
+bootstrap_C0 <- function(var_tbl, B = 2000L, seed = 7L) {
+  set.seed(seed)
+  n <- nrow(var_tbl)
+  boot_slopes <- numeric(B)
+
+  for (b in seq_len(B)) {
+    idx <- sample.int(n, n, replace = TRUE)
+    d <- var_tbl[idx, ]
+    fit <- lm(F_lambda ~ 0 + T_logT_loglogT, data = d)
+    boot_slopes[b] <- coef(fit)[1]
+  }
+
+  tibble(
+    C0_hat       = coef(lm(F_lambda ~ 0 + T_logT_loglogT, data = var_tbl))[1],
+    C0_boot_mean = mean(boot_slopes),
+    C0_boot_se   = sd(boot_slopes),
+    C0_ci_025    = quantile(boot_slopes, 0.025),
+    C0_ci_975    = quantile(boot_slopes, 0.975),
+    B            = B
+  )
+}
+
+cat("\n=== C₀ BOOTSTRAP ===\n")
+C0_boot <- bootstrap_C0(var_tbl, B = 2000L)
+cat(sprintf("  Ĉ₀ (point)  = %.6f\n", C0_boot$C0_hat))
+cat(sprintf("  Ĉ₀ (boot)   = %.6f ± %.6f\n", C0_boot$C0_boot_mean, C0_boot$C0_boot_se))
+cat(sprintf("  95%% CI       = [%.6f, %.6f]\n", C0_boot$C0_ci_025, C0_boot$C0_ci_975))
+
+if (isTRUE(cfg$save_tables)) {
+  write_csv(C0_boot, file.path(cfg$out_dir, "C0_bootstrap.csv"))
+}
