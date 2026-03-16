@@ -12,7 +12,8 @@ Unless otherwise stated, blocks have
 $\Delta=c_\Delta/\log T$ with $c_\Delta=2\pi$ (variance) or
 adaptively chosen $c_\Delta\in[2\pi,60\pi]$ (bias),
 and the penalty is $\lambda=c_\lambda(\log T)^{-2}$ with $c_\lambda\in\{1/4,1,4\}$.
-Integrals on each block use the trapezoidal rule with at least~$8$ samples per block.
+Integrals on each block use the trapezoidal rule with at least~$12$ samples per block
+(variance) or~$8$ (bias).
 All runs were performed in \texttt{R 4.5.1} (double precision).
 
 \paragraph{Data windows.}
@@ -54,8 +55,12 @@ as in Appendix~\ref{app:A}.  From \texttt{variance\_table.csv}
 $Y= \sum_j \int_{I_j} |H'_\sigma|^2$ on
 $X=T\log T\log\log T$ \emph{through the origin} to obtain
 $\widehat{C}_0$.  Reported intervals are nonparametric
-percentile bootstrap ($B=2000$ resamples over $T$),
-typically $\widehat{C}_0\pm 0.002$.  The affine residual bound
+percentile bootstrap ($B=2000$ resamples over the $T$-grid).
+With only six $T$-values the bootstrap distribution is wide and
+right-skewed: $\widehat{C}_0\approx 5.6\times10^{-4}$ with
+$95\%$ CI $[6.7\times10^{-5},\,9.1\times10^{-3}]$,
+reflecting the non-monotone behavior of~$F_\lambda$
+across the tested range.  The affine residual bound
 (Equation~\eqref{eq:aff-proj}) yields $C_0'=c_{\mathrm{aff}}^{-1}C_0$
 with $c_{\mathrm{aff}}=\tfrac14$.
 

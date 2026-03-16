@@ -92,7 +92,7 @@ Monotone convergence demonstrates asymptotic exactness of theoretical prediction
 ## Repository Structure
 ```
 SPTB-RiemannHypothesis/
-├── paper_clean/              # Current paper (27 pages)
+├── paper_clean/              # Current paper (28 pages)
 │   ├── main.tex              # Main document
 │   ├── main.pdf              # Compiled PDF
 │   ├── parts/
@@ -125,7 +125,7 @@ SPTB-RiemannHypothesis/
 
 ## Paper
 
-**Full paper**: [paper_clean/main.pdf](paper_clean/main.pdf) (27 pages)
+**Full paper**: [paper_clean/main.pdf](paper_clean/main.pdf) (28 pages)
 
 ### Compilation
 ```bash

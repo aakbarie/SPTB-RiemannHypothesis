@@ -46,7 +46,8 @@ $\Delta\asymp1/\log T$ matches the canonical analytic regime.
 
 \paragraph{Quadrature.}
 Block integrals are evaluated by the trapezoidal rule on the sampling
-grid, with at least~$8$ samples per block to ensure adequate resolution.
+grid, with at least~$12$ samples per block for variance runs
+and at least~$8$ for bias runs.
 
 \paragraph{Mean-centering.}
 Before computing $F_\lambda$, we subtract the global mean:
@@ -148,8 +149,8 @@ at $T=5\times10^4$.}
 \toprule
 $\eta$ & Theoretical $2\eta$ & Observed $s$ & Relative error \\
 \midrule
-$10^{-3}$ & $0.0020$ & $0.0020000$ & $0.0008\%$ \\
-$5\times10^{-4}$ & $0.0010$ & $0.0010000$ & $0.0008\%$ \\
+$10^{-3}$ & $0.0020$ & $0.0020000$ & $0.008\%$ \\
+$5\times10^{-4}$ & $0.0010$ & $0.0010000$ & $0.008\%$ \\
 $10^{-4}$ & $0.00020$ & $0.00020006$ & $0.03\%$ \\
 \bottomrule
 \end{tabular}
@@ -196,14 +197,15 @@ $T=5\times10^4$.}
 \toprule
 Scaling of $\lambda$ & Observed $s$ & Deviation from mean \\
 \midrule
-$\tfrac14(\log T)^{-2}$ & $0.0001998$ & $-0.1\%$ \\
-$1\times(\log T)^{-2}$ & $0.0002000$ & $0.0\%$ \\
-$4\times(\log T)^{-2}$ & $0.0002003$ & $+0.15\%$ \\
+$\tfrac14(\log T)^{-2}$ & $0.00020006$ & $<0.001\%$ \\
+$1\times(\log T)^{-2}$ & $0.00020006$ & $<0.001\%$ \\
+$4\times(\log T)^{-2}$ & $0.00020006$ & $<0.001\%$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Slope variation below $0.2\%$ confirms the exponential detection is
+All three slopes agree to seven significant figures,
+confirming that the exponential detection is
 insensitive to the exact choice of~$\lambda$.
 
 % ---------------------------------------------------------
@@ -219,8 +221,13 @@ confirming analytic predictions from Section~\ref{step:assembly}.
 
 \paragraph{Example.}
 For $\eta_1=10^{-4}$ and $\eta_2=5\times10^{-5}$,
-the composite signal yields $s=0.0002001$,
-matching the larger exponent within numerical precision.
+the composite signal yields $s=0.000196$,
+within $2\%$ of the theoretical $2\eta_{\max}=0.0002$.
+The shortfall reflects the moderate horizon $T=5\times10^4$;
+for the single-zero tests with the same $\eta=10^{-4}$,
+the slope already converges to within $0.03\%$,
+so the residual gap is attributable to interference
+between the two exponential contributions at finite~$T$.
 
 % ---------------------------------------------------------
 \section{Reproducibility and Code Availability}
@@ -242,8 +249,8 @@ constants $c_{\mathrm{der}}$ and~$C_0$ to the stated precision.
 \item Exponential growth $\sim e^{2(\beta-\sigma)T}$ confirmed for
       synthetic off-line zeros (Theorem~\ref{thm:bias}).  
 \item Robustness verified across $\lambda$-scaling and multiple zeros.  
-\item Measured slopes match theory within $3\times10^{-4}$ relative error
-      at $T=5\times10^4$.
+\item Single-zero slopes match theory within $0.03\%$ relative error
+      at $T=5\times10^4$; multi-zero slopes converge within~$2\%$.
 \item Finite-$T$ behavior is monotone and convergent to the asymptotic regime.
 \end{enumerate}
 

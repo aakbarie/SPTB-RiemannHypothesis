@@ -733,3 +733,4 @@ cat(sprintf("  95%% CI       = [%.6f, %.6f]\n", C0_boot$C0_ci_025, C0_boot$C0_ci
 if (isTRUE(cfg$save_tables)) {
   write_csv(C0_boot, file.path(cfg$out_dir, "C0_bootstrap.csv"))
 }
+
