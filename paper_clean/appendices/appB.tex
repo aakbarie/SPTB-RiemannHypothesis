@@ -27,24 +27,48 @@ Writing the bound as
 \qquad c_{\mathrm{der}}=\tfrac{1}{12},
 \label{eq:cder}
 \end{equation}
-matches the scaling adopted in equations~\eqref{eq:derivative-lb} and~\eqref{eq:worst}.
+matches the scaling adopted in equations~\eqref{eq:derivative-lb} and~\eqref{eq:uniform-lb}.
 
-\paragraph{Sharpness and proof sketch.}
-The best constant in \eqref{eq:affine-poincare} is the first positive eigenvalue
-of the Sturm–Liouville problem for $-d^2/dt^2$ on $I$ with \emph{natural} (Neumann)
-boundary conditions and with the function constrained to be $L^2$–orthogonal to the
-kernel of the operator restricted to affine functions (i.e., to $\mathrm{span}\{1,t\}$).
-After an affine change of variables $t\mapsto x\in[0,1]$ and Gram–Schmidt
-orthogonalization against $\{1,x\}$, the minimizer is the unique solution in
-$\mathrm{span}\{\cos(\pi x),\sin(\pi x)\}$ that is $L^2$–orthogonal to $\{1,x\}$,
-yielding the optimal eigenvalue $12$ on $[0,1]$ and hence $12/\Delta^2$ on $I$.
-Equivalently, one may verify optimality by computing
+\paragraph{Gram matrix and explicit proof.}
+For the basis $\{\phi_1(t),\phi_2(t)\}=\{1,t\}$ on $[0,\Delta]$, the Gram matrix is
 \[
-\frac{\int_0^1 (\partial_x \cos(\pi x))^2\,dx}{\int_0^1 (\cos(\pi x)-\overline{\cos})^2\,dx}
-= \frac{\pi^2/2}{\pi^2/6} \;=\; 3 \quad\text{for the mean-only constraint,}
+G_{ij}=\int_0^\Delta \phi_i(t)\phi_j(t)\,dt
+=\begin{pmatrix}\Delta & \Delta^2/2\\ \Delta^2/2 & \Delta^3/3\end{pmatrix},
+\qquad
+\det(G)=\frac{\Delta^4}{12}.
 \]
-and then imposing orthogonality to $x$ increases the Rayleigh quotient by a factor of $4$,
-producing the sharp constant $12$; rescaling to length~$\Delta$ gives $12/\Delta^2$.
+Hence
+\[
+G^{-1}=\frac{12}{\Delta^4}
+\begin{pmatrix}\Delta^3/3 & -\Delta^2/2\\ -\Delta^2/2 & \Delta\end{pmatrix}.
+\]
+For a function $f\in L^2([0,\Delta])$, the orthogonal projection coefficients $(a,b)$ satisfy
+\[
+\begin{pmatrix}a\\b\end{pmatrix}
+=G^{-1}\begin{pmatrix}\int_0^\Delta f\\ \int_0^\Delta tf\end{pmatrix},
+\]
+and the squared projection residual equals
+\[
+\|f\|^2_{L^2(0,\Delta)} - v^\top G^{-1} v,
+\qquad v=\begin{pmatrix}\int_0^\Delta f\\ \int_0^\Delta tf\end{pmatrix}.
+\]
+This formula underlies Lemma~\ref{lem:affine-lb} and yields the constant
+$c_{\mathrm{der}}=1/12$ when applied to the Rayleigh quotient.
+
+\paragraph{Sharpness discussion.}
+The constant $12/\Delta^2$ in \eqref{eq:affine-poincare} is a sufficient lower bound
+but is \emph{not} the sharp Sturm--Liouville constant for the two-constraint problem.
+The sharp constant equals the smallest eigenvalue of $-d^2/dt^2$ on $[0,\Delta]$
+with Neumann boundary conditions, subject to $L^2$-orthogonality against
+$\mathrm{span}\{1,t\}$.  The corresponding eigenfunction is $\cos(2\pi t/\Delta)$
+(the first Neumann mode orthogonal to both $1$ and~$t$ on $[0,\Delta]$),
+yielding the sharp constant $4\pi^2/\Delta^2 \approx 39.5/\Delta^2$.
+The value $12/\Delta^2$ arises directly from the Gram-matrix computation above
+(it is the reciprocal of the largest eigenvalue of $G^{-1}$ acting on the
+orthogonal complement of $\{1,t\}$) and suffices for all downstream bounds
+in Part~2, since every estimate requires only a \emph{lower} bound on the
+Rayleigh quotient.  Replacing $12$ by the sharp $4\pi^2$ would improve
+numerical constants but does not affect the qualitative results.
 
 \paragraph{Discrete grids and numerical check.}
 On the experimental block grids used in Part~3, the discrete least-squares projection

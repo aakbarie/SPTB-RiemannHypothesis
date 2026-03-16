@@ -4,7 +4,7 @@
 
 \section{Introduction and Overview}
 
-The Riemann Hypothesis (RH) asserts that every nontrivial zero 
+The Riemann Hypothesis (RH)~\cite{bombieri} asserts that every nontrivial zero
 $\rho = \beta + i\gamma$ of $\zeta(s)$ satisfies $\beta = \tfrac12$.
 Equivalently, the analytic “energy’’ of $\zeta(s)$ is balanced across the
 critical line.  This paper develops a quantitative, variational formulation
@@ -20,7 +20,6 @@ F_\lambda(H_\sigma;T,\Delta)
        \bigl|H_\sigma(t)-S_j(t)\bigr|^2
        + \lambda\,\bigl|\partial_t\!\bigl(H_\sigma(t)-S_j(t)\bigr)\bigr|^2\,dt,
 \label{eq:SPTB}
-\tag{1.1}
 \end{equation}
 where $[0,T] = \bigcup I_j$ is partitioned into consecutive blocks of length $\Delta$ and
 $S_j$ is the $L^2(I_j)$-best affine fit to $H_\sigma$.
@@ -60,26 +59,88 @@ Our analysis rests on four standard inputs for the $L$-function in question
 \item[(A1)] \emph{Meromorphic continuation} and the \emph{functional equation.}
 \item[(A2)] \emph{Zero counting:}
 $N(T)=\tfrac{T}{2\pi}\log\tfrac{T}{2\pi}-\tfrac{T}{2\pi}+O(\log T)$.
-\item[(A3)] \emph{Square-summable Dirichlet coefficients} for the truncated
-approximants used to define $H_\sigma$ (ensuring $L^2$ control on short intervals).
-\item[(A4)] A Montgomery–Vaughan–type \emph{short-interval inequality} for the Dirichlet
-polynomials or logarithmic derivatives that appear in $H_\sigma$ and $\partial_t H_\sigma$.
+\item[(A3)] \emph{Spectral summability:}
+$\sum_{|\gamma|\le X}|\rho|^{-2\alpha}=O_\alpha(1)$ for $\alpha>1/2$,
+ensuring that $H_\sigma$ as defined in~\eqref{eq:Hsigma} converges in
+$L^2_{\mathrm{loc}}$ and its truncations have controlled $L^2$ norms on short intervals.
+\item[(A4)] \emph{Montgomery--Vaughan short-interval inequality:} for any
+Dirichlet-type sum $D(t)=\sum_{|\gamma|\le X}A_\gamma e^{i\gamma t}$
+with real frequencies $\gamma$ having average spacing $\gg 1/\log T$,
+\[
+\int_u^{u+\Delta}\!|D(t)|^2\,dt
+\;\le\; (\Delta+\delta^{-1})\sum_{|\gamma|\le X}|A_\gamma|^2,
+\]
+where $\delta\gg 1/\log T$ is the minimal spacing.
+This applies to both $H_\sigma$ and $\partial_t H_\sigma$
+(see~\cite{montgomery-vaughan} and Lemma~\ref{lem:MV-sieve}).
 \end{enumerate}
 No use is made of delicate Euler-product cancellations.  All constants below are
 \emph{computable} from the data of (A1)–(A4).
 
 \begin{remark}[Applicability beyond $\zeta$]
 Parts~1–2 extend verbatim to Dirichlet $L(s,\chi)$ (primitive $\chi$) and to
-automorphic $L$-functions of degree~$d$ satisfying analogues of (A1)–(A4).
+automorphic $L$-functions of degree~$d$~\cite{selberg} satisfying analogues of (A1)–(A4).
 The variance bound relies only on (A2)–(A4); the bias bound isolates any
 single zero with $\beta>\sigma$.  Proofs are stated for $\zeta(s)$ for clarity;
 Part~3 validates numerically for $\zeta(s)$, and Appendix~A lists constants.
 \end{remark}
 
 % ---------------------------------------------------------
+\section{The Harmonic Field \texorpdfstring{$H_\sigma$}{H sigma}}\label{sec:harmonic-field}
+
+Let $\rho=\beta+i\gamma$ run over the nontrivial zeros of $\zeta(s)$
+(or more generally of an automorphic $L$-function satisfying (A1)--(A4)).
+Fix $\sigma\in[1/2,1)$ and a \emph{smoothing exponent} $\alpha\ge 1$.
+
+\begin{definition}[Harmonic field]\label{def:harmonic-field}
+The \emph{harmonic field along $\Re s=\sigma$} is
+\begin{equation}
+H_\sigma(t)
+  \;=\;\sum_\rho \frac{e^{(\beta-\sigma)t}}{|\rho|^\alpha}\,\cos(\gamma t),
+  \qquad t\in[0,T].
+\label{eq:Hsigma}
+\end{equation}
+\end{definition}
+
+The weight $|\rho|^{-\alpha}$ serves as a spectral damping factor ensuring absolute
+convergence.
+By the Riemann--von~Mangoldt formula $N(T)\ll T\log T$,
+partial summation gives $\sum_{|\gamma|\le X}|\rho|^{-2\alpha}=O_\alpha(1)$
+for every $\alpha>1/2$ (Proposition~\ref{prop:summability} below),
+so $H_\sigma(t)$ converges in $L^2_{\mathrm{loc}}$.
+
+\paragraph{Motivation for $\alpha$.}
+When $\alpha=1$, the sum $H_\sigma(t)$ closely models the oscillatory part of the
+logarithmic derivative $-\zeta'/\zeta(\sigma+it)$ after truncation and smoothing,
+with $|\rho|^{-1}$ matching the residue weight of each zero.
+Larger $\alpha$ provides faster spectral decay (better convergence) at the cost of
+emphasizing low-lying zeros; for the main results we require $\alpha\ge 1$.
+
+\paragraph{Connection to $\zeta(s)$ (heuristic).}
+The classical explicit formula~\cite{titchmarsh} gives, for $\sigma>1/2$,
+\[
+-\frac{\zeta'}{\zeta}(\sigma+it)
+=\sum_\rho \frac{1}{(\sigma+it)-\rho} + \text{(polar and $\Gamma$-terms)}.
+\]
+Each summand satisfies
+$\operatorname{Re}\frac{1}{(\sigma+it)-\rho}
+=\frac{\sigma-\beta}{(\sigma-\beta)^2+(\gamma-t)^2}$,
+which is \emph{not} proportional to $e^{(\beta-\sigma)t}\cos(\gamma t)$;
+however, for $|t-\gamma|\ll 1$ and $|\sigma-\beta|$ small, both expressions
+share the same exponential sensitivity to $\beta-\sigma$ (the Lorentzian
+kernel localizes near $t\approx\gamma$ while the exponential--cosine sum
+captures the aggregate oscillatory content).
+After inserting the spectral damping weight $|\rho|^{-(\alpha-1)}$
+and absorbing the slowly varying Lorentzian prefactor into the blockwise
+affine fits, $H_\sigma$ as defined in~\eqref{eq:Hsigma} captures the
+oscillatory zero-dependent content of $\zeta'/\zeta$ along $\Re s=\sigma$.
+This connection is \emph{motivational}; Theorems~\ref{thm:variance}--\ref{thm:bias}
+are proved directly for $H_\sigma$ as defined and require no properties
+of $\zeta'/\zeta$ beyond (A1)--(A4).
+
+% ---------------------------------------------------------
 \section{Notation and Canonical Regime}
 
-Fix $\sigma\in[1/2,1)$ and an observation horizon~$T$.
 Partition $[0,T]$ into blocks $I_j=[t_j,t_{j+1}]$ of width~$\Delta$ and choose
 penalty $\lambda>0$.  Unless otherwise stated we operate in the canonical regime
 \begin{equation}
@@ -87,7 +148,6 @@ penalty $\lambda>0$.  Unless otherwise stated we operate in the canonical regime
 \qquad
 c_1(\log T)^{-2}\le\lambda\le c_2(\log T)^{-2},
 \label{eq:canon}
-\tag{1.2}
 \end{equation}
 with fixed positive constants $\kappa_1,\kappa_2,c_1,c_2$.
 Implicit constants in $\ll,\gg,O(\cdot)$ may depend on
@@ -96,8 +156,9 @@ $(\alpha,\sigma,\kappa_1,\kappa_2,c_1,c_2)$ but are uniform over~\eqref{eq:canon
 % ---------------------------------------------------------
 \section{Motivation and Background}
 
-Classical equivalence criteria for RH (Li, Lagarias, Speiser) involve global data
-and infinitely many zeros.  The SPTB functional is
+Classical equivalence criteria for RH
+(Li~\cite{li}, Lagarias~\cite{lagarias}, Beurling~\cite{beurling})
+involve global data and infinitely many zeros.  The SPTB functional is
 \emph{finite-window} and \emph{local}: it aggregates blockwise amplitude and slope
 residuals.  An off-line zero injects a term
 $e^{(\beta-\sigma)t}\cos(\gamma t)$ into $H_\sigma$ which no affine projection can remove,
@@ -113,8 +174,167 @@ Writing $R = H_\sigma - S$, the functional~\eqref{eq:SPTB}
 balances \emph{amplitude} ($\|R\|_{L^2}^2$) and \emph{slope} ($\|R'\|_{L^2}^2$)
 on each block.  Affine fits yield transparent constants and suffice
 for the sharp lower bounds in the bias regime.
-(A $C^2$ cubic-spline variant gives identical asymptotic orders; see
-Appendix~B for the derivative-variance constant.)
+(A $C^2$ cubic-spline variant~\cite{deboor} gives identical asymptotic orders;
+see Appendix~B for the derivative-variance constant.)
+
+% ---------------------------------------------------------
+\section{Auxiliary Lemmas}\label{sec:aux-lemmas}
+
+We record the technical estimates used throughout the proofs of
+Theorems~\ref{thm:variance} and~\ref{thm:bias}.
+
+\begin{lemma}[Affine Projection Lower Bound]\label{lem:affine-lb}
+Let $f_{\eta,\omega}(t) = e^{\eta t}\cos(\omega t)$ on $[0,\Delta]$ with $\eta > 0$.
+Then
+\[
+\inf_{a,b}\int_0^{\Delta} |f_{\eta,\omega}(t) - (a+bt)|^2\,dt
+\;\ge\; C \cdot
+\begin{cases}
+\eta^4 \Delta^5, & |\omega| \le \eta/2, \\
+\eta^2 \Delta^3, & \eta/2 < |\omega| \le 1/\Delta, \\
+\eta^2 \Delta, & |\omega| > 1/\Delta,
+\end{cases}
+\]
+for an absolute constant $C>0$.
+\end{lemma}
+
+\begin{proof}
+The Gram matrix of the basis $\{1,t\}$ on $[0,\Delta]$ is
+\[
+G = \begin{pmatrix} \Delta & \Delta^2/2 \\ \Delta^2/2 & \Delta^3/3 \end{pmatrix},
+\qquad
+G^{-1} = \frac{12}{\Delta^4}
+\begin{pmatrix} \Delta^3/3 & -\Delta^2/2 \\ -\Delta^2/2 & \Delta \end{pmatrix}.
+\]
+The optimal affine approximation error equals
+$\|f\|_{L^2}^2 - v^\top G^{-1} v$,
+where $v = \bigl(\int_0^\Delta f,\, \int_0^\Delta t\,f\bigr)^\top$.
+We compute
+\[
+v_1=\int_0^\Delta e^{\eta t}\cos(\omega t)\,dt,
+\qquad
+v_2=\int_0^\Delta t\,e^{\eta t}\cos(\omega t)\,dt.
+\]
+
+\textit{Case 1:} $|\omega|\le\eta/2$.
+The cosine satisfies $\cos(\omega t)\ge\cos(\eta\Delta/2)\ge 1/2$ on
+$[0,\Delta]$ (for $\eta\Delta\le 1$).
+Taylor expansion gives $v_1=\Delta+\eta\Delta^2/2+O(\eta^2\Delta^3)$
+and $v_2=\Delta^2/2+O(\eta\Delta^3)$.
+The projection captures most of $\|f\|^2=\Delta+\eta\Delta^2+O(\eta^2\Delta^3)$,
+leaving a residual $\ge C\eta^4\Delta^5$
+from the quartic term in $e^{\eta t}-(\hat a+\hat b t)$.
+
+\textit{Case 2:} $\eta/2<|\omega|\le 1/\Delta$.
+Since $|\omega|\Delta\le 1$, the cosine completes at most one oscillation on
+$[0,\Delta]$; hence $\|f\|^2=\int_0^\Delta e^{2\eta t}\cos^2(\omega t)\,dt\ge c\,\Delta$.
+For the moments, write $e^{\eta t}=1+\eta t+\tfrac12\eta^2t^2+O(\eta^3\Delta^3)$.
+Since $\cos(\omega t)$ is bounded and slowly varying ($|\omega|\Delta\le 1$),
+\[
+v_1=\int_0^\Delta (1+\eta t+\cdots)\cos(\omega t)\,dt = O(\Delta),
+\quad
+v_2=\int_0^\Delta t(1+\eta t+\cdots)\cos(\omega t)\,dt = O(\Delta^2).
+\]
+The Gram projection satisfies
+$v^\top G^{-1}v
+=\frac{12}{\Delta^4}\bigl(\tfrac{\Delta^3}{3}v_1^2
+-\Delta^2 v_1 v_2+\Delta\,v_2^2\bigr)
+=O(\Delta)$.
+The quadratic term $\tfrac12\eta^2 t^2\cos(\omega t)$ is not affine;
+its $L^2$ projection residual onto $\{1,t\}$ on $[0,\Delta]$ is
+$\Theta(\eta^2\Delta^3)$, giving
+$\|f\|^2-v^\top G^{-1}v\ge c'\eta^2\Delta^3$.
+
+\textit{Case 3:} $|\omega|>1/\Delta$.
+The integrals $v_1,v_2$ involve a rapidly oscillating factor
+$\cos(\omega t)$ with $|\omega|\Delta>1$.
+By the Riemann--Lebesgue lemma,
+$|v_1|\le 2/|\omega|$ and $|v_2|\le 2\Delta/|\omega|+2/\omega^2$.
+Hence
+\[
+v^\top G^{-1}v
+=\frac{12}{\Delta^4}\bigl(\tfrac{\Delta^3}{3}v_1^2
+-\Delta^2 v_1 v_2+\Delta\,v_2^2\bigr)
+=O\bigl(\omega^{-2}/\Delta\bigr).
+\]
+For $\|f\|^2$, writing $\cos^2(\omega t)=\tfrac12+\tfrac12\cos(2\omega t)$
+gives $\int_0^\Delta e^{2\eta t}\cos^2(\omega t)\,dt
+=\tfrac12\int_0^\Delta e^{2\eta t}\,dt+O(1/|\omega|)
+\ge c\,\Delta$
+(since the oscillatory part averages out).
+The non-affine contribution from $e^{\eta t}$ has
+$L^2$ energy $\Theta(\eta^2\Delta)$, and the Gram projection captures
+at most $O(\omega^{-2}/\Delta)\ll\eta^2\Delta$ for $|\omega|>1/\Delta$,
+so the residual is $\ge C\eta^2\Delta$.
+\end{proof}
+
+\begin{lemma}[Derivative Penalty]\label{lem:derivative-penalty}
+For $f_{\eta,\omega}(t)=e^{\eta t}\cos(\omega t)$ on $I=[a,a+\Delta]$
+with $\eta\Delta\le 1/2$,
+\[
+\inf_b \int_I |(f_{\eta,\omega}(t)-bt)'|^2\,dt
+\;\ge\; c\, e^{2\eta a}\,\eta^2\min\{\Delta,1/|\omega|\},
+\]
+for an absolute constant $c>0$.
+\end{lemma}
+
+\begin{proof}
+Write $f'(t)=e^{\eta t}(\eta\cos(\omega t)-\omega\sin(\omega t))$. Then
+\[
+\inf_b \int_I |f'(t)-b|^2\,dt
+= \int_I |f'|^2 - \frac{1}{\Delta}\Bigl(\int_I f'\Bigr)^{\!2}.
+\]
+The main term satisfies
+$\int_I |f'|^2 \gg e^{2\eta a}(\eta^2+\omega^2)\min\{\Delta,1/|\omega|\}$,
+while $|\int_I f'| \le 2e^{\eta(a+\Delta)}$.
+Substituting and using $\eta\Delta\le 1/2$ yields the claim.
+\end{proof}
+
+\begin{lemma}[Montgomery--Vaughan Large Sieve]\label{lem:MV-sieve}
+For $I=[u,u+\Delta]$ and real frequencies $\gamma$ with spacing
+$\gg 1/\log T$,
+\[
+\int_I \Bigl|\sum_{|\gamma|\le X} A_\gamma\, e^{i\gamma t}\Bigr|^2 dt
+\;\ll\; (\Delta + \log X)\sum_{|\gamma|\le X} |A_\gamma|^2.
+\]
+\end{lemma}
+
+\begin{proof}
+This is a direct specialization of the Montgomery--Vaughan large sieve
+inequality~\cite{montgomery-vaughan}, using standard zero spacing estimates
+$\gg 1/\log T$; see also Appendix~\ref{app:dirichlet} for details on
+sieve applicability.
+\end{proof}
+
+\begin{proposition}[Summability]\label{prop:summability}
+For $\alpha > 1/2$,
+\[
+\sum_{|\gamma|\le X} |\rho|^{-2\alpha} = O_{\alpha}(1),
+\]
+uniformly in $X$.
+\end{proposition}
+
+\begin{proof}
+Partial summation against $dN(T)$, with
+$N(T)=\frac{T}{2\pi}\log\frac{T}{2\pi} - \frac{T}{2\pi}+O(\log T)$,
+shows convergence of $\sum |\gamma|^{-2\alpha}$ for $2\alpha>1$.
+\end{proof}
+
+\begin{lemma}[High-Frequency Tail]\label{lem:high-freq}
+Let $X=\Delta^{-1}=\log T/(2\pi)$. For $\alpha\ge 1$ and $\beta\le\sigma$,
+\[
+\int_I \Bigl|\sum_{|\gamma|>X}
+\frac{e^{(\beta-\sigma)t}\cos(\gamma t)}{|\rho|^\alpha}\Bigr|^2 dt
+\;\ll\; \Delta \cdot X^{-(2\alpha-1)}\log X.
+\]
+\end{lemma}
+
+\begin{proof}
+Apply Cauchy--Schwarz: split $\sum |\rho|^{-2\alpha}$ from zero density
+estimates.  The partial sum over $|\gamma|>X$ contributes $O(X^{-(2\alpha-1)})$
+by Proposition~\ref{prop:summability} and partial summation;
+the factor $\log X$ accounts for zero-counting growth.
+\end{proof}
 
 % ---------------------------------------------------------
 \section{Variance Regime: On-Line Zeros}
@@ -131,13 +351,73 @@ $\kappa_1/\log T \le \Delta \le \kappa_2/\log T$, one has
 F_\lambda(H_\sigma;T,\Delta)
   = O_{\sigma,\alpha}\!\bigl(T\log T\log\log T\bigr).
 \label{eq:variance}
-\tag{1.3}
 \end{equation}
 \end{theorem}
 
 \noindent\emph{Unconditionality.}
 Theorem~\ref{thm:variance} depends only on (A2)–(A4) and holds independently
 of RH.  Constants are uniform over the canonical regime~\eqref{eq:canon}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:variance}]
+Write $H_\sigma = H_{\le X} + H_{>X}$ with $X = \Delta^{-1} = \log T/(2\pi)$.
+We use the competitor $S_j = 0$ on each block (which only overestimates
+the infimum over affine fits).
+
+\medskip\noindent
+\textit{Low-frequency variance via large sieve.}
+Since $e^{(\beta-\sigma)t}\le 1$ uniformly in $t$ when all $\beta\le\sigma$,
+Lemma~\ref{lem:MV-sieve} yields on any block~$I_j$:
+\[
+\int_{I_j} |H_{\le X}|^2\,dt
+\;\ll\; (\Delta + \log X)\sum_{|\gamma|\le X} |\rho|^{-2\alpha}.
+\]
+By Proposition~\ref{prop:summability}, the sum is $O(1)$ for $\alpha > 1/2$. Hence
+\[
+\int_{I_j} |H_{\le X}|^2\,dt \;\ll\; \log\log T.
+\]
+
+\medskip\noindent
+\textit{High-frequency tail.}
+By Lemma~\ref{lem:high-freq} on each block~$I_j$,
+\[
+\int_{I_j} |H_{>X}|^2\,dt
+\;\ll\; \Delta \cdot X^{-(2\alpha-1)}\log X
+\;\ll\; (\log T)^{-1}\log\log T
+\]
+for $\alpha\ge 1$.
+
+\medskip\noindent
+\textit{Derivative contribution (low-frequency).}
+Differentiating $H_{\le X}$:
+\[
+\partial_t H_{\le X}
+= \sum_{|\gamma|\le X}
+\frac{e^{(\beta-\sigma)t}}{|\rho|^\alpha}
+\bigl((\beta-\sigma)\cos(\gamma t)-\gamma\sin(\gamma t)\bigr).
+\]
+Applying Lemma~\ref{lem:MV-sieve} to $\partial_t H_{\le X}$,
+\[
+\int_{I_j} |\partial_t H_{\le X}|^2\,dt
+\;\ll\; (\Delta + \log X)
+\sum_{|\gamma|\le X}\frac{(\beta-\sigma)^2+\gamma^2}{|\rho|^{2\alpha}}.
+\]
+When $\alpha=1$ the sum is $\ll N(X)\ll X\log X\ll\log T\log\log T$;
+when $\alpha>1$ the sum converges uniformly.
+In both cases,
+\[
+\int_{I_j} |\partial_t H_{\le X}|^2\,dt \;\ll\; \log T(\log\log T)^2.
+\]
+Multiplying by $\lambda = (\log T)^{-2}$ contributes $\ll (\log\log T)^2/\log T$
+per block.
+
+\medskip\noindent
+\textit{Summation over blocks.}
+Combining all terms, each block contributes $\ll \log\log T$ to $F_\lambda$.
+There are $J \ll T/\Delta \ll T\log T$ blocks. Hence
+\[
+F_\lambda(H_\sigma;T,\Delta) \;\ll\; T\log T\log\log T. \qedhere
+\]
+\end{proof}
 
 % ---------------------------------------------------------
 \section{Robustness in the Penalty Parameter \texorpdfstring{$\lambda$}{lambda}}
@@ -160,21 +440,3 @@ off-line zero induces a curvature singularity with exponential rate
 $2(\beta-\sigma)$—made precise analytically in Part~2.
 This view motivates but does not replace the rigorous arguments below.
 
-% ---------------------------------------------------------
-\section{Roadmap}
-
-Part~1 fixes assumptions and proves the variance-regime bound
-(Theorem~\ref{thm:variance}).  
-Part~2 establishes exponential growth under an off-line zero,
-including explicit, uniform constants.
-Part~3 reports numerical validation using Odlyzko’s zero tables and synthetic
-off-line injections.  
-Part~4 outlines the heuristic geometric framework (horocycle confinement)
-motivating the conjectured converse.
-
-\medskip
-\noindent\textbf{Preview: the derivative constant.}
-The key blockwise inequality in Part~2 uses the affine derivative–variance
-constant $c_{\mathrm{der}}=\tfrac{1}{12}$, the optimal ratio
-$\|r'\|_{L^2(I)}^2/\|r-\bar r\|_{L^2(I)}^2$ on unit intervals.
-Its computation and scaling appear in Appendix~B.

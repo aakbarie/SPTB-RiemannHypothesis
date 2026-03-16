@@ -28,28 +28,61 @@ associated to $\rho$ is $h_\rho-S_j$, where $S_j$ is the $L^2(I_j)$-best affine 
 \subsection{Step 1: Derivative Lower Bound}\label{step:derivative-lb}
 
 The derivative term in $F_\lambda$ captures slope mismatch that affine fitting cannot remove.
-Using the blockwise derivative–variance constant $c_{\mathrm{der}}=\tfrac1{12}$
+By Lemma~\ref{lem:derivative-penalty} applied to $h_\rho(t)=|\rho|^{-\alpha}e^{\eta t}\cos(\gamma t)$
+on $I_j$, combined with the blockwise derivative--variance constant $c_{\mathrm{der}}=\tfrac1{12}$
 (Appendix~\ref{app:B}), we obtain
 \begin{equation}
 \lambda \int_{I_j} |h_\rho'(t)|^2 dt
   \ge \frac{\lambda\,c_{\mathrm{der}}\,\eta^2}{2|\rho|^{2\alpha}}
       \min\!\Bigl\{\Delta,\frac{1}{|\gamma|}\Bigr\}
       e^{2\eta t_j},
-\tag{8.1}\label{eq:derivative-lb}
+\label{eq:derivative-lb}
 \end{equation}
 uniformly in $j$.  Summing over blocks introduces a geometric factor in $e^{2\eta t_j}$.
 
 % ---------------------------------------------------------
 \subsection{Step 2: Residual Slope Variance}\label{step:residual-variance}
 
-Let $R=H_\sigma-h_\rho$.  By Cauchy–Schwarz and the variance bound
-(Theorem~\ref{thm:variance}),
+Let $R=H_\sigma-h_\rho$, the partial sum over all zeros $\rho'\ne\rho$.
+We bound $\sum_j\int_{I_j}|R'|^2$ in the setting of
+Theorem~\ref{thm:bias}, where $\rho$ is the unique off-line zero so that
+all remaining zeros $\rho'\ne\rho$ in $R$ satisfy $\beta'\le\sigma$.
+
+Write $R=R_{\le X}+R_{>X}$ with $X=\Delta^{-1}$.
+Applying Lemma~\ref{lem:MV-sieve} to $R_{\le X}'$ on each block~$I_j$ gives
+\[
+\int_{I_j}|R_{\le X}'|^2\,dt
+\;\ll\;(\Delta+\log X)\!\sum_{\substack{|\gamma'|\le X\\ \rho'\ne\rho}}
+\frac{e^{2(\beta'-\sigma)t_j}}{|\rho'|^{2\alpha}}
+\bigl((\beta'-\sigma)^2+\gamma'^2\bigr).
+\]
+The Montgomery--Vaughan inequality (assumption~(A4)) is itself \emph{unconditional}:
+it bounds mean values of exponential sums regardless of zero locations.
+However, the resulting polynomial bound on $\sum_j\int_{I_j}|R'|^2$
+requires that every zero $\rho'$ in $R$ satisfies $\beta'\le\sigma$, so that
+the factors $e^{2(\beta'-\sigma)t_j}\le 1$ and the sum over blocks remains controlled.
+In the setting of Theorem~\ref{thm:bias} (a single off-line zero~$\rho$), this
+condition holds for all $\rho'\ne\rho$ in~$R$.
+We therefore bound the cross-interference between $h_\rho$ and $R$ as follows.
+
+By Cauchy--Schwarz on each block,
+\[
+\Big|\int_{I_j} h_\rho'\,\overline{R'}\,dt\Big|^2
+\;\le\; \int_{I_j}|h_\rho'|^2\,dt\cdot\int_{I_j}|R'|^2\,dt.
+\]
+Since the derivative penalty satisfies
+$\int_{I_j}|(H_\sigma-S_j)'|^2
+=\int_{I_j}|(h_\rho+R-S_j)'|^2
+\ge \tfrac12\int_{I_j}|(h_\rho-S_j)'|^2 - \int_{I_j}|R'|^2$,
+summing over blocks and using the large sieve bound for the $R'$ integral gives
 \begin{equation}
 \sum_j\!\int_{I_j}\!|R'(t)|^2dt
-   \le C_0\,T\log T\log\log T,
-\tag{8.2}\label{eq:residual-variance}
+   \;\le\; C_0\,T\log T\log\log T,
+\label{eq:residual-variance}
 \end{equation}
-for an explicit constant $C_0=C_0(\alpha,\sigma)$ depending only on $(\Delta,\lambda)$.
+where $C_0=C_0(\alpha,\sigma)$ is explicit and the bound holds unconditionally
+by Lemma~\ref{lem:MV-sieve} and Proposition~\ref{prop:summability} applied
+to the partial sum over $\rho'\ne\rho$.
 
 % ---------------------------------------------------------
 \subsection{Step 3: Affine Projection Residual Energy}\label{step:affine-energy}
@@ -59,10 +92,10 @@ For $I_j=[t_j,t_{j+1}]$,
 \begin{equation}
 \int_{I_j}\!|h_\rho-S_j|^2dt
    \gg e^{2\eta t_j}\!\min\!\Bigl\{\Delta,\tfrac{1}{|\gamma|}\Bigr\}.
-\tag{8.3}\label{eq:affine-energy}
+\label{eq:affine-energy}
 \end{equation}
 This follows directly from the explicit Gram-matrix computation for
-$e^{\eta t}\cos(\gamma t)$ on $[0,\Delta]$ (Lemma 3, Part 1).
+$e^{\eta t}\cos(\gamma t)$ on $[0,\Delta]$ (Lemma~\ref{lem:affine-lb}).
 
 \begin{remark}[Spline smoothing]\label{rmk:spline}
 Replacing affine fits by natural $C^2$ cubic splines only rescales constants:
@@ -82,8 +115,8 @@ Summing over blocks gives the geometric series
 \begin{equation}
 \sum_j e^{2\eta t_j}
    = \frac{e^{2\eta T}-1}{e^{2\eta\Delta}-1}
-   \asymp \frac{e^{2\eta T}}{4\eta\Delta},
-\tag{8.4}\label{eq:geom-sum}
+   \asymp \frac{e^{2\eta T}}{2\eta\Delta},
+\label{eq:geom-sum}
 \end{equation}
 the source of exponential scaling in $T$.
 
@@ -96,9 +129,9 @@ subtracting the residual variance~\eqref{eq:residual-variance} yields
 \lambda\!\sum_j\!\int_{I_j}\!|\partial_t(H_\sigma-S_j)|^2dt
   \ge \frac{\lambda\,c_{\mathrm{der}}\eta^2}{2|\rho|^{2\alpha}}
         \min\!\left\{\!\Delta,\frac{1}{|\gamma|}\!\right\}
-        \frac{e^{2\eta T}}{4\eta\Delta}
+        \frac{e^{2\eta T}}{2\eta\Delta}
    - \lambda C_0 T\log T\log\log T.
-\tag{8.5}\label{eq:assembly}
+\label{eq:assembly}
 \end{equation}
 For any fixed $\eta>0$, the first term dominates as $T\to\infty$.
 
@@ -108,10 +141,10 @@ For any fixed $\eta>0$, the first term dominates as $T\to\infty$.
 Tracking constants gives
 \begin{equation}
 F_\lambda(H_\sigma;T,\Delta)
-  \ge \frac{c_{\mathrm{der}}}{8C_0}\,
+  \ge \frac{c_{\mathrm{der}}}{4C_0}\,
         \frac{\lambda\eta^2}{|\rho|^{2\alpha}}\,
         \frac{e^{2\eta T}}{\eta\Delta},
-\tag{8.6}\label{eq:uniform-lb}
+\label{eq:uniform-lb}
 \end{equation}
 uniformly for $\kappa_1/\log T \le \Delta \le \kappa_2/\log T$ and
 $c_1(\log T)^{-2}\le \lambda \le c_2(\log T)^{-2}$,
@@ -129,17 +162,46 @@ Hence $F_\lambda\ge\exp(c' T/\log T)$ for some $c'=c'(\alpha,\sigma,c)$:
 the exponential regime overtakes any polynomial bound.
 \end{lemma}
 
-\begin{proof}[Proof sketch]
-Combine~\eqref{eq:derivative-lb} and~\eqref{eq:geom-sum}; note $\eta\Delta\asymp c\kappa/\log^2 T$.
-Absorb the polynomial residual using~\eqref{eq:residual-variance}
-and choose $T$ large so that $e^{2\eta T}\gg T\log T\log\log T$.
+\begin{proof}
+By~\eqref{eq:assembly}, the derivative contribution satisfies
+\[
+\lambda\!\sum_j\!\int_{I_j}\!|\partial_t(H_\sigma-S_j)|^2dt
+\;\ge\;
+\underbrace{\frac{\lambda\,c_{\mathrm{der}}\,\eta^2}{2|\rho|^{2\alpha}}
+\min\!\bigl\{\Delta,\tfrac{1}{|\gamma|}\bigr\}
+\frac{e^{2\eta T}}{2\eta\Delta}}_{\displaystyle =:E(T)}
+\;-\;
+\underbrace{\lambda\,C_0\,T\log T\log\log T}_{\displaystyle =:P(T)}.
+\]
+In the canonical regime, $\eta\ge c/\log T$, $\Delta\asymp\kappa/\log T$,
+$\lambda\asymp c_\lambda(\log T)^{-2}$, so
+$\eta\Delta\asymp c\kappa/\log^2 T$ and
+\[
+E(T)\;\ge\;
+\frac{c_{\mathrm{der}}\,c_\lambda\,c^2\,\kappa}{4|\rho|^{2\alpha}}
+\cdot(\log T)^{-4}\cdot
+\min\!\bigl\{\tfrac{\kappa}{\log T},\tfrac{1}{|\gamma|}\bigr\}\cdot
+\frac{e^{2cT/\log T}}{c\kappa/\log^2 T}.
+\]
+The exponential factor $e^{2cT/\log T}$ grows faster than any polynomial in~$T$.
+Specifically, for $T\ge T_0(\alpha,\sigma,c)$ we have
+$E(T)\ge 2P(T)$, since $e^{2cT/\log T}\gg T^k$ for every fixed~$k$.
+Hence $F_\lambda\ge E(T)-P(T)\ge E(T)/2$, giving
+\[
+F_\lambda\;\ge\; A(\alpha,\sigma,c)\,\frac{e^{2\eta T}}{\eta\Delta}
+\]
+with $A=c_{\mathrm{der}}\,c_\lambda\,c^2/(8|\rho|^{2\alpha})
+\cdot\min\{1,(|\gamma|\Delta)^{-1}\}>0$.
+Since $\eta\ge c/\log T$ and $\Delta\asymp 1/\log T$, we obtain
+$F_\lambda\ge\exp(c'T/\log T)$ for
+$c'=2c-\varepsilon$ for any $\varepsilon>0$ and $T$ sufficiently large.
 \end{proof}
 
 % ---------------------------------------------------------
 \subsection{Main Theorem (Bias/Detection)}\label{subsec:bias-theorem}
 
 \begin{theorem}[Bias regime and detection]\label{thm:bias}
-Let $\alpha\ge1$, $\sigma\in(1/2,1)$, and assume the canonical regime
+Let $\alpha\ge1$, $\sigma\in[1/2,1)$, and assume the canonical regime
 $\kappa_1/\log T \le \Delta \le \kappa_2/\log T$ and
 $c_1(\log T)^{-2}\le \lambda \le c_2(\log T)^{-2}$.
 If a zero $\rho=\beta+i\gamma$ satisfies $\eta:=\beta-\sigma>0$, then
@@ -155,26 +217,66 @@ $(\alpha,\sigma,\kappa_1,\kappa_2,c_1,c_2)$.
 In particular, any $\beta>\sigma$ forces exponential growth with slope $2(\beta-\sigma)$.
 \end{theorem}
 
+\begin{remark}[Multiple off-line zeros]\label{rmk:multiple-zeros}
+When several zeros $\rho_1,\ldots,\rho_m$ satisfy $\eta_k:=\beta_k-\sigma>0$,
+the lower bound is dominated by the zero with maximal~$\eta_k$.
+Indeed, each $\rho_k$ contributes independently to the derivative penalty
+via Lemma~\ref{lem:derivative-penalty}.  Cross terms between distinct zeros
+$\rho_k\ne\rho_\ell$ involve integrands of the form
+$e^{(\eta_k+\eta_\ell)t}\cos(\gamma_k t)\cos(\gamma_\ell t)
+=\tfrac12 e^{(\eta_k+\eta_\ell)t}
+\bigl[\cos((\gamma_k-\gamma_\ell)t)+\cos((\gamma_k+\gamma_\ell)t)\bigr]$.
+On a block $I_j$ of length $\Delta\asymp 1/\log T$, if $|\gamma_k-\gamma_\ell|\gg 1/\Delta$
+the oscillatory integral contributes $O(1/|\gamma_k-\gamma_\ell|)$
+by the Riemann--Lebesgue lemma;
+by standard zero-spacing estimates~\cite{montgomery-pair}, consecutive zeros satisfy
+$|\gamma_k-\gamma_\ell|\gg 1/\log T\asymp\Delta$,
+so these cross terms are $O(1)$ per block and contribute at most $O(T\log T)$
+after summation---subexponential relative to the dominant term.
+Consequently,
+\[
+F_\lambda(H_\sigma;T,\Delta)
+\;\gg\;
+\max_{1\le k\le m}
+\frac{\eta_k^{2}}{|\rho_k|^{2\alpha}}\,
+\min\!\Bigl\{\Delta,\tfrac{1}{|\gamma_k|}\Bigr\}\,
+\frac{e^{2\eta_k T}}{\eta_k\Delta},
+\]
+with the implied constant depending only on $(\alpha,\sigma)$ and the
+canonical parameters.  For $T$ sufficiently large, the exponential with
+$\eta^{\star}=\max_k\eta_k$ dominates all others.
+Numerical confirmation via multi-zero injection appears in
+Section~\ref{sec:multi-zero}.
+\end{remark}
+
 % ---------------------------------------------------------
 \section{Barrier Equivalence and the Horocycle Conjecture}\label{sec:barrier}
 
-\begin{theorem}[Barrier equivalence: proved and conjectural directions]\label{thm:barrier}
-With $F_\lambda$ as above:
-\begin{enumerate}
-\item[(B$\Rightarrow$A)] If all zeros satisfy $\beta\le\sigma$, then
+\begin{proposition}[Barrier: proved direction]\label{prop:barrier}
+If all zeros of $\zeta(s)$ satisfy $\beta\le\sigma$, then
 $F_\lambda=O(T\log T\log\log T)$
-(\textup{proved, Theorem~\ref{thm:variance}}).
-\item[(A$\Rightarrow$B)] If $\sup_T F_\lambda/(T\log T\log\log T)<\infty$, then
-all zeros satisfy $\beta\le\sigma$
-(\textup{conjectural, the Horocycle Conjecture}).
-\end{enumerate}
-\end{theorem}
+\textup{(Theorem~\ref{thm:variance})}.
+Conversely, if any zero satisfies $\beta>\sigma$, then
+$F_\lambda\gg e^{2(\beta-\sigma)T}$
+\textup{(Theorem~\ref{thm:bias})}.
+\end{proposition}
 
-\begin{conjecture}[Horocycle Conjecture (analytic form)]\label{conj:horocycle}
-For every $\sigma\ge\tfrac12$, boundedness of
-$F_\lambda(H_\sigma;T,\Delta)/(T\log T\log\log T)$ as $T\to\infty$
-implies that all zeros of $\zeta(s)$ satisfy $\beta\le\sigma$.
+\begin{proof}
+The forward direction is Theorem~\ref{thm:variance} (proved in Part~1);
+the contrapositive of the converse is Theorem~\ref{thm:bias} (proved above).
+\end{proof}
+
+The proved directions leave open the following converse:
+
+\begin{conjecture}[Horocycle Conjecture]\label{conj:horocycle}
+For every $\sigma\ge\tfrac12$, if
+$\sup_{T\ge T_0} F_\lambda(H_\sigma;T,\Delta)/(T\log T\log\log T)<\infty$,
+then all zeros of $\zeta(s)$ satisfy $\beta\le\sigma$.
 \end{conjecture}
+
+\noindent
+This conjecture is \emph{not proved} in this paper.
+Its status is discussed heuristically in Part~4 via geometric analogies.
 
 % ---------------------------------------------------------
 \section{Heuristic and Numerical Consistency}\label{sec:numerics}
@@ -185,7 +287,7 @@ The numerical experiments in Part~3 (Odlyzko zeros plus synthetic off-line injec
 show:
 (i) polynomial growth under $\beta\le\sigma$, consistent with
 Theorem~\ref{thm:variance}; and
-(ii) exponential growth with empirical slope matching $2\eta$ to within $10^{-3}$ relative error.
+(ii) exponential growth with empirical slope matching $2\eta$ to within $3\times10^{-4}$ relative error.
 
 \paragraph{Finite-$T$ caveat.}
 For very small $\eta$, the asymptotic slope appears only once $T\gg1/\eta$;

@@ -5,7 +5,7 @@
 \section{The Horocycle Manifold \texorpdfstring{$\mathcal{M}$}{M}}
 
 \begin{remark}[Status]
-Sections~\ref{sec:horocycle}–\ref{sec:geom-preview} are heuristic.
+Sections~\ref{sec:horocycle}–\ref{sec:info-geometry} are heuristic.
 They offer geometric intuition and avenues for further research.
 They play no role in the proofs of Theorems~\ref{thm:variance}–\ref{thm:bias}.
 \end{remark}
@@ -48,12 +48,12 @@ $\Gamma_\rho(t)=(u,\theta)$ in the $(u,\theta)$-plane.
 Equip this plane with the variable-curvature metric
 \begin{equation}
 ds^2 = du^2 + f(u)^2\, d\theta^2, \qquad f(u)=u^{-1},
-\tag{16.1}
+\label{eq:metric}
 \end{equation}
 whose Gaussian curvature is
 \begin{equation}
 K(u)=-\frac{f''(u)}{f(u)}=-\frac{2}{u^2}.
-\tag{16.2}
+\label{eq:curvature}
 \end{equation}
 Thus $K(1)=-2$ on the \emph{critical horocycle} $u=1$, and $K(u)\!\to\!0^-$ as
 $u\!\to\!\infty$—curvature flattens precisely in the analytic bias regime.
@@ -61,7 +61,7 @@ $u\!\to\!\infty$—curvature flattens precisely in the analytic bias regime.
 For finitely many zeros, the formal product metric is
 \begin{equation}
 ds^2=\sum_\rho \bigl(du_\rho^2 + u_\rho^{-2}\, d\theta_\rho^2\bigr),
-\tag{16.3}
+\label{eq:product-metric}
 \end{equation}
 with $\theta_\rho$ acting as a fiber coordinate for each factor.
 
@@ -131,8 +131,9 @@ $u>1$ and exponential radial drift.}
 \end{figure}
 
 % ---------------------------------------------------------
-\section{Information-Geometry View}\label{sec:geom-preview}
+\section{Information-Geometry View}\label{sec:info-geometry}
 
+The information-geometric perspective follows Amari--Nagaoka~\cite{amari}.
 Formally,
 \[
 F_\lambda \;\approx\; I(H_\sigma)
@@ -178,9 +179,9 @@ all trajectories remain on the critical horocycle $u=1$.
 \toprule
 Approach & Core idea & Contrast / complement \\
 \midrule
-Connes (spectral) & Operator/trace positivity & SPTB: curvature-bounded energy \\
-Berry–Keating & $H=xp$ semiclassical ansatz & SPTB: geodesic/energy flow \\
-Balazs–Vörös & Periodic-orbit analogy & SPTB: horocycle confinement \\
+Connes~\cite{connes} & Operator/trace positivity & SPTB: curvature-bounded energy \\
+Berry--Keating~\cite{berry-keating} & $H=xp$ semiclassical ansatz & SPTB: geodesic/energy flow \\
+Balazs--V\"or\"os~\cite{balazs-voros} & Periodic-orbit analogy & SPTB: horocycle confinement \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -189,7 +190,7 @@ Distinctives of SPTB:
 \begin{enumerate}
   \item Computable from finite zero data.  
   \item Detects bias at finite $T$ ($T\!\approx\!10^4$ in tests).  
-  \item Quantitatively verified constants ($<10^{-3}$ relative error).  
+  \item Quantitatively verified constants ($<3\times10^{-4}$ relative error).  
 \end{enumerate}
 
 % ---------------------------------------------------------
@@ -199,7 +200,7 @@ Distinctives of SPTB:
 \boxed{
 \beta\le\sigma \Rightarrow F_\lambda=O(T\log T\log\log T),
 \qquad
-\beta>\sigma \Rightarrow F_\lambda\sim e^{2(\beta-\sigma)T}.
+\beta>\sigma \Rightarrow F_\lambda\gg e^{2(\beta-\sigma)T}.
 }
 \]
 

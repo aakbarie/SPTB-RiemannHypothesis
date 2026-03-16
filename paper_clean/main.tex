@@ -31,7 +31,7 @@
 \address{Independent Researcher, Central California Alliance for Health}
 \email{akbar.esfahani@gmail.com}
 
-\date{October 2025}
+\date{March 2026}
 
 % --------- Theorem Environments ----------
 \numberwithin{equation}{section}
@@ -44,6 +44,7 @@
 \newtheorem{example}[theorem]{Example}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem*{conjecture*}{Conjecture}
 
 % --------- Page-break policy (CLEANED UP) ----------
 % Only major parts get page breaks, not every section
@@ -55,10 +56,11 @@
 We introduce the Spline–Penalized Tail Bound (SPTB), a finite-window functional that
 detects off-critical zeros of automorphic $L$-functions. We prove a rigorous
 \emph{detection theorem}: any zero with $\beta>\sigma$ forces exponential growth
-$F_\lambda \asymp e^{2(\beta-\sigma)T}$, while the on/left regime obeys an unconditional
+$F_\lambda \gg e^{2(\beta-\sigma)T}$, while the on/left regime obeys an unconditional
 polynomial bound $F_\lambda = O(T\log T\log\log T)$. We \emph{conjecture} (and do not prove)
 the converse ("Horocycle Conjecture"), so our contribution is a proven detector rather than an equivalence.
-We validate numerically (to $0.001\%$) and give a heuristic geometric interpretation.
+We validate numerically (slope agreement within $0.03\%$ at $T=5\times10^4$)
+and give a heuristic geometric interpretation.
 \end{abstract}
 
 \maketitle
@@ -118,6 +120,50 @@ Phys. Rep. \textbf{143} (1986), 109--240.
 \bibitem{titchmarsh} E.~C. Titchmarsh,
 \textit{The Theory of the Riemann Zeta-Function},
 2nd ed., Oxford University Press, 1986.
+
+\bibitem{mv-book} H.~L. Montgomery and R.~C. Vaughan,
+\textit{Multiplicative Number Theory~I: Classical Theory},
+Cambridge Studies in Advanced Mathematics, 2007.
+
+\bibitem{iwaniec-kowalski} H.~Iwaniec and E.~Kowalski,
+\textit{Analytic Number Theory},
+AMS Colloquium Publications, 2004.
+
+\bibitem{davenport} H.~Davenport,
+\textit{Multiplicative Number Theory},
+3rd ed., Springer GTM, 2000.
+
+\bibitem{montgomery-pair} H.~L.~Montgomery,
+\textit{The pair correlation of zeros of the zeta function},
+Proc.\ Symp.\ Pure Math.\ \textbf{24} (1973), 181--193.
+
+\bibitem{selberg} A.~Selberg,
+\textit{Old and new conjectures and results about a class of Dirichlet series},
+Proc.\ Amalfi Conf.\ (1992).
+
+\bibitem{deboor} C.~de Boor,
+\textit{A Practical Guide to Splines},
+Springer-Verlag, 1978.
+
+\bibitem{li} X.-J.~Li,
+\textit{The positivity of a sequence of numbers and the Riemann hypothesis},
+J.\ Number Theory \textbf{65} (1997), 325--333.
+
+\bibitem{lagarias} J.~C.~Lagarias,
+\textit{An elementary problem equivalent to the Riemann hypothesis},
+Amer.\ Math.\ Monthly \textbf{109} (2002), 534--543.
+
+\bibitem{bombieri} E.~Bombieri,
+\textit{Problems of the millennium: the Riemann hypothesis},
+Clay Mathematics Institute, 2000.
+
+\bibitem{amari} S.~Amari and H.~Nagaoka,
+\textit{Methods of Information Geometry},
+AMS Translations of Mathematical Monographs \textbf{191}, 2007.
+
+\bibitem{beurling} A.~Beurling,
+\textit{A closure problem related to the Riemann zeta function},
+Proc.\ Natl.\ Acad.\ Sci.\ USA \textbf{41} (1955), 312--314.
 
 \end{thebibliography}
 

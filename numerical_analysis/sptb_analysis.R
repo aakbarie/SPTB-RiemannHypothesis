@@ -20,7 +20,7 @@ cfg <- list(
   zeros_n_max      = 300000L,
   
   # SPTB core parameters
-  sigma            = 0.60,
+  sigma            = 0.50,
   alpha            = 1.0,
   kappa            = 2*pi,            # variance runs only
   c_lambda         = 1.0,             # λ = c_lambda / log(T)^2
