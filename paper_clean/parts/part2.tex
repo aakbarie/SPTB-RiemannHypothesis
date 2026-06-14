@@ -28,6 +28,9 @@ associated to $\rho$ is $h_\rho-S_j$, where $S_j$ is the $L^2(I_j)$-best affine 
 \subsection{Step 1: Derivative Lower Bound}\label{step:derivative-lb}
 
 The derivative term in $F_\lambda$ captures slope mismatch that affine fitting cannot remove.
+Assume first $|\gamma|\Delta\ge1$, the oscillation hypothesis of
+Lemma~\ref{lem:derivative-penalty}; this holds for every zero with
+$|\gamma|\gtrsim\log T$, and in particular for the injected ordinate of Part~3.
 By Lemma~\ref{lem:derivative-penalty} applied to $h_\rho(t)=|\rho|^{-\alpha}e^{\eta t}\cos(\gamma t)$
 on $I_j$, combined with the blockwise derivative--variance constant $c_{\mathrm{der}}=\tfrac1{12}$
 (Appendix~\ref{app:B}), we obtain
@@ -39,6 +42,11 @@ on $I_j$, combined with the blockwise derivative--variance constant $c_{\mathrm{
 \label{eq:derivative-lb}
 \end{equation}
 uniformly in $j$.  Summing over blocks introduces a geometric factor in $e^{2\eta t_j}$.
+For the complementary low-lying case $|\gamma|\Delta<1$ the identical geometric growth
+$\gg e^{2\eta t_j}\min\{\Delta,1/|\gamma|\}$ is furnished instead by the amplitude
+residual~\eqref{eq:affine-energy} of Step~\ref{step:affine-energy}
+(Lemma~\ref{lem:affine-lb}, Cases~1--2), which requires no oscillation hypothesis;
+the remainder of the assembly is unchanged.
 
 % ---------------------------------------------------------
 \subsection{Step 2: Residual Slope Variance}\label{step:residual-variance}

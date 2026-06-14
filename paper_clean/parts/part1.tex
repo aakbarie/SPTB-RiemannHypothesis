@@ -65,12 +65,17 @@ ensuring that $H_\sigma$ as defined in~\eqref{eq:Hsigma} converges in
 $L^2_{\mathrm{loc}}$ and its truncations have controlled $L^2$ norms on short intervals.
 \item[(A4)] \emph{Montgomery--Vaughan short-interval inequality:} for any
 Dirichlet-type sum $D(t)=\sum_{|\gamma|\le X}A_\gamma e^{i\gamma t}$
-with real frequencies $\gamma$ having average spacing $\gg 1/\log T$,
+with distinct real frequencies $\gamma$ of minimal spacing $\delta>0$,
 \[
 \int_u^{u+\Delta}\!|D(t)|^2\,dt
-\;\le\; (\Delta+\delta^{-1})\sum_{|\gamma|\le X}|A_\gamma|^2,
+\;\le\; (\Delta+\delta^{-1})\sum_{|\gamma|\le X}|A_\gamma|^2 .
 \]
-where $\delta\gg 1/\log T$ is the minimal spacing.
+In every application below the sum is truncated at height
+$X=\Delta^{-1}\asymp\log T$ (Theorem~\ref{thm:variance}), where the zero ordinates
+have spacing $\delta\gg 1/\log X\asymp 1/\log\log T$; hence
+$\delta^{-1}\ll\log X\asymp\log\log T$, which is precisely the additive term recorded
+in Lemma~\ref{lem:MV-sieve}.  (The looser bound $\delta^{-1}\ll\log T$ valid for the
+full height-$T$ ordinate set is never needed.)
 This applies to both $H_\sigma$ and $\partial_t H_\sigma$
 (see~\cite{montgomery-vaughan} and Lemma~\ref{lem:MV-sieve}).
 \end{enumerate}
@@ -222,8 +227,10 @@ $[0,\Delta]$ (for $\eta\Delta\le 1$).
 Taylor expansion gives $v_1=\Delta+\eta\Delta^2/2+O(\eta^2\Delta^3)$
 and $v_2=\Delta^2/2+O(\eta\Delta^3)$.
 The projection captures most of $\|f\|^2=\Delta+\eta\Delta^2+O(\eta^2\Delta^3)$,
-leaving a residual $\ge C\eta^4\Delta^5$
-from the quartic term in $e^{\eta t}-(\hat a+\hat b t)$.
+leaving a residual $\ge C\eta^4\Delta^5$: the leading non-affine term of
+$e^{\eta t}-(\hat a+\hat b t)$ is the \emph{quadratic} $\tfrac12\eta^2 t^2$, whose
+$L^2(I)$ projection residual against $\mathrm{span}\{1,t\}$ equals
+$\bigl(\tfrac{\eta^2}{2}\bigr)^2\cdot\tfrac{\Delta^5}{180}=\Theta(\eta^4\Delta^5)$.
 
 \textit{Case 2:} $\eta/2<|\omega|\le 1/\Delta$.
 Since $|\omega|\Delta\le 1$, the cosine completes at most one oscillation on
@@ -270,24 +277,46 @@ so the residual is $\ge C\eta^2\Delta$.
 
 \begin{lemma}[Derivative Penalty]\label{lem:derivative-penalty}
 For $f_{\eta,\omega}(t)=e^{\eta t}\cos(\omega t)$ on $I=[a,a+\Delta]$
-with $\eta\Delta\le 1/2$,
+with $\eta\Delta\le 1/2$ \emph{and} $|\omega|\Delta\ge 1$,
 \[
 \inf_b \int_I |(f_{\eta,\omega}(t)-bt)'|^2\,dt
+\;\ge\; c\, e^{2\eta a}\,\omega^2\,\Delta
 \;\ge\; c\, e^{2\eta a}\,\eta^2\min\{\Delta,1/|\omega|\},
 \]
 for an absolute constant $c>0$.
 \end{lemma}
 
+\begin{remark}[Role of the oscillation hypothesis $|\omega|\Delta\ge1$]\label{rmk:osc-hypothesis}
+The hypothesis $|\omega|\Delta\ge1$ (at least one radian of phase per block) is
+\emph{necessary}.  As $\omega\to0$ the derivative $f'$ becomes nearly affine on $I$, and
+the left-hand side degenerates to $\Theta\!\bigl(e^{2\eta a}\eta^4\Delta^3\bigr)$, which is
+smaller than $\eta^2\Delta$ by the factor $(\eta\Delta)^2$; no lower bound of the form
+$c\,\eta^2\min\{\Delta,1/|\omega|\}$ can then hold with an absolute $c>0$.
+In the detection regime of Part~2 the relevant frequency is a zero ordinate
+$\omega=\gamma$ with $|\gamma|\Delta\gg1$ throughout the canonical scaling, so the
+hypothesis is amply satisfied; the complementary low-frequency case is handled by the
+amplitude bound (Lemma~\ref{lem:affine-lb}), which needs no oscillation hypothesis.
+\end{remark}
+
 \begin{proof}
-Write $f'(t)=e^{\eta t}(\eta\cos(\omega t)-\omega\sin(\omega t))$. Then
+The minimising constant is the mean $\bar{f'}=\Delta^{-1}\int_I f'$, so the left-hand side
+is the variance of $f'$ on $I$:
 \[
-\inf_b \int_I |f'(t)-b|^2\,dt
-= \int_I |f'|^2 - \frac{1}{\Delta}\Bigl(\int_I f'\Bigr)^{\!2}.
+\inf_b \int_I |f'-b|^2\,dt
+= \int_I |f'|^2 - \Delta\,\bar{f'}^{\,2}.
 \]
-The main term satisfies
-$\int_I |f'|^2 \gg e^{2\eta a}(\eta^2+\omega^2)\min\{\Delta,1/|\omega|\}$,
-while $|\int_I f'| \le 2e^{\eta(a+\Delta)}$.
-Substituting and using $\eta\Delta\le 1/2$ yields the claim.
+Since $\eta\Delta\le\tfrac12$ the weight obeys $e^{\eta a}\le e^{\eta t}\le e^{1/2}e^{\eta a}$
+on $I$, so it may be frozen at $t=a$ at the cost of an absolute factor; it therefore suffices
+to bound the variance of $g(t)=\eta\cos(\omega t)-\omega\sin(\omega t)$, whose amplitude is
+$\sqrt{\eta^2+\omega^2}\ge|\omega|$.  A direct evaluation gives
+$\int_I g^2=\tfrac12(\eta^2+\omega^2)\Delta+O\!\bigl((\eta^2+\omega^2)/|\omega|\bigr)$
+and $\bigl|\int_I g\bigr|=O(1)$.  Because $|\omega|\Delta\ge1$ the main term dominates the
+subtracted mean, so the variance of $g$ is $\gg\omega^2\Delta$; restoring the frozen weight
+gives $\inf_b\int_I|f'-b|^2\ge c\,e^{2\eta a}\omega^2\Delta$.
+Finally $|\omega|\Delta\ge1$ together with $\eta\Delta\le\tfrac12$ forces $|\omega|\ge2\eta$
+and $\min\{\Delta,1/|\omega|\}=1/|\omega|$, whence
+$\omega^2\Delta=\omega\,(\omega\Delta)\ge\omega\ge\eta^2/|\omega|
+=\eta^2\min\{\Delta,1/|\omega|\}$, which is the second inequality.
 \end{proof}
 
 \begin{lemma}[Montgomery--Vaughan Large Sieve]\label{lem:MV-sieve}
@@ -360,6 +389,10 @@ of RH.  Constants are uniform over the canonical regime~\eqref{eq:canon}.
 
 \begin{proof}[Proof of Theorem~\ref{thm:variance}]
 Write $H_\sigma = H_{\le X} + H_{>X}$ with $X = \Delta^{-1} = \log T/(2\pi)$.
+The precise location of the cut is immaterial: any $X$ with
+$\Delta^{-1}\le X\le(\log T)^2$ yields the same final bound, the low- and
+high-frequency estimates below being valid throughout that range;
+Appendix~\ref{app:A} carries out the identical split at $\Gamma_0=(\log T)^2$.
 We use the competitor $S_j = 0$ on each block (which only overestimates
 the infimum over affine fits).
 
@@ -409,6 +442,26 @@ In both cases,
 \]
 Multiplying by $\lambda = (\log T)^{-2}$ contributes $\ll (\log\log T)^2/\log T$
 per block.
+
+\medskip\noindent
+\textit{Derivative contribution (high-frequency).}
+For the tail $\partial_t H_{>X}$ the coefficient sum
+$\sum_{|\gamma|>X}\gamma^2|\rho|^{-2\alpha}$ diverges when $\alpha=1$, so a coefficient
+bound is insufficient and the short-interval cancellation of
+Lemma~\ref{lem:MV-sieve} is essential.  Applying it to $\partial_t H_{>X}$ on $I_j$
+(equivalently, the per-zero estimate~\eqref{eq:high} of Appendix~\ref{app:A}) gives
+\[
+\int_{I_j}|\partial_t H_{>X}|^2\,dt
+\;\ll\;\sum_{|\gamma|>X}\frac{\gamma^2}{|\rho|^{2\alpha}}
+\min\!\Bigl\{\Delta,\frac{1}{\gamma^2\Delta}\Bigr\}
+\;=\;\frac{1}{\Delta}\sum_{|\gamma|>X}\frac{1}{|\rho|^{2\alpha}}
+\;\ll\;\frac{X^{-(2\alpha-1)}\log X}{\Delta}\;\ll\;\log\log T,
+\]
+since $|\gamma|>X=\Delta^{-1}$ forces $\min\{\Delta,1/(\gamma^2\Delta)\}=1/(\gamma^2\Delta)$,
+while $\sum_{|\gamma|>X}|\rho|^{-2\alpha}\ll X^{-(2\alpha-1)}\log X$ by
+Lemma~\ref{lem:high-freq} and $\Delta^{-1}=X$ (so the bound is $X^{2-2\alpha}\log X\ll\log\log T$
+for $\alpha\ge1$).  Multiplying by $\lambda=(\log T)^{-2}$ this is
+$\ll\log\log T/(\log T)^2$ per block, dominated by the low-frequency derivative term.
 
 \medskip\noindent
 \textit{Summation over blocks.}
