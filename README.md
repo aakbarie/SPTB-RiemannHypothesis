@@ -92,12 +92,13 @@ Monotone convergence demonstrates asymptotic exactness of theoretical prediction
 ## Repository Structure
 ```
 SPTB-RiemannHypothesis/
-├── paper_clean/              # Current paper (28 pages)
+├── paper_clean/              # Current paper (30 pages)
 │   ├── main.tex              # Main document
 │   ├── main.pdf              # Compiled PDF
 │   ├── parts/
 │   │   ├── part1.tex         # Foundations and Variance Regime
 │   │   ├── part2.tex         # Bias Regime and Detection Theorem
+│   │   ├── part2b_explicit_formula.tex  # Explicit-formula / Turán–Pintz reframe
 │   │   ├── part3.tex         # Empirical Validation
 │   │   └── part4.tex         # Geometric Framework (heuristic)
 │   ├── appendices/
@@ -117,7 +118,8 @@ SPTB-RiemannHypothesis/
 │       └── *.png             # Figures
 ├── data/
 │   └── zeros_1.txt           # Odlyzko zero ordinates
-├── paper/                    # Earlier paper version (archived)
+├── archive/
+│   └── paper-legacy-2025-10/ # Earlier paper version (superseded by paper_clean/)
 └── README.md
 ```
 

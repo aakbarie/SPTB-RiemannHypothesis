@@ -36,19 +36,22 @@ then $F_\lambda(H_\sigma;T,\Delta)$ grows exponentially with slope $2(\beta-\sig
 Together, (i)–(ii) define a finite-window \emph{detector} for violations of RH.
 
 \medskip
-\noindent\textbf{Non-equivalence disclaimer.}
-We use “detector’’ in the precise sense:
-(a) off-line zero $\Rightarrow$ exponential growth (proved);
-(b) all zeros on/left of $\sigma$ $\Rightarrow$ polynomial growth (proved);
-(c) polynomial boundedness $\Rightarrow$ all zeros on/left of $\sigma$
-(\emph{unproved}, the Horocycle Conjecture).  No equivalence with RH is claimed.
-
-\medskip
-\noindent\textbf{Abstract (concise).}
-\emph{We prove that any zero with $\beta>\sigma$ enforces exponential growth of
-$F_\lambda$ as in~\eqref{eq:SPTB}, while if all zeros lie on/left of $\sigma$
-the growth is polynomial.  We conjecture (but do not prove) the converse.
-Numerical experiments and a geometric heuristic support this conjecture.}
+\noindent\textbf{Non-equivalence disclaimer and surrogate scope.}
+The exponential signal $e^{(\beta-\sigma)t}\cos(\gamma t)$ that drives our
+detection theorem is not posited: it is the explicit-formula expansion of the
+genuine $\zeta$-derived remainder $G_\sigma(t)=e^{-\sigma t}(\psi(e^t)-e^t)$
+(Section~\ref{sec:explicit-formula}), in which an off-line zero injects exactly
+this term with weight $|\rho|^{-1}$ and a phase $\varphi_\rho$. The quantitative
+analysis, however, is carried out on a \emph{tractable square-summable surrogate}
+$H_\sigma$ of $G_\sigma$, a deliberate modeling choice that makes the variance
+bound clean. Accordingly: (a) the forward direction---off-line zero
+$\Rightarrow$ exponential growth---is, for $G_\sigma$, an instance of classical
+Tur\'an--Pintz $\Omega$-oscillation read out by $F_\lambda$, not a new forcing
+mechanism; (b) the polynomial upper bound holds verbatim for the surrogate
+$H_\sigma$ but requires the smoothing window for $G_\sigma$; and (c) the
+converse (polynomial boundedness $\Rightarrow$ $\beta\le\sigma$) is unproved (the
+Horocycle Conjecture). We therefore present SPTB as a finite-window numerical
+diagnostic over known oscillation theory, and claim no equivalence with RH.
 
 % ---------------------------------------------------------
 \section{Scope and Assumptions}
@@ -62,15 +65,18 @@ Our analysis rests on four standard inputs for the $L$-function in question
 $N(T)=\tfrac{T}{2\pi}\log\tfrac{T}{2\pi}-\tfrac{T}{2\pi}+O(\log T)$.
 \item[(A3)] \emph{Square-summable Dirichlet coefficients} for the truncated
 approximants used to define $H_\sigma$ (ensuring $L^2$ control on short intervals).
-\item[(A4)] A Montgomery–Vaughan–type \emph{short-interval inequality} for the Dirichlet
+\item[(A4)] A Montgomery–Vaughan–type \emph{short-interval inequality}~\cite{montgomery-vaughan}
+for the Dirichlet
 polynomials or logarithmic derivatives that appear in $H_\sigma$ and $\partial_t H_\sigma$.
 \end{enumerate}
 No use is made of delicate Euler-product cancellations.  All constants below are
 \emph{computable} from the data of (A1)–(A4).
 
 \begin{remark}[Applicability beyond $\zeta$]
-Parts~1–2 extend verbatim to Dirichlet $L(s,\chi)$ (primitive $\chi$) and to
-automorphic $L$-functions of degree~$d$ satisfying analogues of (A1)–(A4).
+Parts~1–2 extend to Dirichlet $L(s,\chi)$ (primitive $\chi$) and, conjecturally, to
+automorphic $L$-functions of degree~$d$ satisfying analogues of (A1)–(A4)
+(for which the required zero-density and spacing inputs follow the framework
+of Rudnick--Sarnak~\cite{rudnick-sarnak}).
 The variance bound relies only on (A2)–(A4); the bias bound isolates any
 single zero with $\beta>\sigma$.  Proofs are stated for $\zeta(s)$ for clarity;
 Part~3 validates numerically for $\zeta(s)$, and Appendix~A lists constants.
@@ -96,8 +102,11 @@ $(\alpha,\sigma,\kappa_1,\kappa_2,c_1,c_2)$ but are uniform over~\eqref{eq:canon
 % ---------------------------------------------------------
 \section{Motivation and Background}
 
-Classical equivalence criteria for RH (Li, Lagarias, Speiser) involve global data
-and infinitely many zeros.  The SPTB functional is
+Classical equivalence criteria for RH—Li's positivity criterion~\cite{li-criterion}
+(with complements by Bombieri and Lagarias~\cite{bombieri-lagarias}), the Lagarias
+elementary form~\cite{lagarias}, Speiser's criterion~\cite{speiser}, and the
+Nyman--Beurling/B\'aez-Duarte mean-square criterion~\cite{beurling,baezduarte}—involve
+global data and infinitely many zeros (see also Conrey's survey~\cite{conrey-notices}).  The SPTB functional is
 \emph{finite-window} and \emph{local}: it aggregates blockwise amplitude and slope
 residuals.  An off-line zero injects a term
 $e^{(\beta-\sigma)t}\cos(\gamma t)$ into $H_\sigma$ which no affine projection can remove,
@@ -175,6 +184,7 @@ motivating the conjectured converse.
 \medskip
 \noindent\textbf{Preview: the derivative constant.}
 The key blockwise inequality in Part~2 uses the affine derivative–variance
-constant $c_{\mathrm{der}}=\tfrac{1}{12}$, the optimal ratio
-$\|r'\|_{L^2(I)}^2/\|r-\bar r\|_{L^2(I)}^2$ on unit intervals.
+constant $c_{\mathrm{der}}=4\pi^2$, the sharp constant in the affine Poincaré
+inequality $\|r'\|_{L^2(I)}^2\ge(c_{\mathrm{der}}/\Delta^2)\|r\|_{L^2(I)}^2$ for
+$r\perp\mathrm{span}\{1,t\}$ on unit intervals.
 Its computation and scaling appear in Appendix~B.

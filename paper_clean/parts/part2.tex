@@ -29,7 +29,7 @@ associated to $\rho$ is $h_\rho-S_j$, where $S_j$ is the $L^2(I_j)$-best affine 
 
 The derivative term in $F_\lambda$ captures slope mismatch that affine fitting cannot remove.
 By Lemma~\ref{lem:derivative-penalty} applied to $h_\rho(t)=|\rho|^{-\alpha}e^{\eta t}\cos(\gamma t)$
-on $I_j$, combined with the blockwise derivative--variance constant $c_{\mathrm{der}}=\tfrac1{12}$
+on $I_j$, combined with the blockwise derivative--variance constant $c_{\mathrm{der}}=4\pi^2$
 (Appendix~\ref{app:B}), we obtain
 \begin{equation}
 \lambda \int_{I_j} |h_\rho'(t)|^2 dt
@@ -123,17 +123,33 @@ the source of exponential scaling in $T$.
 % ---------------------------------------------------------
 \subsection{Step 5: Assembly}\label{step:assembly}
 
-Combining \eqref{eq:derivative-lb}–\eqref{eq:geom-sum} and
-subtracting the residual variance~\eqref{eq:residual-variance} yields
+Write $H_\sigma=h_\rho+R$ with $R=H_\sigma-h_\rho$, and let $S_j$ be the blockwise
+affine projection.  Rather than a per-block subtraction, we argue globally: by the
+triangle inequality in $L^2\bigl(\bigcup_j I_j\bigr)$,
+\[
+\Bigl(\sum_j\!\int_{I_j}\!|\partial_t(H_\sigma-S_j)|^2\Bigr)^{1/2}
+\;\ge\;
+\Bigl(\sum_j\!\int_{I_j}\!|\partial_t(h_\rho-S_j)|^2\Bigr)^{1/2}
+-\Bigl(\sum_j\!\int_{I_j}\!|R'|^2\Bigr)^{1/2},
+\]
+so the residual cross-term is absorbed by the inequality itself (no
+block-by-block cancellation is invoked).  By Steps~\ref{step:derivative-lb}
+and~\ref{step:geom-sum} the first term is $\ge E(T)^{1/2}$ with
+\[
+E(T)=\frac{c_{\mathrm{der}}\,\eta^2}{2|\rho|^{2\alpha}}
+        \min\!\left\{\!\Delta,\tfrac{1}{|\gamma|}\!\right\}\frac{e^{2\eta T}}{2\eta\Delta},
+\]
+and by Step~\ref{step:residual-variance} the second is $\le P(T)^{1/2}$ with
+$P(T)=C_0\,T\log T\log\log T$.  Since $E$ grows exponentially and $P$ only
+polynomially, $E(T)\ge 4P(T)$ for all sufficiently large $T$, whence
+$E(T)^{1/2}-P(T)^{1/2}\ge \tfrac12 E(T)^{1/2}$ and
 \begin{equation}
 \lambda\!\sum_j\!\int_{I_j}\!|\partial_t(H_\sigma-S_j)|^2dt
-  \ge \frac{\lambda\,c_{\mathrm{der}}\eta^2}{2|\rho|^{2\alpha}}
-        \min\!\left\{\!\Delta,\frac{1}{|\gamma|}\!\right\}
-        \frac{e^{2\eta T}}{2\eta\Delta}
-   - \lambda C_0 T\log T\log\log T.
+  \;\ge\; \tfrac14\,\lambda\,E(T).
 \label{eq:assembly}
 \end{equation}
-For any fixed $\eta>0$, the first term dominates as $T\to\infty$.
+For any fixed $\eta>0$ this is exponential in $T$ and dominates the polynomial
+variance regime.
 
 % ---------------------------------------------------------
 \subsection{Step 6: Uniform Constants and Threshold Regime}\label{step:uniform}
@@ -148,7 +164,7 @@ F_\lambda(H_\sigma;T,\Delta)
 \end{equation}
 uniformly for $\kappa_1/\log T \le \Delta \le \kappa_2/\log T$ and
 $c_1(\log T)^{-2}\le \lambda \le c_2(\log T)^{-2}$,
-with $c_{\mathrm{der}}=\tfrac1{12}$ and $C_0$ from Theorem~\ref{thm:variance}.
+with $c_{\mathrm{der}}=4\pi^2$ and $C_0$ from Theorem~\ref{thm:variance}.
 
 \begin{lemma}[Threshold regime]\label{lem:threshold}
 Fix the canonical scaling and assume $\eta=\beta-\sigma\ge c/\log T$ for constant $c>0$.
@@ -216,6 +232,15 @@ with an implied constant depending only on
 $(\alpha,\sigma,\kappa_1,\kappa_2,c_1,c_2)$.
 In particular, any $\beta>\sigma$ forces exponential growth with slope $2(\beta-\sigma)$.
 \end{theorem}
+
+\begin{proof}
+Immediate from Lemma~\ref{lem:threshold} and the uniform lower
+bound~\eqref{eq:uniform-lb}: the single-zero derivative-penalty contribution
+(Steps~\ref{step:derivative-lb}--\ref{step:assembly}) dominates the residual
+slope variance~\eqref{eq:residual-variance} once $e^{2\eta T}$ exceeds the
+polynomial bound $C_0\,T\log T\log\log T$, which holds for all sufficiently
+large~$T$ in the canonical regime.
+\end{proof}
 
 \begin{remark}[Multiple off-line zeros]\label{rmk:multiple-zeros}
 When several zeros $\rho_1,\ldots,\rho_m$ satisfy $\eta_k:=\beta_k-\sigma>0$,

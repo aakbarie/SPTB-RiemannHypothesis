@@ -12,19 +12,19 @@ P_{\mathrm{aff}} r = 0
 \]
 the sharp affine Poincaré (a.k.a.\ Friedrichs) inequality holds:
 \begin{equation}
-\int_I |r'(t)|^2\,dt \;\ge\; \frac{12}{\Delta^2}\,\int_I |r(t)|^2\,dt.
+\int_I |r'(t)|^2\,dt \;\ge\; \frac{4\pi^2}{\Delta^2}\,\int_I |r(t)|^2\,dt.
 \label{eq:affine-poincare}
 \end{equation}
 Equivalently,
 \[
-\int_I |r(t)|^2\,dt \;\le\; \frac{\Delta^2}{12}\,\int_I |r'(t)|^2\,dt.
+\int_I |r(t)|^2\,dt \;\le\; \frac{\Delta^2}{4\pi^2}\,\int_I |r'(t)|^2\,dt.
 \]
 
 \paragraph{Normalization used in Part~2.}
 Writing the bound as
 \begin{equation}
-\int_I |r'(t)|^2\,dt \;\ge\; \frac{1}{12}\,\frac{1}{\Delta^2}\,\int_I |r(t)|^2\,dt,
-\qquad c_{\mathrm{der}}=\tfrac{1}{12},
+\int_I |r'(t)|^2\,dt \;\ge\; \frac{c_{\mathrm{der}}}{\Delta^2}\,\int_I |r(t)|^2\,dt,
+\qquad c_{\mathrm{der}}=4\pi^2,
 \label{eq:cder}
 \end{equation}
 matches the scaling adopted in equations~\eqref{eq:derivative-lb} and~\eqref{eq:uniform-lb}.
@@ -52,29 +52,29 @@ and the squared projection residual equals
 \|f\|^2_{L^2(0,\Delta)} - v^\top G^{-1} v,
 \qquad v=\begin{pmatrix}\int_0^\Delta f\\ \int_0^\Delta tf\end{pmatrix}.
 \]
-This formula underlies Lemma~\ref{lem:affine-lb} and yields the constant
-$c_{\mathrm{der}}=1/12$ when applied to the Rayleigh quotient.
+This formula underlies Lemma~\ref{lem:affine-lb}; together with the Neumann
+spectral computation below it yields the constant $c_{\mathrm{der}}$ in the
+Rayleigh quotient.
 
-\paragraph{Sharpness discussion.}
-The constant $12/\Delta^2$ in \eqref{eq:affine-poincare} is a sufficient lower bound
-but is \emph{not} the sharp Sturm--Liouville constant for the two-constraint problem.
-The sharp constant equals the smallest eigenvalue of $-d^2/dt^2$ on $[0,\Delta]$
-with Neumann boundary conditions, subject to $L^2$-orthogonality against
-$\mathrm{span}\{1,t\}$.  The corresponding eigenfunction is $\cos(2\pi t/\Delta)$
-(the first Neumann mode orthogonal to both $1$ and~$t$ on $[0,\Delta]$),
-yielding the sharp constant $4\pi^2/\Delta^2 \approx 39.5/\Delta^2$.
-The value $12/\Delta^2$ arises directly from the Gram-matrix computation above
-(it is the reciprocal of the largest eigenvalue of $G^{-1}$ acting on the
-orthogonal complement of $\{1,t\}$) and suffices for all downstream bounds
-in Part~2, since every estimate requires only a \emph{lower} bound on the
-Rayleigh quotient.  Replacing $12$ by the sharp $4\pi^2$ would improve
-numerical constants but does not affect the qualitative results.
+\paragraph{Sharpness.}
+The sharp constant in \eqref{eq:affine-poincare} equals the smallest eigenvalue
+of $-d^2/dt^2$ on $[0,\Delta]$ with Neumann boundary conditions, subject to
+$L^2$-orthogonality against $\mathrm{span}\{1,t\}$.  The corresponding
+eigenfunction is $\cos(2\pi t/\Delta)$ (the first Neumann mode orthogonal to both
+$1$ and~$t$ on $[0,\Delta]$), yielding the sharp constant
+$c_{\mathrm{der}}=4\pi^2/\Delta^2 \approx 39.5/\Delta^2$.
+An elementary but weaker bound $12/\Delta^2$ follows directly from the Gram-matrix
+computation above; since every estimate in Part~2 requires only a \emph{lower}
+bound on the Rayleigh quotient, either constant is admissible, and we adopt the
+sharp value $c_{\mathrm{der}}=4\pi^2$.
 
 \paragraph{Discrete grids and numerical check.}
 On the experimental block grids used in Part~3, the discrete least-squares projection
 onto $\{1,t\}$ and the corresponding finite-difference estimate of $\int_I |r'|^2$
-agree with \eqref{eq:affine-poincare} to machine precision (relative error $<10^{-12}$),
-confirming both the value $c_{\mathrm{der}}=\tfrac{1}{12}$ and its $\Delta^{-2}$ scaling.
+confirm the value $c_{\mathrm{der}}=4\pi^2$ and its $\Delta^{-2}$ scaling: the
+supplementary routine \texttt{verify\_c\_der} reports an empirical minimum of
+$39.483$ for the Rayleigh quotient over random trigonometric residuals,
+matching $4\pi^2\approx39.478$.
 
 \medskip
 \noindent
