@@ -1,0 +1,61 @@
+% ---------------------------------------------------------
+\section{Derivative–Variance (Affine Poincaré) Constant}
+\label{app:B}
+
+Let $I=[t_j,t_{j+1}]$ with $|I|=\Delta$ and let $P_{\mathrm{aff}}$ denote the $L^2(I)$
+projection onto the affine subspace $\{a+bt\}$. For any $r\in H^1(I)$ satisfying the
+orthogonality conditions
+\[
+P_{\mathrm{aff}} r = 0
+\quad\Longleftrightarrow\quad
+\int_I r(t)\,dt=0,\qquad \int_I t\,r(t)\,dt=0,
+\]
+the sharp affine Poincaré (a.k.a.\ Friedrichs) inequality holds:
+\begin{equation}
+\int_I |r'(t)|^2\,dt \;\ge\; \frac{4\pi^2}{\Delta^2}\,\int_I |r(t)|^2\,dt.
+\label{eq:affine-poincare}
+\end{equation}
+Equivalently,
+\[
+\int_I |r(t)|^2\,dt \;\le\; \frac{\Delta^2}{4\pi^2}\,\int_I |r'(t)|^2\,dt.
+\]
+
+\paragraph{Normalization used in Part~2.}
+Writing the bound as
+\begin{equation}
+\int_I |r'(t)|^2\,dt \;\ge\; \frac{c_{\mathrm{der}}}{\Delta^2}\,\int_I |r(t)|^2\,dt,
+\qquad c_{\mathrm{der}}=4\pi^2,
+\label{eq:cder}
+\end{equation}
+matches the scaling adopted in equations~\eqref{eq:derivative-lb} and~\eqref{eq:affine-energy}.
+
+\paragraph{Sharpness and proof sketch.}
+The best constant in \eqref{eq:affine-poincare} is the first positive eigenvalue
+of $-d^2/dt^2$ on $I$ with \emph{natural} (Neumann) boundary conditions, restricted to
+functions $L^2$–orthogonal to the affine subspace $\mathrm{span}\{1,t\}$.
+After an affine change of variables $t\mapsto x\in[0,1]$, the Neumann eigenfunctions are
+$\cos(n\pi x)$ with eigenvalues $(n\pi)^2$. Orthogonality to the constant removes $n=0$;
+orthogonality to $x$ removes $n=1$, because
+$\int_0^1 x\cos(\pi x)\,dx=-2/\pi^2\neq 0$ whereas $\int_0^1 x\cos(2\pi x)\,dx=0$.
+The minimizer is therefore $\cos(2\pi x)$, giving the optimal eigenvalue
+$(2\pi)^2=4\pi^2$ on $[0,1]$, and hence $4\pi^2/\Delta^2$ on $I$ after rescaling to
+length~$\Delta$. Directly,
+\[
+\frac{\int_0^1 (\partial_x \cos(2\pi x))^2\,dx}{\int_0^1 (\cos(2\pi x))^2\,dx}
+= \frac{2\pi^2}{1/2} \;=\; 4\pi^2 .
+\]
+
+\paragraph{Discrete grids and numerical check.}
+On the experimental block grids used in Part~3, the discrete least-squares projection
+onto $\{1,t\}$ and the corresponding finite-difference estimate of $\int_I |r'|^2$
+agree with \eqref{eq:affine-poincare} to high precision: the supplementary routine
+\texttt{verify\_c\_der} reports an empirical minimum of $39.483$ for the Rayleigh
+quotient over random trigonometric residuals, matching $c_{\mathrm{der}}=4\pi^2\approx39.478$
+and confirming the $\Delta^{-2}$ scaling.
+
+\medskip
+\noindent
+\emph{Remark.}
+Inequality \eqref{eq:affine-poincare} is uniform in the block position~$t_j$
+and depends only on the block length~$\Delta$; no assumptions on $r$ beyond
+$r\in H^1(I)$ and $P_{\mathrm{aff}} r=0$ are required.

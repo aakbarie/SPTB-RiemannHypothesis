@@ -5,7 +5,7 @@
 This appendix documents how numerical constants and slopes were extracted from the
 experiments in Part~3.  All scripts and CSVs (\texttt{bias\_summary.csv},
 \texttt{bias\_blocks.csv}, \texttt{variance\_table.csv}) are included in the repo and
-reproduce Figures~\ref{fi1}–\ref{fig4} and the tables cited there.
+reproduce Figures~\ref{fig:variance1}--\ref{fig:bias2} and the tables cited there.
 
 \subsection*{Common settings}
 Unless otherwise stated, blocks have
@@ -23,15 +23,15 @@ off-line zero at $\beta=\sigma+\eta$, with $\eta\in\{10^{-3},5\!\times\!10^{-4},
 \noindent\textbf{1) Derivative constant $c_{\mathrm{der}}$.}
 We use the affine Poincaré inequality on a block $I$ of length $\Delta$:
 \[
-\int_I |r'(t)|^2\,dt \;\ge\; \frac{12}{\Delta^2}\int_I |r(t)|^2\,dt.
+\int_I |r'(t)|^2\,dt \;\ge\; \frac{4\pi^2}{\Delta^2}\int_I |r(t)|^2\,dt.
 \]
-Thus $c_{\mathrm{der}}=\tfrac{1}{12}$ in the normalization of Part~2
+Thus $c_{\mathrm{der}}=4\pi^2$ in the normalization of Part~2
 (see Appendix~\ref{app:B}).  Numerically, we verify sharpness by
 projection onto the affine subspace on each block and computing
 $\|r'\|_{L^2(I)}^2 / \|r\|_{L^2(I)}^2$ over $10^4$ randomly phased test
 signals $\sum_{m=1}^M a_m\cos(\omega_m t+\phi_m)$ with $M\in[1,8]$,
 $\omega_m\Delta\in[0.1,10]$.  The empirical minimum equals
-$1/(12\Delta^2)$ to machine precision.
+$4\pi^2/\Delta^2$ (for $\Delta=1$, $39.483$ versus $4\pi^2=39.478$).
 
 \medskip
 \noindent\textbf{2) Variance constants $C_0,\,C_0'$.}

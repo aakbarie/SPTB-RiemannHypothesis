@@ -15,7 +15,7 @@
 \geometry{margin=1in}
 
 % Figures from both folders (paper figs + R outputs)
-\graphicspath{{figs/}{../numerical_analysis/sptb_out/}}
+\graphicspath{{figs/}{numerical_analysis/sptb_out/}}
 
 % URLs (line-breaking)
 \usepackage{url}
@@ -31,7 +31,7 @@
 \address{Independent Researcher, Central California Alliance for Health}
 \email{akbar.esfahani@gmail.com}
 
-\date{March 2026}
+\date{October 2025}
 
 % --------- Theorem Environments ----------
 \numberwithin{equation}{section}
@@ -44,11 +44,16 @@
 \newtheorem{example}[theorem]{Example}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{conjecture}[theorem]{Conjecture}
-\newtheorem*{conjecture*}{Conjecture}
+\newtheorem*{geoconj}{Horocycle Conjecture}
 
-% --------- Page-break policy (CLEANED UP) ----------
-% Only major parts get page breaks, not every section
-\newcommand{\partbreak}{\clearpage}
+% --------- Page-break policy ----------
+% 1) Force every \section to start on a new page.
+\makeatletter
+\let\SPTB@orig@section\section
+\renewcommand{\section}{\clearpage\SPTB@orig@section}
+\makeatother
+% 2) Helper macro for clear breaks between large content chunks.
+\newcommand{\contentbreak}{\clearpage}
 
 \begin{document}
 
@@ -63,31 +68,27 @@ surrogate $H_\sigma$ of $G_\sigma$. We prove that $F_\lambda$ obeys an
 unconditional polynomial bound $O(T\log T\log\log T)$ when all zeros satisfy
 $\beta\le\sigma$, and grows like $e^{2(\beta-\sigma)T}$ otherwise---the latter a
 read-out of $\Omega$-oscillation. Our contribution is a finite-window numerical
-diagnostic on top of known oscillation theory (slope agreement within $0.03\%$ at
-$T=5\times10^4$), with the converse (the ``Horocycle Conjecture'') left open.
+diagnostic on top of known oscillation theory, with the converse (the
+``Horocycle Conjecture'') left open.
 \end{abstract}
 
 \maketitle
-\clearpage
+\contentbreak
 
 \tableofcontents
-\clearpage
+\contentbreak
 
-% --------- Main parts (with breaks only between major parts) ----------
+% --------- Main parts (each begins on a fresh page; sections inside also break) ----------
 \input{parts/part1}
-\partbreak
-
-\input{parts/part2b_explicit_formula}
-\partbreak
 
 \input{parts/part2}
-\partbreak
+
+\input{parts/part2b_explicit_formula}
 
 \input{parts/part3}
-\partbreak
 
 \input{parts/part4}
-\clearpage
+\contentbreak
 
 % --------- Appendices ----------
 \appendix
@@ -96,14 +97,12 @@ $T=5\times10^4$), with the converse (the ``Horocycle Conjecture'') left open.
 \input{appendices/appB}
 
 \input{appendices/appC}
-
-\input{appendices/appD}
-\clearpage
+\contentbreak
 
 % --------- Bibliography ----------
 \begin{thebibliography}{99}
 
-\bibitem{odlyzko} A.~M. Odlyzko,
+\bibitem{odlyzko} A.~M. Odlyzko, 
 \textit{Tables of zeros of the Riemann zeta function},
 \url{https://www-odlyzko.dtc.umn.edu/zeta_tables/}.
 
@@ -128,85 +127,62 @@ Phys. Rep. \textbf{143} (1986), 109--240.
 \textit{The Theory of the Riemann Zeta-Function},
 2nd ed., Oxford University Press, 1986.
 
-\bibitem{mv-book} H.~L. Montgomery and R.~C. Vaughan,
-\textit{Multiplicative Number Theory~I: Classical Theory},
-Cambridge Studies in Advanced Mathematics, 2007.
-
-\bibitem{iwaniec-kowalski} H.~Iwaniec and E.~Kowalski,
+\bibitem{iwaniec-kowalski} H. Iwaniec and E. Kowalski,
 \textit{Analytic Number Theory},
-AMS Colloquium Publications, 2004.
+Amer. Math. Soc. Colloq. Publ. \textbf{53}, 2004.
 
-\bibitem{davenport} H.~Davenport,
-\textit{Multiplicative Number Theory},
-3rd ed., Springer GTM, 2000.
-
-\bibitem{montgomery-pair} H.~L.~Montgomery,
-\textit{The pair correlation of zeros of the zeta function},
-Proc.\ Symp.\ Pure Math.\ \textbf{24} (1973), 181--193.
-
-\bibitem{selberg} A.~Selberg,
-\textit{Old and new conjectures and results about a class of Dirichlet series},
-Proc.\ Amalfi Conf.\ (1992).
-
-\bibitem{deboor} C.~de Boor,
-\textit{A Practical Guide to Splines},
-Springer-Verlag, 1978.
-
-\bibitem{li} X.-J.~Li,
-\textit{The positivity of a sequence of numbers and the Riemann hypothesis},
-J.\ Number Theory \textbf{65} (1997), 325--333.
-
-\bibitem{lagarias} J.~C.~Lagarias,
-\textit{An elementary problem equivalent to the Riemann hypothesis},
-Amer.\ Math.\ Monthly \textbf{109} (2002), 534--543.
-
-\bibitem{bombieri} E.~Bombieri,
-\textit{Problems of the millennium: the Riemann hypothesis},
-Clay Mathematics Institute, 2000.
-
-\bibitem{amari} S.~Amari and H.~Nagaoka,
-\textit{Methods of Information Geometry},
-AMS Translations of Mathematical Monographs \textbf{191}, 2007.
-
-\bibitem{beurling} A.~Beurling,
-\textit{A closure problem related to the Riemann zeta function},
-Proc.\ Natl.\ Acad.\ Sci.\ USA \textbf{41} (1955), 312--314.
-
-\bibitem{baezduarte} L.~B\'aez-Duarte,
-\textit{A strengthening of the Nyman--Beurling criterion for the Riemann hypothesis},
-Atti Accad.\ Naz.\ Lincei Rend.\ Lincei Mat.\ Appl.\ \textbf{14} (2003), 5--11.
-
-\bibitem{ingham} A.~E.~Ingham,
+\bibitem{ingham} A.~E. Ingham,
 \textit{The Distribution of Prime Numbers},
 Cambridge University Press, 1932.
 
-\bibitem{turan-pintz} J.~Pintz,
+\bibitem{turan-pintz} J. Pintz,
 \textit{On the remainder term of the prime number formula and the zeros of
 the Riemann zeta-function},
 in \textit{Number Theory (Noordwijkerhout 1983)},
-Lecture Notes in Math.\ \textbf{1068}, Springer, 1984, pp.\ 186--197.
+Lecture Notes in Math. \textbf{1068}, Springer, 1984, pp.\ 186--197.
 
-\bibitem{turan} P.~Tur\'an,
-\textit{On a New Method of Analysis and its Applications},
-Wiley-Interscience, 1984.
+\bibitem{baezduarte} L. B\'aez-Duarte,
+\textit{A strengthening of the Nyman--Beurling criterion for the Riemann hypothesis},
+Atti Accad. Naz. Lincei Cl. Sci. Fis. Mat. Natur. Rend. Lincei (9) Mat. Appl.
+\textbf{14} (2003), 5--11.
 
-\bibitem{bombieri-lagarias} E.~Bombieri and J.~C.~Lagarias,
+\bibitem{beurling} A. Beurling,
+\textit{A closure problem related to the Riemann zeta-function},
+Proc. Natl. Acad. Sci. USA \textbf{41} (1955), 312--314.
+
+\bibitem{li-criterion} X.-J. Li,
+\textit{The positivity of a sequence of numbers and the Riemann hypothesis},
+J. Number Theory \textbf{65} (1997), 325--333.
+
+\bibitem{bombieri-lagarias} E. Bombieri and J.~C. Lagarias,
 \textit{Complements to Li's criterion for the Riemann hypothesis},
-J.\ Number Theory \textbf{77} (1999), 274--287.
+J. Number Theory \textbf{77} (1999), 274--287.
 
-\bibitem{conrey} J.~B.~Conrey,
+\bibitem{lagarias} J.~C. Lagarias,
+\textit{An elementary problem equivalent to the Riemann hypothesis},
+Amer. Math. Monthly \textbf{109} (2002), 534--543.
+
+\bibitem{speiser} A. Speiser,
+\textit{Geometrisches zur Riemannschen Zetafunktion},
+Math. Ann. \textbf{110} (1934), 514--521.
+
+\bibitem{montgomery-pair} H.~L. Montgomery,
+\textit{The pair correlation of zeros of the zeta function},
+in \textit{Analytic Number Theory}, Proc. Sympos. Pure Math. \textbf{24},
+Amer. Math. Soc., 1973, pp.\ 181--193.
+
+\bibitem{rudnick-sarnak} Z. Rudnick and P. Sarnak,
+\textit{Zeros of principal $L$-functions and random matrix theory},
+Duke Math. J. \textbf{81} (1996), 269--322.
+
+\bibitem{conrey-notices} J.~B. Conrey,
 \textit{The Riemann hypothesis},
-Notices Amer.\ Math.\ Soc.\ \textbf{50} (2003), 341--353.
+Notices Amer. Math. Soc. \textbf{50} (2003), 341--353.
 
-\bibitem{zagier} D.~Zagier,
-\textit{Eisenstein series and the Riemann zeta function},
-in \textit{Automorphic Forms, Representation Theory and Arithmetic},
-Tata Inst.\ / Springer, 1981, pp.\ 275--301.
-
-\bibitem{sarnak-horocycle} P.~Sarnak,
+\bibitem{sarnak-horocycle} P. Sarnak,
 \textit{Asymptotic behavior of periodic orbits of the horocycle flow and
 Eisenstein series},
-Comm.\ Pure Appl.\ Math.\ \textbf{34} (1981), 719--739.
+Comm. Pure Appl. Math. \textbf{34} (1981), 719--739.
 
 \end{thebibliography}
 

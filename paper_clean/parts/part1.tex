@@ -35,19 +35,22 @@ then $F_\lambda(H_\sigma;T,\Delta)$ grows exponentially with slope $2(\beta-\sig
 Together, (i)–(ii) define a finite-window \emph{detector} for violations of RH.
 
 \medskip
-\noindent\textbf{Non-equivalence disclaimer.}
-We use “detector’’ in the precise sense:
-(a) off-line zero $\Rightarrow$ exponential growth (proved);
-(b) all zeros on/left of $\sigma$ $\Rightarrow$ polynomial growth (proved);
-(c) polynomial boundedness $\Rightarrow$ all zeros on/left of $\sigma$
-(\emph{unproved}, the Horocycle Conjecture).  No equivalence with RH is claimed.
-
-\medskip
-\noindent\textbf{Abstract (concise).}
-\emph{We prove that any zero with $\beta>\sigma$ enforces exponential growth of
-$F_\lambda$ as in~\eqref{eq:SPTB}, while if all zeros lie on/left of $\sigma$
-the growth is polynomial.  We conjecture (but do not prove) the converse.
-Numerical experiments and a geometric heuristic support this conjecture.}
+\noindent\textbf{Non-equivalence disclaimer and surrogate scope.}
+The exponential signal $e^{(\beta-\sigma)t}\cos(\gamma t)$ that drives our
+detection theorem is not posited: it is the explicit-formula expansion of the
+genuine $\zeta$-derived remainder $G_\sigma(t)=e^{-\sigma t}(\psi(e^t)-e^t)$
+(Section~\ref{sec:explicit-formula}), in which an off-line zero injects exactly
+this term with weight $|\rho|^{-1}$ and a phase $\varphi_\rho$. The quantitative
+analysis, however, is carried out on a \emph{tractable square-summable surrogate}
+$H_\sigma$ of $G_\sigma$, a deliberate modeling choice that makes the variance
+bound clean. Accordingly: (a) the forward direction---off-line zero
+$\Rightarrow$ exponential growth---is, for $G_\sigma$, an instance of classical
+Tur\'an--Pintz $\Omega$-oscillation read out by $F_\lambda$, not a new forcing
+mechanism; (b) the polynomial upper bound holds verbatim for the surrogate
+$H_\sigma$ but requires the smoothing window for $G_\sigma$; and (c) the
+converse (polynomial boundedness $\Rightarrow$ $\beta\le\sigma$) is unproved (the
+Horocycle Conjecture). We therefore present SPTB as a finite-window numerical
+diagnostic over known oscillation theory, and claim no equivalence with RH.
 
 % ---------------------------------------------------------
 \section{Scope and Assumptions}
@@ -65,24 +68,32 @@ ensuring that $H_\sigma$ as defined in~\eqref{eq:Hsigma} converges in
 $L^2_{\mathrm{loc}}$ and its truncations have controlled $L^2$ norms on short intervals.
 \item[(A4)] \emph{Montgomery--Vaughan short-interval inequality:} for any
 Dirichlet-type sum $D(t)=\sum_{|\gamma|\le X}A_\gamma e^{i\gamma t}$
-with real frequencies $\gamma$ having average spacing $\gg 1/\log T$,
+with real frequencies $\gamma$,
 \[
 \int_u^{u+\Delta}\!|D(t)|^2\,dt
 \;\le\; (\Delta+\delta^{-1})\sum_{|\gamma|\le X}|A_\gamma|^2,
 \]
-where $\delta\gg 1/\log T$ is the minimal spacing.
-This applies to both $H_\sigma$ and $\partial_t H_\sigma$
-(see~\cite{montgomery-vaughan} and Lemma~\ref{lem:MV-sieve}).
+where $\delta$ is the minimal frequency gap.  This applies to both $H_\sigma$ and
+$\partial_t H_\sigma$ (see~\cite{montgomery-vaughan} and Lemma~\ref{lem:MV-sieve}).
+We caution that for the zeros of $\zeta$ the minimal gap is \emph{not} bounded
+below by $1/\log T$ (zeros cluster, cf.\ pair correlation~\cite{montgomery-pair});
+the inequality is therefore applied in the averaged form of
+Remark~\ref{rmk:spacing}, which is what introduces the $\log\log T$ factor.
 \end{enumerate}
 No use is made of delicate Euler-product cancellations.  All constants below are
 \emph{computable} from the data of (A1)–(A4).
 
 \begin{remark}[Applicability beyond $\zeta$]
-Parts~1–2 extend verbatim to Dirichlet $L(s,\chi)$ (primitive $\chi$) and to
-automorphic $L$-functions of degree~$d$~\cite{selberg} satisfying analogues of (A1)–(A4).
-The variance bound relies only on (A2)–(A4); the bias bound isolates any
-single zero with $\beta>\sigma$.  Proofs are stated for $\zeta(s)$ for clarity;
-Part~3 validates numerically for $\zeta(s)$, and Appendix~A lists constants.
+The surrogate-level analysis of Parts~1–2 extends to Dirichlet $L(s,\chi)$
+(primitive $\chi$; Appendix~\ref{app:dirichlet}) and, conjecturally, to
+automorphic $L$-functions of degree~$d$~\cite{selberg} satisfying analogues of
+(A1)–(A4): the variance bound relies only on (A2)–(A4), and the bias bound
+isolates any single zero with $\beta>\sigma$.  The explicit-formula grounding of
+Section~\ref{sec:explicit-formula} is written for $\zeta(s)$; it transfers to
+$L(s,\chi)$ through the corresponding explicit formula (with the analytic
+conductor replacing $\log T$), and to higher degree only heuristically.
+Proofs are stated for $\zeta(s)$ for clarity; Part~3 validates numerically for
+$\zeta(s)$, and Appendix~A lists constants.
 \end{remark}
 
 % ---------------------------------------------------------
@@ -108,6 +119,18 @@ By the Riemann--von~Mangoldt formula $N(T)\ll T\log T$,
 partial summation gives $\sum_{|\gamma|\le X}|\rho|^{-2\alpha}=O_\alpha(1)$
 for every $\alpha>1/2$ (Proposition~\ref{prop:summability} below),
 so $H_\sigma(t)$ converges in $L^2_{\mathrm{loc}}$.
+
+\begin{remark}[The derivative is a truncated object]\label{rmk:truncation}
+Differentiating \eqref{eq:Hsigma} termwise produces coefficients of size
+$|\gamma|\,|\rho|^{-\alpha}$, so the series for $\partial_t H_\sigma$ converges
+absolutely only for $\alpha>2$.  At the explicit-formula value $\alpha=1$
+(Section~\ref{sec:explicit-formula}) it is understood as the \emph{truncated}
+field $\partial_t H_\sigma^{(X)}=\sum_{|\gamma|\le X}\partial_t(\,\cdot\,)$ with
+the canonical cutoff $X=\Delta^{-1}\asymp\log T$.  Every occurrence of
+$\int_{I_j}|\partial_t H_\sigma|^2$ in Parts~1–2 refers to this truncation,
+whose short-interval norm is exactly what (A4) and Appendix~\ref{app:A} bound;
+the cutoff is the source of the $\log T$ in $N(X)\ll X\log X$ used there.
+\end{remark}
 
 \paragraph{Motivation for $\alpha$.}
 When $\alpha=1$, the sum $H_\sigma(t)$ closely models the oscillatory part of the
@@ -157,7 +180,9 @@ $(\alpha,\sigma,\kappa_1,\kappa_2,c_1,c_2)$ but are uniform over~\eqref{eq:canon
 \section{Motivation and Background}
 
 Classical equivalence criteria for RH
-(Li~\cite{li}, Lagarias~\cite{lagarias}, Beurling~\cite{beurling})
+(Li~\cite{li}, with complements by Bombieri--Lagarias~\cite{bombieri-lagarias};
+Lagarias~\cite{lagarias}; the Nyman--Beurling/B\'aez-Duarte criterion~\cite{beurling,baezduarte};
+see also the survey~\cite{conrey})
 involve global data and infinitely many zeros.  The SPTB functional is
 \emph{finite-window} and \emph{local}: it aggregates blockwise amplitude and slope
 residuals.  An off-line zero injects a term
@@ -300,11 +325,24 @@ $\gg 1/\log T$,
 \end{lemma}
 
 \begin{proof}
-This is a direct specialization of the Montgomery--Vaughan large sieve
-inequality~\cite{montgomery-vaughan}, using standard zero spacing estimates
-$\gg 1/\log T$; see also Appendix~\ref{app:dirichlet} for details on
-sieve applicability.
+This is a specialization of the Montgomery--Vaughan large sieve
+inequality~\cite{montgomery-vaughan}; see Remark~\ref{rmk:spacing} for the
+spacing issue and Appendix~\ref{app:dirichlet} for details.
 \end{proof}
+
+\begin{remark}[Spacing caveat and intended argument]\label{rmk:spacing}
+The large sieve constant $\delta^{-1}$ above uses the \emph{minimal} gap
+$\delta$ of the active frequencies.  For the ordinates of $\zeta$ no positive
+lower bound on $\delta$ holds (the GUE/pair-correlation law predicts gaps far
+below the mean), so Lemma~\ref{lem:MV-sieve} cannot be invoked with
+$\delta\asymp1/\log T$ uniformly.  The bound is instead established in mean over
+the block grid: grouping zeros by local density and applying a Gallagher-type
+short-interval second-moment estimate, the clustered frequencies contribute
+$\ll(\Delta+\log X)$ \emph{on average}, with the zero-counting estimate (A2)
+supplying the residual $\log\log T$.  This averaged form is what Parts~1–2 use;
+we flag it as the technical crux of the variance bound and do not claim the
+naive minimal-spacing large sieve.
+\end{remark}
 
 \begin{proposition}[Summability]\label{prop:summability}
 For $\alpha > 1/2$,

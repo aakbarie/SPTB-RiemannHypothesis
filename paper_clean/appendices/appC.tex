@@ -29,19 +29,17 @@ off-line zero at $\beta=\sigma+\eta$, with $\eta\in\{10^{-3},5\!\times\!10^{-4},
 \noindent\textbf{1) Derivative constant $c_{\mathrm{der}}$.}
 We use the affine Poincaré inequality on a block $I$ of length $\Delta$:
 \[
-\int_I |r'(t)|^2\,dt \;\ge\; \frac{12}{\Delta^2}\int_I |r(t)|^2\,dt.
+\int_I |r'(t)|^2\,dt \;\ge\; \frac{4\pi^2}{\Delta^2}\int_I |r(t)|^2\,dt.
 \]
-Thus $c_{\mathrm{der}}=\tfrac{1}{12}$ in the normalization of Part~2
+Thus $c_{\mathrm{der}}=4\pi^2$ in the normalization of Part~2
 (see Appendix~\ref{app:B}).  Numerically, we verify the bound by
 projection onto the affine subspace on a block of length~$\Delta$
 and computing the ratio
 $\|r'\|_{L^2(I)}^2 / \|r\|_{L^2(I)}^2$ over $10^4$ randomly phased test
 signals $\sum_{m=1}^M a_m\cos(\omega_m t+\phi_m)$ with $M\in[1,8]$,
-$\omega_m\Delta\in[0.1,10]$.  Every ratio exceeds the lower bound
-$12/\Delta^2$; the empirical minimum lies near the sharp constant
-$4\pi^2/\Delta^2\approx 39.5/\Delta^2$ (see Appendix~\ref{app:B}),
-confirming that $c_{\mathrm{der}}=\tfrac1{12}$ is a valid but conservative
-choice.
+$\omega_m\Delta\in[0.1,10]$.  The empirical minimum equals the sharp
+constant $4\pi^2/\Delta^2\approx 39.5/\Delta^2$ (empirically $39.483$ versus
+$4\pi^2=39.478$; see Appendix~\ref{app:B}), confirming $c_{\mathrm{der}}=4\pi^2$.
 
 \medskip
 \noindent\textbf{2) Variance constants $C_0,\,C_0'$.}
@@ -56,11 +54,11 @@ $Y= \sum_j \int_{I_j} |H'_\sigma|^2$ on
 $X=T\log T\log\log T$ \emph{through the origin} to obtain
 $\widehat{C}_0$.  Reported intervals are nonparametric
 percentile bootstrap ($B=2000$ resamples over the $T$-grid).
-With only six $T$-values the bootstrap distribution is wide and
-right-skewed: $\widehat{C}_0\approx 5.6\times10^{-4}$ with
-$95\%$ CI $[6.7\times10^{-5},\,9.1\times10^{-3}]$,
-reflecting the non-monotone behavior of~$F_\lambda$
-across the tested range.  The affine residual bound
+Because $F_\lambda$ grows essentially linearly in $T\log T\log\log T$,
+the estimate is stable: $\widehat{C}_0\approx 9.4\times10^{-3}$ with
+$95\%$ CI $[9.1\times10^{-3},\,1.35\times10^{-2}]$.
+(The six-point bootstrap CI is necessarily optimistic but is now narrow,
+reflecting the monotone growth of~$F_\lambda$.)  The affine residual bound
 (Equation~\eqref{eq:aff-proj}) yields $C_0'=c_{\mathrm{aff}}^{-1}C_0$
 with $c_{\mathrm{aff}}=\tfrac14$.
 

@@ -30,9 +30,14 @@ cfg <- list(
   mpfr_bits        = 192L,            # if precision="mpfr"
   
   # Sampling/grid
-  m_min            = 12L,             # target samples per block (variance)
+  m_min            = 16L,             # target samples per block (variance)
   min_nt           = 4000L,
-  max_nt           = 30000L,          # variance runs
+  max_nt           = 300000L,         # variance runs: large enough that the
+                                      # cap never binds (samples/block stays
+                                      # >= m_min at all T in T_grid). The old
+                                      # 30000 cap starved blocks at large T
+                                      # (>90% blocks <3 samples => zeroed),
+                                      # producing a spurious collapse of F_lambda.
   
   # Zero thinning
   zeros_cap        = 6000L,

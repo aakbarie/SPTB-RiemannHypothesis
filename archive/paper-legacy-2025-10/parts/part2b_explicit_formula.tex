@@ -1,0 +1,110 @@
+% =========================================================
+% PART 2b — FROM THE EXPLICIT FORMULA TO H_sigma
+% (honest reframing: G_sigma is the theorem, H_sigma the surrogate)
+% =========================================================
+
+\section{From the Explicit Formula to $H_\sigma$}\label{sec:explicit-formula}
+
+The detection theorem of Part~2 takes as input the smoothed tail $H_\sigma(t)$,
+in which an off-line zero contributes a term $e^{(\beta-\sigma)t}\cos(\gamma t)$.
+In Part~2 that term is \emph{posited}. The purpose of this section is to record
+that it is not an arbitrary modeling device: an exponential signal of exactly
+this shape, with a forced weight and an explicit phase, is produced by the
+classical Riemann--von Mangoldt explicit formula. We therefore separate the
+genuine $\zeta$-derived signal, $G_\sigma$, from the tractable square-summable
+surrogate, $H_\sigma$, on which the variance/bias analysis is carried out.
+
+\subsection{The $\sigma$-tilted explicit-formula remainder}
+
+Let $\psi(x)=\sum_{n\le x}\Lambda(n)$ be the Chebyshev function. The explicit
+formula \cite{titchmarsh,iwaniec-kowalski} states that, for $x>1$,
+\begin{equation}
+\psi(x) \;=\; x \;-\; \sum_{\rho}\frac{x^{\rho}}{\rho}
+        \;-\; \log(2\pi) \;-\; \tfrac12\log\!\bigl(1-x^{-2}\bigr),
+\label{eq:ef-psi}
+\end{equation}
+the sum over nontrivial zeros $\rho=\beta+i\gamma$ taken in the symmetric
+principal-value sense. Writing $x=e^{t}$ and tilting by $e^{-\sigma t}$, define
+the \emph{$\sigma$-tilted explicit-formula remainder}
+\begin{equation}
+G_\sigma(t) \;:=\; e^{-\sigma t}\bigl(\psi(e^{t})-e^{t}\bigr).
+\label{eq:ef-Gdef}
+\end{equation}
+Substituting \eqref{eq:ef-psi} into \eqref{eq:ef-Gdef} and discarding the
+elementary $O(e^{-\sigma t})$ terms gives the spectral expansion
+\begin{equation}
+G_\sigma(t) \;=\; -\sum_{\rho}\frac{e^{(\beta-\sigma)t}}{|\rho|}
+                 \cos\!\bigl(\gamma t+\varphi_\rho\bigr)\;+\;O\!\bigl(e^{-\sigma t}\bigr),
+\qquad \varphi_\rho:=\arg(1/\rho),
+\label{eq:ef-spectral}
+\end{equation}
+where conjugate zeros $\rho,\overline{\rho}$ have been paired so that the
+contribution is real: $x^{\rho}/\rho + x^{\overline{\rho}}/\overline{\rho}
+= 2|\rho|^{-1}e^{\beta t}\cos(\gamma t+\varphi_\rho)$.
+
+\begin{remark}[The exponential signal is a theorem, not a definition]\label{rmk:ef-theorem}
+Three features of \eqref{eq:ef-spectral} are forced, not chosen:
+\emph{(i)} each zero contributes a term $e^{(\beta-\sigma)t}\cos(\gamma t+\varphi_\rho)$,
+so an off-critical zero ($\beta>\sigma$) injects exactly the exponentially
+growing oscillation analysed in Part~2;
+\emph{(ii)} the amplitude weight is $|\rho|^{-1}$, i.e.\ the exponent
+$\alpha$ of Part~2 is pinned to $\alpha=1$;
+\emph{(iii)} a phase $\varphi_\rho=\arg(1/\rho)$ appears, absent from the
+idealized $H_\sigma$ of \eqref{eq:SPTB}. Thus the structural input of the
+detection theorem is supplied by \eqref{eq:ef-psi}, a theorem, rather than
+inserted by hand.
+\end{remark}
+
+\subsection{$H_\sigma$ as a tractable surrogate for $G_\sigma$}\label{subsec:surrogate}
+
+The genuine signal $G_\sigma$ is not square-summable as a zero sum: the
+series \eqref{eq:ef-spectral} converges only conditionally, and on the line
+$\beta=\sigma$ the partial sums grow like the explicit-formula remainder
+itself, whose mean-square behaviour requires a smoothing window to control.
+To obtain the clean blockwise variance bound of Theorem~\ref{thm:variance} we
+therefore replace $G_\sigma$ by the \emph{surrogate}
+\begin{equation}
+H_\sigma(t)\;=\;\sum_{\rho}\frac{e^{(\beta-\sigma)t}}{|\rho|^{\alpha}}\cos(\gamma t),
+\qquad \alpha\ge 1,
+\label{eq:ef-surrogate}
+\end{equation}
+in which (a) the weight $|\rho|^{-\alpha}$ with $\alpha\ge1$ is square-summable
+by the zero-counting estimate (A2), rendering the variance argument
+unconditional; and (b) the phases $\varphi_\rho$ are dropped, since they affect
+none of the blockwise lower bounds. The choice $\alpha=1$ recovers the
+explicit-formula weight of \eqref{eq:ef-spectral}; larger $\alpha$ only
+strengthens square-summability. We state plainly that \eqref{eq:ef-surrogate}
+is a \emph{modeling choice}: every quantitative statement of Part~2 is a
+statement about the surrogate $H_\sigma$, not verbatim about $G_\sigma$.
+
+\begin{remark}[Relation to Tur\'an--Pintz oscillation]\label{rmk:ef-turan-pintz}
+For the genuine signal $G_\sigma$ the forward detection direction of Part~2 is
+not a new phenomenon. By \eqref{eq:ef-spectral}, a zero with $\beta>\sigma$
+forces $G_\sigma$ to exhibit $\Omega$-oscillations of amplitude
+$\gg e^{(\beta-\sigma)t}$; this is precisely the classical oscillation theory
+of the prime-counting error term \cite{turan-pintz,ingham}. The
+positive-definite functional $F_\lambda$ cannot annihilate an oscillation it
+does not fit, so $F_\lambda[G_\sigma]\gg e^{2(\beta-\sigma)T}$ follows as a
+\emph{read-out} of Tur\'an--Pintz $\Omega$-theory rather than as an independent
+forcing mechanism. The novelty of the present work is thus not the existence of
+exponential growth but the \emph{finite-window spline functional}
+$F_\lambda$, its explicit blockwise constants (Appendix~B), and its use as a
+detector statistic; cf.\ also the mean-square heuristics of
+\cite{baezduarte,montgomery-pair}.
+\end{remark}
+
+\begin{remark}[Scope: detector versus criterion]\label{rmk:ef-scope}
+The variance/bias dichotomy is clean only for the surrogate. For $H_\sigma$ of
+\eqref{eq:ef-surrogate} the upper bound $F_\lambda=O(T\log T\log\log T)$
+(Theorem~\ref{thm:variance}) and the exponential lower bound
+(Theorem~\ref{thm:bias}) both hold as proved. For the true remainder $G_\sigma$
+the lower bound persists (it is Tur\'an--Pintz, Remark~\ref{rmk:ef-turan-pintz}),
+but the polynomial \emph{upper} bound does not hold verbatim: it requires the
+smoothing/window underlying \eqref{eq:ef-surrogate}, since the unsmoothed
+remainder is not square-summable. Consequently SPTB is best positioned as a
+\emph{finite-window numerical diagnostic} built on top of known oscillation
+theory, not as a new analytic equivalence criterion for RH. The converse
+direction---that polynomial boundedness of $F_\lambda$ forces all zeros to
+satisfy $\beta\le\sigma$---remains open and is the content of the Horocycle
+Conjecture (Conjecture~\ref{conj:horocycle}).
+\end{remark}

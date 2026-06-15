@@ -5,9 +5,14 @@
 \section{The Horocycle Manifold \texorpdfstring{$\mathcal{M}$}{M}}
 
 \begin{remark}[Status]
-Sections~\ref{sec:horocycle}–\ref{sec:geom-preview} are heuristic.
+Sections~\ref{sec:horocycle}–\ref{sec:infogeom} are heuristic.
 They offer geometric intuition and avenues for further research.
 They play no role in the proofs of Theorems~\ref{thm:variance}–\ref{thm:bias}.
+The term \emph{horocycle} is used here as a heuristic label for the critical
+level set $u=1$ of the model space $\mathcal{M}$ below; we do not claim a
+connection to the horocycle flow on the modular surface or to the
+closed-horocycle/Eisenstein-series theory of Sarnak~\cite{sarnak-horocycle}
+and Zagier, with which only an analogy is drawn.
 \end{remark}
 
 \subsection{Conceptual Overview}
@@ -97,12 +102,12 @@ mirroring exponential bias.
 
 \subsection{Horocycle Barrier (Geometric Conjecture)}
 
-\begin{conjecture*}[Horocycle Conjecture, geometric form]
+\begin{geoconj}[geometric form]
 If $F_\lambda/(T\log T\log\log T)$ remains bounded, the trajectory
 $\Gamma$ stays on the critical horocycle $u=1$.
 Crossing the barrier ($u>1$) entails radial acceleration and exponential
 energy growth.
-\end{conjecture*}
+\end{geoconj}
 
 This conjecture aligns with the analytic theorems yet remains unproven.
 
@@ -131,7 +136,7 @@ $u>1$ and exponential radial drift.}
 \end{figure}
 
 % ---------------------------------------------------------
-\section{Information-Geometry View}\label{sec:geom-preview}
+\section{Information-Geometry View}\label{sec:infogeom}
 
 Formally,
 \[
@@ -178,9 +183,9 @@ all trajectories remain on the critical horocycle $u=1$.
 \toprule
 Approach & Core idea & Contrast / complement \\
 \midrule
-Connes (spectral) & Operator/trace positivity & SPTB: curvature-bounded energy \\
-Berry–Keating & $H=xp$ semiclassical ansatz & SPTB: geodesic/energy flow \\
-Balazs–Vörös & Periodic-orbit analogy & SPTB: horocycle confinement \\
+Connes (spectral)~\cite{connes} & Operator/trace positivity & SPTB: curvature-bounded energy \\
+Berry–Keating~\cite{berry-keating} & $H=xp$ semiclassical ansatz & SPTB: geodesic/energy flow \\
+Balazs–Vörös~\cite{balazs-voros} & Quantum chaos on the pseudosphere & SPTB: horocycle confinement \\
 \bottomrule
 \end{tabular}
 \end{table}
