@@ -291,7 +291,24 @@ The forward direction is Theorem~\ref{thm:variance} (proved in Part~1);
 the contrapositive of the converse is Theorem~\ref{thm:bias} (proved above).
 \end{proof}
 
-The proved directions leave open the following converse:
+The contrapositive of detection already yields the converse for \emph{finite}
+configurations.
+
+\begin{proposition}[Converse for finite off-line sets]\label{prop:finite-converse}
+Suppose $\zeta$ has finitely many \textup{(}and at least one\textup{)} zeros with
+$\beta>\sigma$, of maximal excess $\eta^\ast=\max(\beta-\sigma)>0$.  Then
+$F_\lambda(H_\sigma;T,\Delta)\gg e^{2\eta^\ast T}$, so
+$\sup_{T\ge T_0}F_\lambda/(T\log T\log\log T)=\infty$.  Hence if that supremum is
+finite, $\zeta$ has no finite nonempty set of zeros with $\beta>\sigma$.
+\end{proposition}
+
+\begin{proof}
+Apply Theorem~\ref{thm:bias} to a zero attaining $\eta^\ast$; the remaining
+finitely many off-line zeros are absorbed by Remark~\ref{rmk:multiple-zeros}, and
+the on/left zeros contribute the polynomial residual of
+Step~\ref{step:residual-variance}.  Since $e^{2\eta^\ast T}$ outgrows every
+polynomial, the normalized supremum diverges.
+\end{proof}
 
 \begin{conjecture}[Horocycle Conjecture]\label{conj:horocycle}
 For every $\sigma\ge\tfrac12$, if
@@ -300,8 +317,17 @@ then all zeros of $\zeta(s)$ satisfy $\beta\le\sigma$.
 \end{conjecture}
 
 \noindent
-This conjecture is \emph{not proved} in this paper.
-Its status is discussed heuristically in Part~4 via geometric analogies.
+By Proposition~\ref{prop:finite-converse} the conjecture holds whenever the zeros
+with $\beta>\sigma$ are finite in number.  It is \emph{not} merely the
+contrapositive of Theorem~\ref{thm:bias}: the detection bound is proved only for a
+single off-line zero against an on/left background, so its open content lies
+precisely in the configurations that method cannot reach --- infinite off-line
+families with $\beta_n\uparrow\beta^\ast$ \emph{unattained}, and off-line zeros
+with $\beta-\sigma\to0$ (excluded from the threshold guarantee $\eta\ge c/\log T$
+of Lemma~\ref{lem:threshold}).  Equivalently it asks for a uniform \emph{lower}
+bound on $F_\lambda(H_\sigma)$ over arbitrary off-line configurations,
+complementary to the upper bounds of Appendix~\ref{app:A}.  This is \emph{not
+proved} here; Part~4 discusses it heuristically.
 
 % ---------------------------------------------------------
 \section{Heuristic and Numerical Consistency}\label{sec:numerics}
