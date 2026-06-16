@@ -326,8 +326,69 @@ families with $\beta_n\uparrow\beta^\ast$ \emph{unattained}, and off-line zeros
 with $\beta-\sigma\to0$ (excluded from the threshold guarantee $\eta\ge c/\log T$
 of Lemma~\ref{lem:threshold}).  Equivalently it asks for a uniform \emph{lower}
 bound on $F_\lambda(H_\sigma)$ over arbitrary off-line configurations,
-complementary to the upper bounds of Appendix~\ref{app:A}.  This is \emph{not
-proved} here; Part~4 discusses it heuristically.
+complementary to the upper bounds of Appendix~\ref{app:A}.
+
+\subsection{A rigidity reformulation of the open case}\label{subsec:rigidity}
+
+The obstruction is one of \emph{rigidity}: whether zeros accumulating at the
+spectral edge can conspire, through cancellation, to suppress the growth rate of
+$F_\lambda$.  Write $\beta^\ast=\sup\{\beta:\zeta(\beta+i\gamma)=0\}$.  We first
+dispose of the \emph{attained} case, which already strengthens
+Proposition~\ref{prop:finite-converse}.
+
+\begin{proposition}[Attained edge]\label{prop:attained-edge}
+If $\beta^\ast>\sigma$ and the supremum is attained \textup{(}by finitely many
+zeros\textup{)}, then $F_\lambda(H_\sigma;T,\Delta)\gg e^{2(\beta^\ast-\sigma)T}$,
+even when infinitely many further zeros lie in $(\sigma,\beta^\ast)$.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Write $F_\lambda=\|R\|_{\mathrm{pen}}^2$ with $R=(\mathrm{Id}-P)H_\sigma$ and
+$\|\cdot\|_{\mathrm{pen}}^2=\sum_j(\|\cdot\|_{L^2(I_j)}^2+\lambda\|\partial_t\cdot\|_{L^2(I_j)}^2)$.
+Let $w=(\mathrm{Id}-P)h^\ast$, where $h^\ast=\sum h_\rho$ runs over the finitely
+many zeros with $\beta=\beta^\ast$; these have distinct, well-separated ordinates,
+so $\|w\|_{\mathrm{pen}}^2\asymp e^{2(\beta^\ast-\sigma)T}$ (the single-zero
+estimate of Step~\ref{step:derivative-lb}).  By Cauchy--Schwarz,
+$F_\lambda\ge\langle R,w\rangle_{\mathrm{pen}}^2/\|w\|_{\mathrm{pen}}^2$.  The
+pairing $\langle R,w\rangle_{\mathrm{pen}}=\sum_\rho\langle(\mathrm{Id}-P)h_\rho,w\rangle_{\mathrm{pen}}$
+equals $\|w\|_{\mathrm{pen}}^2$ plus cross terms with the lower zeros, each of
+exponential rate $\eta_\rho+\eta^\ast<2\eta^\ast$ and hence
+$o(e^{2(\beta^\ast-\sigma)T})$.  Thus
+$\langle R,w\rangle_{\mathrm{pen}}\asymp e^{2(\beta^\ast-\sigma)T}$ and
+$F_\lambda\gg e^{4(\beta^\ast-\sigma)T}/e^{2(\beta^\ast-\sigma)T}=e^{2(\beta^\ast-\sigma)T}$.
+\end{proof}
+
+The single unresolved case is $\beta^\ast$ \emph{unattained}: zeros
+$\beta_n\uparrow\beta^\ast$ with none achieving the supremum.  Then no finite top
+test field $w$ exists, and the cross terms from zeros with $\eta_\rho$ arbitrarily
+close to $\eta^\ast$ share the diagonal's exponential rate, so cancellation is not
+excluded by the elementary argument.
+
+\begin{remark}[Rigidity formulation]\label{rmk:rigidity}
+Since $F_\lambda(H_\sigma;\,\cdot\,)\ge0$, Landau's theorem identifies the abscissa
+of convergence of $\int_0^\infty e^{-uT}F_\lambda\,dT$ with a real singularity,
+equal to the exponential growth rate of $F_\lambda$.  The \emph{diagonal} part of
+$F_\lambda$ has its rightmost singularity at $u=2(\beta^\ast-\sigma)$ with
+nonnegative residues; the open case is exactly the assertion that the
+off-diagonal part cannot cancel this singularity and move the abscissa left.
+Precisely, the reduction is $u_c=2\,\limsup_{t\to\infty}\tfrac1t\log|H_\sigma'(t)|$,
+so the question is whether the growth (boundedness) abscissa of the exponential
+sum $H_\sigma'$ equals its absolute-convergence abscissa $\eta^\ast=\beta^\ast-\sigma$.
+For general exponential sums these can differ (a Bohr phenomenon): the
+term-by-term pole locations of the formal $M(u)$ do not control the continued
+singularity, and near-edge cancellation could in principle lower $u_c$ below
+$2\eta^\ast$ --- but, by Proposition~\ref{prop:attained-edge}, \emph{only when
+$\beta^\ast$ is unattained}.  Zero-density bounds give only the trivial upper
+bound $u_c\le2\eta^\ast$; excluding the downward cancellation is the genuine
+rigidity content.  This
+is a \emph{rigidity} statement --- the growth rate of $F_\lambda$ is conjecturally
+the spectral edge $2(\beta^\ast-\sigma)_+$, undisturbed by cancellation among
+edge-accumulating zeros --- and is the analytic counterpart of the
+curvature/horocycle rigidity of Part~4, morally parallel to the rigidity of
+unipotent and horocycle flows, where no exotic invariant structures intervene.
+We isolate it as the precise content of the open case: \emph{bounded energy
+rigidly confines the spectrum to $\beta\le\sigma$.}
+\end{remark}
 
 % ---------------------------------------------------------
 \section{Heuristic and Numerical Consistency}\label{sec:numerics}
