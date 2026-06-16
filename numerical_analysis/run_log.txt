@@ -1,0 +1,63 @@
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+There were 12 warnings (use warnings() to see them)
+Warning messages:
+1: In grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y,  :
+  conversion failure on 'Theory 2η' in 'mbcsToSbcs': for η (U+03B7)
+2: In grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y,  :
+  conversion failure on 'Empirical tail slope (TOTAL Δ) vs theory (2η)' in 'mbcsToSbcs': for Δ (U+0394)
+3: In grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y,  :
+  conversion failure on 'Empirical tail slope (TOTAL Δ) vs theory (2η)' in 'mbcsToSbcs': for η (U+03B7)
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+
+=== VARIANCE SUMMARY ===
+Slope vs T log T log log T:  0.009363 
+Slope vs T log^2 T:          0.002273 
+
+=== BIAS SWEEP (tail slopes on TOTAL Δ) ===
+   Tmax   eta    Delta kappa_bias    n_t blocks  gamma0     lambda
+1 10000 1e-04 0.682188    6.28319 120000  14659 2.19881 0.01178823
+2 10000 5e-04 0.682188    6.28319 120000  14659 2.19881 0.01178823
+3 10000 1e-03 0.682188    6.28319 120000  14659 2.19881 0.01178823
+4 20000 1e-04 1.333333   13.20465 120000  15000 1.12500 0.01019586
+5 20000 5e-04 1.333333   13.20465 120000  15000 1.12500 0.01019586
+6 20000 1e-03 1.333333   13.20465 120000  15000 1.12500 0.01019586
+7 50000 1e-04 3.333333   36.06593 120000  15001 0.45000 0.00854207
+8 50000 5e-04 3.333333   36.06593 120000  15001 0.45000 0.00854207
+9 50000 1e-03 3.333333   36.06593 120000  15001 0.45000 0.00854207
+  emp_tail_rate theory_2eta
+1   0.000247834       2e-04
+2   0.001000448       1e-03
+3   0.002000144       2e-03
+4   0.000207752       2e-04
+5   0.001000009       1e-03
+6   0.002000017       2e-03
+7   0.000200063       2e-04
+8   0.001000008       1e-03
+9   0.002000016       2e-03
+
+=== λ-ROBUSTNESS SWEEP ===
+# A tibble: 3 × 7
+  c_lambda lambda_label        eta  Tmax emp_tail_rate theory_2eta deviation_pct
+     <dbl> <chr>             <dbl> <dbl> <chr>         <chr>       <chr>        
+1     0.25 0.25 × (log T)^{…  1e-4 50000 0.000200063   2e-04       "-1.49915e-0…
+2     1    1 × (log T)^{-2}   1e-4 50000 0.000200063   2e-04       "-6.93770e-0…
+3     4    4 × (log T)^{-2}   1e-4 50000 0.000200063   2e-04       " 2.19292e-0…
+
+=== MULTI-ZERO TEST ===
+# A tibble: 1 × 6
+  etas_str     max_eta theory_2eta_max emp_tail_rate  Tmax Delta   
+  <chr>        <chr>   <chr>           <chr>         <dbl> <chr>   
+1 1e-04, 5e-05 1e-04   2e-04           0.0001960724  50000 3.333333
+
+=== c_der VERIFICATION (10^4 random signals) ===
+  Empirical min ||r'||²/||r||² = 39.4830
+  Poincaré lower bound 12/Δ²   = 12.0000
+  Sharp constant 4π²/Δ²        = 39.4784
+  All signals above 12/Δ²?     = TRUE
+
+=== C₀ BOOTSTRAP ===
+  Ĉ₀ (point)  = 0.009363
+  Ĉ₀ (boot)   = 0.009995 ± 0.001326
+  95% CI       = [0.009079, 0.013517]
