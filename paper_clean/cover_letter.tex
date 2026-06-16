@@ -1,0 +1,69 @@
+% =========================================================
+% COVER LETTER (submission package; compiled separately)
+% =========================================================
+\documentclass[12pt]{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\begin{document}
+
+\begin{flushright}
+Akbar Akbari Esfahani\\
+Independent Researcher\\
+\texttt{akbar.esfahani@gmail.com}
+\end{flushright}
+
+\noindent Dear Editors,
+
+\medskip
+Please consider the enclosed manuscript, \emph{A Structural Spline-Penalized
+Tail Bound for $L$-Functions}, for publication.
+
+\medskip
+\noindent\textbf{What this paper is --- and is not.}
+This is \emph{not} a proof of the Riemann Hypothesis, and it claims no
+equivalence with it.  It introduces a finite-window, positive functional --- the
+Spline--Penalized Tail Bound $F_\lambda$ --- and studies it as a
+\emph{computable detector statistic} for off-critical zeros, built explicitly on
+top of classical oscillation theory.  The forward direction (an off-critical zero
+forces exponential growth of $F_\lambda$) is, for the genuine explicit-formula
+remainder $G_\sigma(t)=e^{-\sigma t}(\psi(e^t)-e^t)$, a \emph{read-out} of the
+Tur\'an--Pintz $\Omega$-oscillation phenomenon, not a new forcing mechanism; we
+say so plainly throughout.
+
+\medskip
+\noindent\textbf{What is proved.}
+For a tractable square-summable surrogate $H_\sigma$ of $G_\sigma$ we prove
+(i)~an essentially unconditional polynomial variance bound
+$F_\lambda=O(T\log T\log\log T)$ when all zeros lie on or left of $\sigma$, with
+explicit blockwise constants; and (ii)~exponential growth
+$F_\lambda\gg e^{2(\beta-\sigma)T}$ under any off-critical zero.  The converse
+(the ``Horocycle Conjecture'') is proved for finite and attained-edge zero
+configurations and reduced, in the remaining unattained-edge case, to a precise
+rigidity statement about non-clustering of ordinates.  We are explicit about the
+two open inputs --- a mild ordinate-spacing hypothesis (far weaker than RH or
+pair correlation) and the unattained-edge rigidity --- and localize each exactly.
+
+\medskip
+\noindent\textbf{Numerics and reproducibility.}
+The analytic dichotomy is exercised numerically on Odlyzko's zeros, with measured
+exponential slopes matching the theoretical value to within about $10^{-3}$
+relative error; we are careful to label the bias experiments as calibration of
+the estimator rather than independent confirmation.  Full \texttt{R} source, the
+zero data, and all tables/figures are released for reproduction.
+
+\medskip
+\noindent\textbf{Suggested venue.}
+Given its character --- a computable diagnostic with explicit constants, numerical
+validation, and honestly delimited open inputs, rather than a new analytic
+criterion for RH --- the paper seems best suited to an experimental or
+computational venue such as \emph{Experimental Mathematics} or
+\emph{Mathematics of Computation}.
+
+\medskip
+Thank you for your consideration.
+
+\medskip
+\noindent Sincerely,\\
+Akbar Akbari Esfahani
+
+\end{document}
