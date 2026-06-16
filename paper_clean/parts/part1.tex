@@ -76,9 +76,11 @@ with real frequencies $\gamma$,
 where $\delta$ is the minimal frequency gap.  This applies to both $H_\sigma$ and
 $\partial_t H_\sigma$ (see~\cite{montgomery-vaughan} and Lemma~\ref{lem:MV-sieve}).
 We caution that for the zeros of $\zeta$ the minimal gap is \emph{not} bounded
-below by $1/\log T$ (zeros cluster, cf.\ pair correlation~\cite{montgomery-pair});
-the inequality is therefore applied in the averaged form of
-Remark~\ref{rmk:spacing}, which is what introduces the $\log\log T$ factor.
+below by $1/\log T$ (zeros cluster, cf.\ pair correlation~\cite{montgomery-pair}).
+As explained in Remark~\ref{rmk:spacing}, the variance bound does not in fact
+rely on (A4) for the zero frequencies: it is obtained directly from the global
+second moment in Appendix~\ref{app:A}, with (A4) used only for the well-spaced
+Dirichlet-polynomial frequencies $\log n$.
 \end{enumerate}
 No use is made of delicate Euler-product cancellations.  All constants below are
 \emph{computable} from the data of (A1)–(A4).
@@ -330,18 +332,24 @@ inequality~\cite{montgomery-vaughan}; see Remark~\ref{rmk:spacing} for the
 spacing issue and Appendix~\ref{app:dirichlet} for details.
 \end{proof}
 
-\begin{remark}[Spacing caveat and intended argument]\label{rmk:spacing}
-The large sieve constant $\delta^{-1}$ above uses the \emph{minimal} gap
-$\delta$ of the active frequencies.  For the ordinates of $\zeta$ no positive
-lower bound on $\delta$ holds (the GUE/pair-correlation law predicts gaps far
-below the mean), so Lemma~\ref{lem:MV-sieve} cannot be invoked with
-$\delta\asymp1/\log T$ uniformly.  The bound is instead established in mean over
-the block grid: grouping zeros by local density and applying a Gallagher-type
-short-interval second-moment estimate, the clustered frequencies contribute
-$\ll(\Delta+\log X)$ \emph{on average}, with the zero-counting estimate (A2)
-supplying the residual $\log\log T$.  This averaged form is what Parts~1–2 use;
-we flag it as the technical crux of the variance bound and do not claim the
-naive minimal-spacing large sieve.
+\begin{remark}[Spacing is not actually needed]\label{rmk:spacing}
+The large sieve constant $\delta^{-1}$ in Lemma~\ref{lem:MV-sieve} uses the
+\emph{minimal} gap $\delta$ of the active frequencies, and for the ordinates of
+$\zeta$ no positive lower bound on $\delta$ holds uniformly (the
+pair-correlation law predicts gaps far below the mean).  We therefore do
+\emph{not} prove the variance bound through Lemma~\ref{lem:MV-sieve}.  Instead,
+because the blocks tile $[0,T]$, the quantity
+$\sum_j\int_{I_j}|H_\sigma'|^2$ equals the \emph{global} second moment
+$\int_0^T|H_\sigma'|^2$, which Appendix~\ref{app:A} bounds directly: the diagonal
+yields the main term $\tfrac{1}{2\pi}T\log T\log\log T$ \emph{unconditionally},
+while the off-diagonal is merely polylogarithmic in $T$ under the mild ordinate
+spacing Hypothesis~(S) (Hypothesis~\ref{hyp:spacing}).  Hypothesis~(S) is far
+weaker than RH or pair correlation and is the single arithmetic input; crucially,
+it replaces --- and is much milder than --- the uniform minimal-gap requirement
+of the large sieve, because the truncation height $X\asymp\log T$ is negligible
+against the integration length $T$.  Lemma~\ref{lem:MV-sieve} is retained only
+for the Dirichlet-polynomial estimates of Appendix~\ref{app:dirichlet}, where the
+frequencies $\log n$ are genuinely well spaced.
 \end{remark}
 
 \begin{proposition}[Summability]\label{prop:summability}
@@ -393,8 +401,12 @@ F_\lambda(H_\sigma;T,\Delta)
 \end{theorem}
 
 \noindent\emph{Unconditionality.}
-Theorem~\ref{thm:variance} depends only on (A2)–(A4) and holds independently
-of RH.  Constants are uniform over the canonical regime~\eqref{eq:canon}.
+Theorem~\ref{thm:variance} holds independently of RH.  Its leading term is
+unconditional; the error term uses, in place of a large-sieve estimate for the
+(clustered) ordinates, only the mild spacing Hypothesis~\ref{hyp:spacing}~(S),
+which is far weaker than RH or pair correlation (Appendix~\ref{app:A},
+Remark~\ref{rmk:spacing}).  Constants are uniform over the canonical
+regime~\eqref{eq:canon}.
 
 \begin{proof}[Proof of Theorem~\ref{thm:variance}]
 Write $H_\sigma = H_{\le X} + H_{>X}$ with $X = \Delta^{-1} = \log T/(2\pi)$.

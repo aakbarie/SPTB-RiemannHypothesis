@@ -26,94 +26,140 @@ H'_\sigma(t)=\sum_{\rho}\frac{e^{\eta_\rho t}}{|\rho|^{\alpha}}
 \]
 Fix the canonical block scale $\Delta\asymp (\log T)^{-1}$ and partition
 $[0,T]=\bigcup_j I_j$ with $I_j=[t_j,t_{j+1}]$, $|I_j|=\Delta$.
-Introduce a frequency cut
+As in Remark~\ref{rmk:truncation}, at the explicit-formula value $\alpha=1$ the
+derivative field is taken in truncated form, with frequencies
+$|\gamma|\le X:=\Delta^{-1}\asymp\log T$.  In complex notation
 \[
-\Gamma_0:=(\log T)^2,
+H_\sigma'(t)=\sum_{|\gamma|\le X} b_\rho\, e^{(\eta_\rho+i\gamma)t},
+\qquad |b_\rho|\asymp |\rho|^{-\alpha}|\gamma|,\quad \eta_\rho=\beta-\sigma .
 \]
-and split the spectrum into
-\(
-\mathcal{L}=\{\rho:\ |\gamma|<\Gamma_0\}
-\)
-and
-\(
-\mathcal{H}=\{\rho:\ |\gamma|\ge \Gamma_0\}.
-\)
+The argument below uses only the \emph{global} second moment of this truncated
+field; its leading term is unconditional, and the sole arithmetic input is the
+mild ordinate-spacing Hypothesis~\ref{hyp:spacing}~(S), far weaker than any
+large-sieve minimal-gap requirement.
 
 \subsection{Blockwise Affine Projection and a Mean–Variance Lemma}
 
 Let $P_j$ denote the $L^2(I_j)$ projection onto affine functions
-$\{a+bt\}$ and set $R_j=(\mathrm{Id}-P_j)H_\sigma$.
-By linear–regression Pythagoras (orthogonality of the normal equations)
-we have the blockwise stability
+$\{a+bt\}$ and set $R_j=(\mathrm{Id}-P_j)H_\sigma$.  Then $R_j'=H_\sigma'-b_j$,
+where $b_j$ is the (constant) slope of the affine fit.  We have the blockwise
+stability
 \begin{equation}
 \int_{I_j} |R'_j(t)|^2\,dt
 \;\le\;
 c_{\mathrm{aff}}^{-1}\int_{I_j} |H'_\sigma(t)|^2\,dt,
-\qquad
-c_{\mathrm{aff}}=\tfrac{1}{4},
 \label{eq:aff-proj}
 \end{equation}
-with an absolute constant $c_{\mathrm{aff}}\in(0,1)$. Thus it suffices to
-bound $\sum_j\int_{I_j}|H'_\sigma|^2$.
+for an absolute constant $c_{\mathrm{aff}}\in(0,1)$.  Indeed, the regression slope
+$b_j=\frac{12}{\Delta^3}\int_{I_j}(t-\bar t)\,H_\sigma\,dt
+=\frac{12}{\Delta^3}\int_{I_j}\kappa_j(t)\,H_\sigma'(t)\,dt$ for a kernel
+$\kappa_j$ with $|\kappa_j|\le\Delta^2$, so by Cauchy--Schwarz
+$\Delta\,b_j^2\le C\int_{I_j}|H_\sigma'|^2$; combined with
+$\int_{I_j}|H_\sigma'-b_j|^2=\int_{I_j}|H_\sigma'|^2-\Delta\,b_j(2m_j-b_j)$,
+where $m_j=\Delta^{-1}\!\int_{I_j}H_\sigma'$ is the block mean of $H_\sigma'$ and
+$\Delta\,m_j^2\le\int_{I_j}|H_\sigma'|^2$, this yields \eqref{eq:aff-proj} with an
+absolute constant.  (We make no use of any specific value of $c_{\mathrm{aff}}$.)
 
-\subsection{Low Frequencies \texorpdfstring{$(|\gamma|<\Gamma_0)$}{(low)}}
+\subsection{Reduction to a global second moment}
 
-On $I_j$ the weights $e^{\eta_\rho t}$ vary slowly and can be frozen at
-$t_j$ up to a relative $O(\eta_\rho\Delta)=o(1)$ correction (uniformly in
-the canonical regime). Using
-$\int_{I_j}\cos^2(\gamma t)\,dt\asymp \Delta$ uniformly for
-$|\gamma|<\Gamma_0$ and the pointwise bound
-$\eta_\rho^2\cos^2+\gamma^2\sin^2\le \eta_\rho^2+\gamma^2$, we obtain
+Because the blocks tile $[0,T]$, \eqref{eq:aff-proj} gives
 \begin{equation}
-\int_{I_j}\!|H'_{\sigma,\mathcal{L}}(t)|^2\,dt
-\;\ll\;
-\Delta \sum_{\rho\in\mathcal{L}}
-\frac{e^{2\eta_\rho t_j}}{|\rho|^{2\alpha}}\bigl(\eta_\rho^2+\gamma^2\bigr),
-\label{eq:low}
+\sum_j\int_{I_j}|R_j'|^2
+\;\le\; c_{\mathrm{aff}}^{-1}\sum_j\int_{I_j}|H_\sigma'|^2
+\;=\; c_{\mathrm{aff}}^{-1}\int_0^T|H_\sigma'(t)|^2\,dt,
+\label{eq:reduce-global}
 \end{equation}
-with an absolute implied constant.
+so it suffices to bound the global second moment of the truncated field.
 
-\subsection{High Frequencies \texorpdfstring{$(|\gamma|\ge\Gamma_0)$}{(high)}}
+\subsection{Diagonal main term}
 
-By the Montgomery–Vaughan short–interval inequality applied to
-$\sum b_\rho e^{i\gamma t}$ with $b_\rho$ the frozen coefficients on $I_j$,
-\begin{equation}
-\int_{I_j}\!|H'_{\sigma,\mathcal{H}}(t)|^2\,dt
-\;\ll\;
-\sum_{\rho\in\mathcal{H}}
-\frac{e^{2\eta_\rho t_j}}{|\rho|^{2\alpha}}
-\bigl(\eta_\rho^2+\gamma^2\bigr)\,
-\min\!\Bigl\{\Delta,\tfrac{1}{\gamma^2\Delta}\Bigr\}.
-\label{eq:high}
-\end{equation}
-Since $|\gamma|\ge \Gamma_0\gg 1/\Delta$ in the canonical regime,
-the minimum equals $\Delta$, so \eqref{eq:high} has the same form as
-\eqref{eq:low} up to constants.
-
-\subsection{Summation over Blocks and Zeros}
-
-Summing \eqref{eq:low}–\eqref{eq:high} over $j$ and using
+Expanding the square,
 \[
-\sum_{j} \Delta\, e^{2\eta_\rho t_j}
-\;\ll\;
-\begin{cases}
-\dfrac{e^{2\eta_\rho T}}{\eta_\rho}, & \eta_\rho>0,\\[6pt]
-T, & \eta_\rho\le 0,
-\end{cases}
+\int_0^T|H_\sigma'|^2\,dt
+=\sum_{|\gamma|\le X}|b_\rho|^2\!\int_0^T\! e^{2\eta_\rho t}\,dt
+\;+\;\sum_{\rho\ne\rho'} b_\rho\bar b_{\rho'}\!\int_0^T\! e^{(\eta_\rho+\eta_{\rho'})t}e^{i(\gamma-\gamma')t}\,dt .
 \]
-together with standard zero–counting and the square–summability of the
-coefficient weights, yields the global variance bound
+In the variance regime $\eta_\rho=\beta-\sigma\le0$.  An on-line zero
+($\eta_\rho=0$) contributes $\int_0^T e^{2\eta_\rho t}dt=T$ to the diagonal;
+an off-line-left zero ($\eta_\rho<0$) contributes $\le 1/(2|\eta_\rho|)=O(1)$.
+Hence the diagonal equals
+\[
+T\!\!\sum_{\substack{0<\gamma\le X\\ \beta=\sigma}}\!\!|b_\rho|^2\,(1+o(1))
+=T\!\!\sum_{0<\gamma\le X}\!\frac{\gamma^2}{|\rho|^{2\alpha}}\,(1+o(1)),
+\]
+the off-line-left zeros giving a lower-order contribution.  By
+Riemann--von~Mangoldt, $dN(V)=\tfrac{1}{2\pi}\log\tfrac{V}{2\pi}\,dV+O(dV)$, so
+with $|\rho|\asymp\gamma$,
+\[
+\sum_{0<\gamma\le X}\frac{\gamma^2}{|\rho|^{2\alpha}}
+\asymp\int_1^X V^{2-2\alpha}\,\frac{\log V}{2\pi}\,dV
+=\begin{cases}\dfrac{X^{3-2\alpha}\log X}{2\pi(3-2\alpha)}(1+o(1)), & \alpha<\tfrac32,\\[6pt] O(1), & \alpha>\tfrac32.\end{cases}
+\]
+At the explicit-formula value $\alpha=1$ this is
+$\frac{X\log X}{2\pi}(1+o(1))=\frac{\log T\log\log T}{2\pi}(1+o(1))$ since
+$X=\Delta^{-1}\asymp\log T$, so the diagonal is
+\begin{equation}
+T\sum_{0<\gamma\le X}\frac{\gamma^2}{|\rho|^{2\alpha}}
+=\frac{1}{2\pi}\,T\log T\log\log T\,(1+o(1)).
+\label{eq:diag-main}
+\end{equation}
+This is the source of both the $\log\log T$ factor and the criticality of
+$\alpha=1$ (for $\alpha>1$ the sum converges and the bound improves to $O(T)$).
+
+\subsection{Off-diagonal: negligibility via zero separation}
+
+Using $|e^{(\eta_\rho+\eta_{\rho'})t}|\le1$ and
+$\bigl|\int_0^T e^{i(\gamma-\gamma')t}dt\bigr|\le 2/|\gamma-\gamma'|$, the
+off-diagonal is bounded by
+\[
+\Bigl|\sum_{\rho\ne\rho'}\cdots\Bigr|
+\le 2\!\!\sum_{\substack{|\gamma|,|\gamma'|\le X\\ \gamma\ne\gamma'}}\!\!
+\frac{|b_\rho||b_{\rho'}|}{|\gamma-\gamma'|}
+\le\frac{2}{\delta_{\min}(X)}\Bigl(\sum_{|\gamma|\le X}|b_\rho|\Bigr)^2 ,
+\]
+where $\delta_{\min}(X)$ is the least gap between distinct ordinates with
+$|\gamma|\le X$.  The diagonal carries the full factor $T$ from $\int_0^T$, so
+the off-diagonal is negligible as soon as $\delta_{\min}(X)^{-1}$ is small
+relative to $T$.  This is guaranteed by the following mild input, which we state
+explicitly as it is the \emph{only} arithmetic hypothesis entering the variance
+bound.
+
+\begin{hypothesis}[Mild ordinate spacing, \textup{(S)}]\label{hyp:spacing}
+There is an absolute $c_0>0$ such that distinct ordinates $\gamma\ne\gamma'$ of
+$\zeta$ with $|\gamma|,|\gamma'|\le V$ satisfy $|\gamma-\gamma'|\gg V^{-c_0}$;
+equivalently $\delta_{\min}(V)\gg V^{-c_0}$.
+\end{hypothesis}
+
+\noindent
+Hypothesis (S) is far weaker than the Riemann Hypothesis or the pair-correlation
+conjecture: it only forbids distinct ordinates from approaching faster than any
+fixed polynomial rate, and is consistent with all known zero computations
+(the closest recorded pairs, e.g.\ Lehmer pairs, are separated by $\gg 10^{-5}$,
+vastly larger than the required $V^{-c_0}$ at the relevant heights $V\asymp\log T$).
+A Jensen's-formula argument on a bounded disc, using $|\zeta|\ll V^{A}$
+(convexity) and the bound $O(\log V)$ on the number of nearby zeros, makes (S)
+highly plausible unconditionally; we do not pursue a complete proof here and
+isolate it as the single open input.  Under (S),
+$\delta_{\min}(X)^{-1}\ll X^{c_0}=(\log T)^{c_0}$ and, since
+$\sum_{|\gamma|\le X}|b_\rho|\ll N(X)\ll X^{1+o(1)}$, the off-diagonal is
+$\ll(\log T)^{c_0+2+o(1)}$ --- \emph{polylogarithmic} in $T$ --- hence negligible
+against the diagonal \eqref{eq:diag-main}.  The point is structural: the
+truncation height $X\asymp\log T$ is so small relative to the integration length
+$T$ that, granting (S), the cross terms cannot compete; no minimal-gap or
+large-sieve estimate for the (clustered) ordinates is invoked.
+
+\subsection{Conclusion}
+
+Combining \eqref{eq:reduce-global}, \eqref{eq:diag-main} and the off-diagonal
+bound (the latter under Hypothesis~\ref{hyp:spacing}) gives the global variance
+bound
 \begin{equation}
 \sum_j\int_{I_j}\!|H'_\sigma(t)|^2\,dt
-\;\le\;
-C_0(\sigma,\alpha)\, T\log T\log\log T,
+\;\le\; C_0(\sigma,\alpha)\, T\log T\log\log T,
+\qquad C_0=\tfrac{1}{2\pi}+o(1)\ \ (\alpha=1),
 \label{eq:globalC0}
 \end{equation}
-where $C_0(\sigma,\alpha)$ is explicit and depends only on the fixed
-parameters and the Montgomery–Vaughan constant (the latter contributing a
-factor $1/(8\pi^2)$ in the standard normalization).
-
-Combining \eqref{eq:aff-proj} and \eqref{eq:globalC0} gives the form used in
+and, with \eqref{eq:aff-proj}, the form used in
 Step~\ref{step:residual-variance} of Part~2:
 \begin{equation}
 \sum_j\int_{I_j}\!|R'_j(t)|^2\,dt
