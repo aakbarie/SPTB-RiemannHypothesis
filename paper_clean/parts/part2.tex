@@ -390,6 +390,47 @@ We isolate it as the precise content of the open case: \emph{bounded energy
 rigidly confines the spectrum to $\beta\le\sigma$.}
 \end{remark}
 
+\begin{remark}[A Gram-matrix formulation, after Knill--Laflamme]\label{rmk:gram}
+The rigidity admits a linear-algebraic reformulation in the spirit of the
+Knill--Laflamme quantum error-correction conditions~\cite{knill-laflamme}, where
+correctability of error operators $\{E_a\}$ on a code with projector $P$ is
+governed by the \emph{nondegeneracy} of the Hermitian Gram matrix
+$c_{ab}=PE_a^\dagger E_bP$: diagonalizing $c$ splits the errors, by polar
+decomposition, into an orthogonal (correctable) part and a null (vanishing) part.
+Here the analogues of the errors are the edge contributions
+$e_\rho(t)=e^{(\eta_\rho+i\gamma_\rho)t}$ (with $\eta_\rho$ near $\eta^\ast$), and
+cancellation is exactly degeneracy of their Gram matrix
+$G(T)_{\rho\rho'}=\int_0^T e_\rho(t)\,\overline{e_{\rho'}(t)}\,dt$.  A direct
+computation shows the \emph{normalized} Gram matrix is essentially independent
+of $T$:
+\begin{equation}
+\widetilde G_{\rho\rho'}
+=\frac{\langle e_\rho,e_{\rho'}\rangle}{\|e_\rho\|\,\|e_{\rho'}\|}
+\;\xrightarrow{\,T\to\infty\,}\;
+\frac{2\sqrt{\eta_\rho\,\eta_{\rho'}}}{\sqrt{(\eta_\rho+\eta_{\rho'})^2+(\gamma_\rho-\gamma_{\rho'})^2}}
+\;\le\;\frac{2\eta^\ast}{|\gamma_\rho-\gamma_{\rho'}|}
+\qquad(\rho\ne\rho'),
+\label{eq:gram-cos}
+\end{equation}
+with unit diagonal; as a genuine cosine it never exceeds $1$, and the right-hand
+bound is the well-separated form $|\gamma_\rho-\gamma_{\rho'}|\gg\eta^\ast$.  Thus
+the \emph{angle} between two edge contributions is fixed by their ordinate gap:
+cancellation (near-degeneracy of $\widetilde G$) requires edge zeros with
+\emph{close ordinates}, whereas ordinate separation forces near-orthogonality and
+hence rigidity.  Concretely, since the off-diagonal entries are bounded by
+$2\eta^\ast/|\gamma_\rho-\gamma_{\rho'}|$, the Schur test makes $\widetilde G$
+positive definite with a spectral gap as soon as
+$\sup_\rho\sum_{\rho'\ne\rho}2\eta^\ast/|\gamma_\rho-\gamma_{\rho'}|<1$, in which
+case $F_\lambda\gg e^{2(\eta^\ast-\varepsilon)T}$ and no cancellation occurs (a
+weighted, finite-$T$ analogue of Ingham's inequality~\cite{ingham-ineq}).  This
+ties the unattained-edge rigidity to the same \emph{spacing} of ordinates that
+underlies Hypothesis~(S) of Appendix~\ref{app:A}: both open inputs assert that
+the zeros do not cluster.  We do not establish the Schur bound
+unconditionally---over an unbounded range of heights the row sums need not be
+finite---so the rigidity is \emph{reduced to}, but not closed by, ordinate
+separation.
+\end{remark}
+
 % ---------------------------------------------------------
 \section{Heuristic and Numerical Consistency}\label{sec:numerics}
 
