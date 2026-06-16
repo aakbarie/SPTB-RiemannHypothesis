@@ -136,10 +136,10 @@ conjecture: it only forbids distinct ordinates from approaching faster than any
 fixed polynomial rate, and is consistent with all known zero computations
 (the closest recorded pairs, e.g.\ Lehmer pairs, are separated by $\gg 10^{-5}$,
 vastly larger than the required $V^{-c_0}$ at the relevant heights $V\asymp\log T$).
-A Jensen's-formula argument on a bounded disc, using $|\zeta|\ll V^{A}$
-(convexity) and the bound $O(\log V)$ on the number of nearby zeros, makes (S)
-highly plausible unconditionally; we do not pursue a complete proof here and
-isolate it as the single open input.  Under (S),
+What \emph{can} be proved toward (S), and the precise obstruction to a complete
+proof, are recorded in \S\ref{subsec:toward-S} below; (S) is no easier than the
+known unconditional small-gap problem for $\zeta$-ordinates, and we isolate it as
+the single open input.  Under (S),
 $\delta_{\min}(X)^{-1}\ll X^{c_0}=(\log T)^{c_0}$ and, since
 $\sum_{|\gamma|\le X}|b_\rho|\ll N(X)\ll X^{1+o(1)}$, the off-diagonal is
 $\ll(\log T)^{c_0+2+o(1)}$ --- \emph{polylogarithmic} in $T$ --- hence negligible
@@ -147,6 +147,66 @@ against the diagonal \eqref{eq:diag-main}.  The point is structural: the
 truncation height $X\asymp\log T$ is so small relative to the integration length
 $T$ that, granting (S), the cross terms cannot compete; no minimal-gap or
 large-sieve estimate for the (clustered) ordinates is invoked.
+
+\subsection{Toward Hypothesis (S)}\label{subsec:toward-S}
+
+We record what can be proved toward (S) and isolate the obstruction.
+
+First, in the variance regime at $\sigma=\tfrac12$ the hypothesis simplifies.
+If every zero satisfies $\beta\le\tfrac12$, then by the functional equation
+together with the reflection $\zeta(\bar s)=\overline{\zeta(s)}$, each zero
+$\rho=\beta+i\gamma$ is paired with $1-\bar\rho=(1-\beta)+i\gamma$, also a zero, of
+real part $1-\beta\ge\tfrac12$; both can satisfy $\beta\le\tfrac12$ only if
+$\beta=\tfrac12$.  Hence \emph{at $\sigma=\tfrac12$ the variance regime forces
+all zeros onto the critical line}, and distinct ordinates correspond to distinct
+zeros with $|\rho-\rho'|=|\gamma-\gamma'|$.  For such zeros we have a conditional
+separation.
+
+\begin{proposition}[Conditional polynomial separation]\label{prop:cond-sep}
+Let $\rho_1=\tfrac12+i\gamma_1,\ \rho_2=\tfrac12+i\gamma_2$ be distinct on-line
+zeros with $|\gamma_j|\le V$, set $d=|\gamma_1-\gamma_2|<1$ and
+$s_0=\tfrac12+i\tfrac{\gamma_1+\gamma_2}{2}$, and let $A$ be an absolute exponent
+with $|\zeta(s)|\ll V^{A}$ on $\{|s-s_0|\le1\}$ \textup{(}the functional equation
+and convexity give polynomial growth in the height on any fixed-width strip, so
+such an absolute $A$ exists\textup{)}.
+If there is a point $c$ with $|c-s_0|\le\tfrac12 V^{-(A+B)/2}$ and
+$|\zeta(c)|\ge V^{-B}$, then $d\ge V^{-(A+B)/2}$.
+\end{proposition}
+
+\begin{proof}
+Jensen's formula for $\zeta$ on the disc $\{|s-c|\le1\}$ gives
+\[
+\sum_{|z_k-c|\le1}\log\frac{1}{|z_k-c|}
+=\frac{1}{2\pi}\!\int_0^{2\pi}\!\log\bigl|\zeta(c+e^{i\theta})\bigr|\,d\theta
+-\log|\zeta(c)|
+\;\le\; A\log V+B\log V,
+\]
+the sum over zeros $z_k$ of $\zeta$ in the disc.  Every term is nonnegative, and
+$\rho_1,\rho_2$ alone contribute at least $2\log\frac{1}{d/2+|c-s_0|}$ (as
+$|\rho_j-c|\le d/2+|c-s_0|$).  Hence $d/2+|c-s_0|\ge V^{-(A+B)/2}$, and with
+$|c-s_0|\le\tfrac12 V^{-(A+B)/2}$ this yields $d\ge V^{-(A+B)/2}$.
+\end{proof}
+
+\begin{remark}[The obstruction and the status of (S)]\label{rmk:obstruction}
+Proposition~\ref{prop:cond-sep} reduces (S) to producing a point $c$ within
+$V^{-c_0}$ of the cluster at which $|\zeta|\ge V^{-B}$.  This is exactly what is
+\emph{not} available unconditionally: near a cluster of the $O(\log V)$ zeros in
+a unit disc, Cartan's lemma bounds the small-value set of $\zeta$ only up to an
+exceptional radius of size $O(1)$, not $V^{-c_0}$, so one cannot in general find a
+non-small point as close as $V^{-c_0}$ to the cluster.  In this sense (S) is no
+easier than the unconditional small-gap problem for $\zeta$-ordinates --- a
+recognized hard problem.  Lehmer's phenomenon shows the gaps can be very small,
+while random-matrix heuristics predict the smallest gap up to height $V$ to be
+only polynomially small, comfortably within (S) for a suitable $c_0$.
+We stress that (S) is more than what the variance bound needs: (S) makes the
+off-diagonal \emph{polylogarithmic}, but for it merely to be \emph{negligible}
+against the diagonal $\asymp T\log T\log\log T$ it suffices that
+$\delta_{\min}(\log T)\gg T^{-1}(\log T)^{O(1)}$ --- i.e.\ that no two distinct
+ordinates below height $\log T$ lie within $T^{-1}(\log T)^{O(1)}$ of each other,
+a vastly weaker requirement, overwhelmingly satisfied since those ordinates are
+low-height zeros with gaps $\asymp 1/\log\log T$.  We therefore leave (S) as the
+single, mild, numerically unchallenged arithmetic input.
+\end{remark}
 
 \subsection{Conclusion}
 
