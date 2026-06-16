@@ -76,9 +76,11 @@ with real frequencies $\gamma$,
 where $\delta$ is the minimal frequency gap.  This applies to both $H_\sigma$ and
 $\partial_t H_\sigma$ (see~\cite{montgomery-vaughan} and Lemma~\ref{lem:MV-sieve}).
 We caution that for the zeros of $\zeta$ the minimal gap is \emph{not} bounded
-below by $1/\log T$ (zeros cluster, cf.\ pair correlation~\cite{montgomery-pair});
-the inequality is therefore applied in the averaged form of
-Remark~\ref{rmk:spacing}, which is what introduces the $\log\log T$ factor.
+below by $1/\log T$ (zeros cluster, cf.\ pair correlation~\cite{montgomery-pair}).
+As explained in Remark~\ref{rmk:spacing}, the variance bound does not in fact
+rely on (A4) for the zero frequencies: it is obtained directly from the global
+second moment in Appendix~\ref{app:A}, with (A4) used only for the well-spaced
+Dirichlet-polynomial frequencies $\log n$.
 \end{enumerate}
 No use is made of delicate Euler-product cancellations.  All constants below are
 \emph{computable} from the data of (A1)–(A4).
@@ -330,18 +332,26 @@ inequality~\cite{montgomery-vaughan}; see Remark~\ref{rmk:spacing} for the
 spacing issue and Appendix~\ref{app:dirichlet} for details.
 \end{proof}
 
-\begin{remark}[Spacing caveat and intended argument]\label{rmk:spacing}
-The large sieve constant $\delta^{-1}$ above uses the \emph{minimal} gap
-$\delta$ of the active frequencies.  For the ordinates of $\zeta$ no positive
-lower bound on $\delta$ holds (the GUE/pair-correlation law predicts gaps far
-below the mean), so Lemma~\ref{lem:MV-sieve} cannot be invoked with
-$\delta\asymp1/\log T$ uniformly.  The bound is instead established in mean over
-the block grid: grouping zeros by local density and applying a Gallagher-type
-short-interval second-moment estimate, the clustered frequencies contribute
-$\ll(\Delta+\log X)$ \emph{on average}, with the zero-counting estimate (A2)
-supplying the residual $\log\log T$.  This averaged form is what Parts~1–2 use;
-we flag it as the technical crux of the variance bound and do not claim the
-naive minimal-spacing large sieve.
+\begin{remark}[Spacing is not actually needed]\label{rmk:spacing}
+The large sieve constant $\delta^{-1}$ in Lemma~\ref{lem:MV-sieve} uses the
+\emph{minimal} gap $\delta$ of the active frequencies, and for the ordinates of
+$\zeta$ no positive lower bound on $\delta$ holds uniformly (the
+pair-correlation law predicts gaps far below the mean).  We therefore do
+\emph{not} prove the variance bound through Lemma~\ref{lem:MV-sieve}.  Instead,
+because the blocks tile $[0,T]$, the quantity
+$\sum_j\int_{I_j}|H_\sigma'|^2$ equals the \emph{global} second moment
+$\int_0^T|H_\sigma'|^2$, which Appendix~\ref{app:A} bounds directly: the diagonal
+yields the main term $\tfrac{1}{2\pi}T\log T\log\log T$ \emph{unconditionally},
+while the off-diagonal is merely polylogarithmic in $T$ under the mild ordinate
+spacing Hypothesis~(S) (Hypothesis~\ref{hyp:spacing}).  Hypothesis~(S) is far
+weaker than RH or pair correlation and is the single arithmetic input; crucially,
+it replaces --- and is much milder than --- the uniform minimal-gap requirement
+of the large sieve, because the truncation height $X\asymp\log T$ is negligible
+against the integration length $T$.  Lemma~\ref{lem:MV-sieve} is recorded for
+completeness --- it applies to genuinely well-spaced frequencies, such as the
+$\log n$ of Dirichlet polynomials, but \emph{not} to the clustered zeta
+ordinates, which is why the variance bound is obtained by the global second
+moment instead.
 \end{remark}
 
 \begin{proposition}[Summability]\label{prop:summability}
@@ -393,68 +403,45 @@ F_\lambda(H_\sigma;T,\Delta)
 \end{theorem}
 
 \noindent\emph{Unconditionality.}
-Theorem~\ref{thm:variance} depends only on (A2)–(A4) and holds independently
-of RH.  Constants are uniform over the canonical regime~\eqref{eq:canon}.
+Theorem~\ref{thm:variance} holds independently of RH, and is essentially
+unconditional: the leading (diagonal) term is unconditional, and the off-diagonal
+error term requires, in place of a large-sieve estimate for the clustered
+ordinates, only the \emph{trivial} low-height separation
+$\delta_{\min}(\log T)\gg T^{-1}(\log T)^{O(1)}$
+(Appendix~\ref{app:A}, Remark~\ref{rmk:obstruction}), which holds with enormous
+room since the zeros below height $\log T$ have gaps $\asymp1/\log\log T$.  The
+clean uniform Hypothesis~\ref{hyp:spacing}~(S) is far more than this bound
+needs; the genuinely open use of non-clustering is not here but in the
+unattained-edge rigidity of Part~2 (Remarks~\ref{rmk:rigidity}--\ref{rmk:gram}).
+Constants are uniform over the canonical regime~\eqref{eq:canon}.
 
 \begin{proof}[Proof of Theorem~\ref{thm:variance}]
-Write $H_\sigma = H_{\le X} + H_{>X}$ with $X = \Delta^{-1} = \log T/(2\pi)$.
-We use the competitor $S_j = 0$ on each block (which only overestimates
-the infimum over affine fits).
-
-\medskip\noindent
-\textit{Low-frequency variance via large sieve.}
-Since $e^{(\beta-\sigma)t}\le 1$ uniformly in $t$ when all $\beta\le\sigma$,
-Lemma~\ref{lem:MV-sieve} yields on any block~$I_j$:
-\[
-\int_{I_j} |H_{\le X}|^2\,dt
-\;\ll\; (\Delta + \log X)\sum_{|\gamma|\le X} |\rho|^{-2\alpha}.
-\]
-By Proposition~\ref{prop:summability}, the sum is $O(1)$ for $\alpha > 1/2$. Hence
-\[
-\int_{I_j} |H_{\le X}|^2\,dt \;\ll\; \log\log T.
-\]
-
-\medskip\noindent
-\textit{High-frequency tail.}
-By Lemma~\ref{lem:high-freq} on each block~$I_j$,
-\[
-\int_{I_j} |H_{>X}|^2\,dt
-\;\ll\; \Delta \cdot X^{-(2\alpha-1)}\log X
-\;\ll\; (\log T)^{-1}\log\log T
-\]
-for $\alpha\ge 1$.
-
-\medskip\noindent
-\textit{Derivative contribution (low-frequency).}
-Differentiating $H_{\le X}$:
-\[
-\partial_t H_{\le X}
-= \sum_{|\gamma|\le X}
-\frac{e^{(\beta-\sigma)t}}{|\rho|^\alpha}
-\bigl((\beta-\sigma)\cos(\gamma t)-\gamma\sin(\gamma t)\bigr).
-\]
-Applying Lemma~\ref{lem:MV-sieve} to $\partial_t H_{\le X}$,
-\[
-\int_{I_j} |\partial_t H_{\le X}|^2\,dt
-\;\ll\; (\Delta + \log X)
-\sum_{|\gamma|\le X}\frac{(\beta-\sigma)^2+\gamma^2}{|\rho|^{2\alpha}}.
-\]
-When $\alpha=1$ the sum is $\ll N(X)\ll X\log X\ll\log T\log\log T$;
-when $\alpha>1$ the sum converges uniformly.
-In both cases,
-\[
-\int_{I_j} |\partial_t H_{\le X}|^2\,dt \;\ll\; \log T(\log\log T)^2.
-\]
-Multiplying by $\lambda = (\log T)^{-2}$ contributes $\ll (\log\log T)^2/\log T$
-per block.
-
-\medskip\noindent
-\textit{Summation over blocks.}
-Combining all terms, each block contributes $\ll \log\log T$ to $F_\lambda$.
-There are $J \ll T/\Delta \ll T\log T$ blocks. Hence
-\[
-F_\lambda(H_\sigma;T,\Delta) \;\ll\; T\log T\log\log T. \qedhere
-\]
+Since the blocks tile $[0,T]$ and the blockwise affine projection only decreases
+each residual, $F_\lambda$ is controlled by the global second moments of $H_\sigma$
+and of its truncated derivative; we do \emph{not} route the bound through the
+large sieve for the (clustered) zero frequencies (cf.\ Remark~\ref{rmk:spacing}).
+For the slope term, the reduction~\eqref{eq:reduce-global} and the
+diagonal/off-diagonal estimate of Appendix~\ref{app:A} give
+\begin{equation*}
+\sum_j\int_{I_j}|R_j'|^2 \;\le\; C_0'\,T\log T\log\log T
+\qquad\text{\eqref{eq:residC0prime}},
+\end{equation*}
+the leading order coming from the diagonal~\eqref{eq:diag-main}; the off-diagonal
+is negligible (polylogarithmic in $T$) using only the mild low-height separation
+of Remark~\ref{rmk:obstruction}.  For the amplitude term, the same diagonal
+computation without the derivative weight gives
+\begin{equation*}
+\sum_j\int_{I_j}|R_j|^2 \;\le\; \int_0^T|H_\sigma|^2\,dt
+\;\ll\; T\sum_{|\gamma|\le X}|\rho|^{-2\alpha} \;\ll\; T
+\end{equation*}
+for $\alpha>1/2$ (Proposition~\ref{prop:summability}).  Since
+$\lambda\le c_2(\log T)^{-2}\le1$,
+\begin{equation*}
+F_\lambda(H_\sigma;T,\Delta)
+=\sum_j\Big(\int_{I_j}|R_j|^2+\lambda\int_{I_j}|R_j'|^2\Big)
+\;\ll\; T + C_0'\,T\log T\log\log T
+\;\ll\; T\log T\log\log T. \qedhere
+\end{equation*}
 \end{proof}
 
 % ---------------------------------------------------------

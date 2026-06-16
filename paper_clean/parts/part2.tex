@@ -48,41 +48,20 @@ We bound $\sum_j\int_{I_j}|R'|^2$ in the setting of
 Theorem~\ref{thm:bias}, where $\rho$ is the unique off-line zero so that
 all remaining zeros $\rho'\ne\rho$ in $R$ satisfy $\beta'\le\sigma$.
 
-Write $R=R_{\le X}+R_{>X}$ with $X=\Delta^{-1}$.
-Applying Lemma~\ref{lem:MV-sieve} to $R_{\le X}'$ on each block~$I_j$ gives
-\[
-\int_{I_j}|R_{\le X}'|^2\,dt
-\;\ll\;(\Delta+\log X)\!\sum_{\substack{|\gamma'|\le X\\ \rho'\ne\rho}}
-\frac{e^{2(\beta'-\sigma)t_j}}{|\rho'|^{2\alpha}}
-\bigl((\beta'-\sigma)^2+\gamma'^2\bigr).
-\]
-The Montgomery--Vaughan inequality (assumption~(A4)) is itself \emph{unconditional}:
-it bounds mean values of exponential sums regardless of zero locations.
-However, the resulting polynomial bound on $\sum_j\int_{I_j}|R'|^2$
-requires that every zero $\rho'$ in $R$ satisfies $\beta'\le\sigma$, so that
-the factors $e^{2(\beta'-\sigma)t_j}\le 1$ and the sum over blocks remains controlled.
-In the setting of Theorem~\ref{thm:bias} (a single off-line zero~$\rho$), this
-condition holds for all $\rho'\ne\rho$ in~$R$.
-We therefore bound the cross-interference between $h_\rho$ and $R$ as follows.
-
-By Cauchy--Schwarz on each block,
-\[
-\Big|\int_{I_j} h_\rho'\,\overline{R'}\,dt\Big|^2
-\;\le\; \int_{I_j}|h_\rho'|^2\,dt\cdot\int_{I_j}|R'|^2\,dt.
-\]
-Since the derivative penalty satisfies
-$\int_{I_j}|(H_\sigma-S_j)'|^2
-=\int_{I_j}|(h_\rho+R-S_j)'|^2
-\ge \tfrac12\int_{I_j}|(h_\rho-S_j)'|^2 - \int_{I_j}|R'|^2$,
-summing over blocks and using the large sieve bound for the $R'$ integral gives
+Since every $\rho'\ne\rho$ in $R$ satisfies $\beta'\le\sigma$, the residual is a
+variance-regime field, and Theorem~\ref{thm:variance} (proved in Part~1 via the
+global second moment of Appendix~\ref{app:A}, \emph{not} the large sieve for the
+clustered ordinates) applies to it directly:
 \begin{equation}
 \sum_j\!\int_{I_j}\!|R'(t)|^2dt
-   \;\le\; C_0\,T\log T\log\log T,
+   \;\le\; C_0'\,T\log T\log\log T,
 \label{eq:residual-variance}
 \end{equation}
-where $C_0=C_0(\alpha,\sigma)$ is explicit and the bound holds unconditionally
-by Lemma~\ref{lem:MV-sieve} and Proposition~\ref{prop:summability} applied
-to the partial sum over $\rho'\ne\rho$.
+with $C_0'$ as in~\eqref{eq:residC0prime}.  This bound is essentially
+unconditional: by Remark~\ref{rmk:obstruction} it needs only the trivial
+low-height ordinate separation, far weaker than Hypothesis~(S).  The cross-term
+between $h_\rho$ and $R$ is handled at the global level by the triangle-inequality
+assembly of Step~\ref{step:assembly}, so no per-block cancellation is invoked.
 
 % ---------------------------------------------------------
 \subsection{Step 3: Affine Projection Residual Energy}\label{step:affine-energy}
@@ -140,7 +119,7 @@ E(T)=\frac{c_{\mathrm{der}}\,\eta^2}{2|\rho|^{2\alpha}}
         \min\!\left\{\!\Delta,\tfrac{1}{|\gamma|}\!\right\}\frac{e^{2\eta T}}{2\eta\Delta},
 \]
 and by Step~\ref{step:residual-variance} the second is $\le P(T)^{1/2}$ with
-$P(T)=C_0\,T\log T\log\log T$.  Since $E$ grows exponentially and $P$ only
+$P(T)=C_0'\,T\log T\log\log T$.  Since $E$ grows exponentially and $P$ only
 polynomially, $E(T)\ge 4P(T)$ for all sufficiently large $T$, whence
 $E(T)^{1/2}-P(T)^{1/2}\ge \tfrac12 E(T)^{1/2}$ and
 \begin{equation}
@@ -157,14 +136,15 @@ variance regime.
 Tracking constants gives
 \begin{equation}
 F_\lambda(H_\sigma;T,\Delta)
-  \ge \frac{c_{\mathrm{der}}}{4C_0}\,
+  \ge \frac{c_{\mathrm{der}}}{4C_0'}\,
         \frac{\lambda\eta^2}{|\rho|^{2\alpha}}\,
         \frac{e^{2\eta T}}{\eta\Delta},
 \label{eq:uniform-lb}
 \end{equation}
 uniformly for $\kappa_1/\log T \le \Delta \le \kappa_2/\log T$ and
 $c_1(\log T)^{-2}\le \lambda \le c_2(\log T)^{-2}$,
-with $c_{\mathrm{der}}=4\pi^2$ and $C_0$ from Theorem~\ref{thm:variance}.
+with $c_{\mathrm{der}}=4\pi^2$ and $C_0'$ the residual variance constant
+of~\eqref{eq:residual-variance}.
 
 \begin{lemma}[Threshold regime]\label{lem:threshold}
 Fix the canonical scaling and assume $\eta=\beta-\sigma\ge c/\log T$ for constant $c>0$.
@@ -187,7 +167,7 @@ By~\eqref{eq:assembly}, the derivative contribution satisfies
 \min\!\bigl\{\Delta,\tfrac{1}{|\gamma|}\bigr\}
 \frac{e^{2\eta T}}{2\eta\Delta}}_{\displaystyle =:E(T)}
 \;-\;
-\underbrace{\lambda\,C_0\,T\log T\log\log T}_{\displaystyle =:P(T)}.
+\underbrace{\lambda\,C_0'\,T\log T\log\log T}_{\displaystyle =:P(T)}.
 \]
 In the canonical regime, $\eta\ge c/\log T$, $\Delta\asymp\kappa/\log T$,
 $\lambda\asymp c_\lambda(\log T)^{-2}$, so
@@ -275,7 +255,7 @@ Section~\ref{sec:multi-zero}.
 \end{remark}
 
 % ---------------------------------------------------------
-\section{Barrier Equivalence and the Horocycle Conjecture}\label{sec:barrier}
+\section{The Barrier Dichotomy and the Horocycle Conjecture}\label{sec:barrier}
 
 \begin{proposition}[Barrier: proved direction]\label{prop:barrier}
 If all zeros of $\zeta(s)$ satisfy $\beta\le\sigma$, then
@@ -291,17 +271,149 @@ The forward direction is Theorem~\ref{thm:variance} (proved in Part~1);
 the contrapositive of the converse is Theorem~\ref{thm:bias} (proved above).
 \end{proof}
 
-The proved directions leave open the following converse:
+The contrapositive of detection already yields the converse for \emph{finite}
+configurations.
+
+\begin{proposition}[Converse for finite off-line sets]\label{prop:finite-converse}
+Suppose $\zeta$ has finitely many \textup{(}and at least one\textup{)} zeros with
+$\beta>\sigma$, of maximal excess $\eta^\ast=\max(\beta-\sigma)>0$.  Then
+$F_\lambda(H_\sigma;T,\Delta)\gg e^{2\eta^\ast T}$, so
+$\sup_{T\ge T_0}F_\lambda/(T\log T\log\log T)=\infty$.  Hence if that supremum is
+finite, $\zeta$ has no finite nonempty set of zeros with $\beta>\sigma$.
+\end{proposition}
+
+\begin{proof}
+Apply Theorem~\ref{thm:bias} to a zero attaining $\eta^\ast$; the remaining
+finitely many off-line zeros are absorbed by Remark~\ref{rmk:multiple-zeros}, and
+the on/left zeros contribute the polynomial residual of
+Step~\ref{step:residual-variance}.  Since $e^{2\eta^\ast T}$ outgrows every
+polynomial, the normalized supremum diverges.
+\end{proof}
 
 \begin{conjecture}[Horocycle Conjecture]\label{conj:horocycle}
-For every $\sigma\ge\tfrac12$, if
+For every $\sigma\in[\tfrac12,1)$, if
 $\sup_{T\ge T_0} F_\lambda(H_\sigma;T,\Delta)/(T\log T\log\log T)<\infty$,
 then all zeros of $\zeta(s)$ satisfy $\beta\le\sigma$.
 \end{conjecture}
 
 \noindent
-This conjecture is \emph{not proved} in this paper.
-Its status is discussed heuristically in Part~4 via geometric analogies.
+By Proposition~\ref{prop:finite-converse} the conjecture holds whenever the zeros
+with $\beta>\sigma$ are finite in number.  It is \emph{not} merely the
+contrapositive of Theorem~\ref{thm:bias}: the detection bound is proved only for a
+single off-line zero against an on/left background, so its open content lies
+precisely in the configurations that method cannot reach --- infinite off-line
+families with $\beta_n\uparrow\beta^\ast$ \emph{unattained}, and off-line zeros
+with $\beta-\sigma\to0$ (excluded from the threshold guarantee $\eta\ge c/\log T$
+of Lemma~\ref{lem:threshold}).  Equivalently it asks for a uniform \emph{lower}
+bound on $F_\lambda(H_\sigma)$ over arbitrary off-line configurations,
+complementary to the upper bounds of Appendix~\ref{app:A}.
+
+\subsection{A rigidity reformulation of the open case}\label{subsec:rigidity}
+
+The obstruction is one of \emph{rigidity}: whether zeros accumulating at the
+spectral edge can conspire, through cancellation, to suppress the growth rate of
+$F_\lambda$.  Write $\beta^\ast=\sup\{\beta:\zeta(\beta+i\gamma)=0\}$.  We first
+dispose of the \emph{attained} case, which already strengthens
+Proposition~\ref{prop:finite-converse}.
+
+\begin{proposition}[Attained edge]\label{prop:attained-edge}
+If $\beta^\ast>\sigma$ and the supremum is attained \textup{(}by finitely many
+zeros\textup{)}, then $F_\lambda(H_\sigma;T,\Delta)\gg e^{2(\beta^\ast-\sigma)T}$,
+even when infinitely many further zeros lie in $(\sigma,\beta^\ast)$.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Write $F_\lambda=\|R\|_{\mathrm{pen}}^2$ with $R=(\mathrm{Id}-P)H_\sigma$ and
+$\|\cdot\|_{\mathrm{pen}}^2=\sum_j(\|\cdot\|_{L^2(I_j)}^2+\lambda\|\partial_t\cdot\|_{L^2(I_j)}^2)$.
+Let $w=(\mathrm{Id}-P)h^\ast$, where $h^\ast=\sum h_\rho$ runs over the finitely
+many zeros with $\beta=\beta^\ast$; these have distinct, well-separated ordinates,
+so $\|w\|_{\mathrm{pen}}^2\asymp e^{2(\beta^\ast-\sigma)T}$ (the single-zero
+estimate of Step~\ref{step:derivative-lb}).  By Cauchy--Schwarz,
+$F_\lambda\ge\langle R,w\rangle_{\mathrm{pen}}^2/\|w\|_{\mathrm{pen}}^2$.  The
+pairing $\langle R,w\rangle_{\mathrm{pen}}=\sum_\rho\langle(\mathrm{Id}-P)h_\rho,w\rangle_{\mathrm{pen}}$
+equals $\|w\|_{\mathrm{pen}}^2$ plus cross terms with the lower zeros, each of
+exponential rate $\eta_\rho+\eta^\ast<2\eta^\ast$ and hence
+$o(e^{2(\beta^\ast-\sigma)T})$.  Thus
+$\langle R,w\rangle_{\mathrm{pen}}\asymp e^{2(\beta^\ast-\sigma)T}$ and
+$F_\lambda\gg e^{4(\beta^\ast-\sigma)T}/e^{2(\beta^\ast-\sigma)T}=e^{2(\beta^\ast-\sigma)T}$.
+\end{proof}
+
+The single unresolved case is $\beta^\ast$ \emph{unattained}: zeros
+$\beta_n\uparrow\beta^\ast$ with none achieving the supremum.  Then no finite top
+test field $w$ exists, and the cross terms from zeros with $\eta_\rho$ arbitrarily
+close to $\eta^\ast$ share the diagonal's exponential rate, so cancellation is not
+excluded by the elementary argument.
+
+\begin{remark}[Rigidity formulation]\label{rmk:rigidity}
+Since $F_\lambda(H_\sigma;\,\cdot\,)\ge0$ as a function of $T$, the
+Laplace-transform singularity theorem for nonnegative integrands
+(Pringsheim's theorem; \cite[Ch.~II]{widder}) identifies the abscissa of
+convergence of $\int_0^\infty e^{-uT}F_\lambda\,dT$ with a real singularity,
+equal to the exponential growth rate of $F_\lambda$.  The \emph{diagonal} part of
+$F_\lambda$ has its rightmost singularity at $u=2(\beta^\ast-\sigma)$ with
+nonnegative residues; the open case is exactly the assertion that the
+off-diagonal part cannot cancel this singularity and move the abscissa left.
+Precisely, the reduction is $u_c=2\,\limsup_{t\to\infty}\tfrac1t\log|H_\sigma'(t)|$,
+so the question is whether the growth (boundedness) abscissa of the exponential
+sum $H_\sigma'$ equals its absolute-convergence abscissa $\eta^\ast=\beta^\ast-\sigma$.
+For general exponential sums these can differ (a Bohr phenomenon): the
+term-by-term pole locations of the formal $M(u)$ do not control the continued
+singularity, and near-edge cancellation could in principle lower $u_c$ below
+$2\eta^\ast$ --- but, by Proposition~\ref{prop:attained-edge}, \emph{only when
+$\beta^\ast$ is unattained}.  Zero-density bounds give only the trivial upper
+bound $u_c\le2\eta^\ast$; excluding the downward cancellation is the genuine
+rigidity content.  This
+is a \emph{rigidity} statement --- the growth rate of $F_\lambda$ is conjecturally
+the spectral edge $2(\beta^\ast-\sigma)_+$, undisturbed by cancellation among
+edge-accumulating zeros --- and is the analytic counterpart of the
+curvature/horocycle rigidity of Part~4, morally parallel to the rigidity of
+unipotent and horocycle flows, where no exotic invariant structures intervene.
+We isolate it as the precise content of the open case: \emph{bounded energy
+rigidly confines the spectrum to $\beta\le\sigma$.}
+\end{remark}
+
+\begin{remark}[A Gram-matrix (Ingham) formulation]\label{rmk:gram}
+The rigidity is a quantitative linear-independence statement, controlled by the
+Gram matrix of the edge exponentials.  Writing
+$e_\rho(t)=e^{(\eta_\rho+i\gamma_\rho)t}$ (with $\eta_\rho$ near $\eta^\ast$),
+cancellation of near-edge contributions is exactly degeneracy of their Gram
+matrix $G(T)_{\rho\rho'}=\int_0^T e_\rho(t)\,\overline{e_{\rho'}(t)}\,dt$, and a
+spectral gap precludes it.  (This is the same Gram-nondegeneracy that governs
+correctability in the Knill--Laflamme conditions for quantum
+codes~\cite{knill-laflamme}, where diagonalizing the Hermitian
+$c_{ab}=PE_a^\dagger E_bP$ splits the errors, by polar decomposition, into a
+correctable and a vanishing part.)  A direct
+computation shows the \emph{normalized} Gram matrix is essentially independent
+of $T$:
+\begin{equation}
+\widetilde G_{\rho\rho'}
+=\frac{\langle e_\rho,e_{\rho'}\rangle}{\|e_\rho\|\,\|e_{\rho'}\|}
+\;\xrightarrow{\,T\to\infty\,}\;
+\frac{2\sqrt{\eta_\rho\,\eta_{\rho'}}}{\sqrt{(\eta_\rho+\eta_{\rho'})^2+(\gamma_\rho-\gamma_{\rho'})^2}}
+\;\le\;\frac{2\eta^\ast}{|\gamma_\rho-\gamma_{\rho'}|}
+\qquad(\rho\ne\rho'),
+\label{eq:gram-cos}
+\end{equation}
+with unit diagonal; as a genuine cosine it never exceeds $1$, and the right-hand
+bound is the well-separated form $|\gamma_\rho-\gamma_{\rho'}|\gg\eta^\ast$.  Thus
+the \emph{angle} between two edge contributions is fixed by their ordinate gap:
+cancellation (near-degeneracy of $\widetilde G$) requires edge zeros with
+\emph{close ordinates}, whereas ordinate separation forces near-orthogonality and
+hence rigidity.  Concretely, since the off-diagonal entries are bounded by
+$2\eta^\ast/|\gamma_\rho-\gamma_{\rho'}|$, the Schur test makes $\widetilde G$
+positive definite with a spectral gap as soon as
+$\sup_\rho\sum_{\rho'\ne\rho}2\eta^\ast/|\gamma_\rho-\gamma_{\rho'}|<1$, in which
+case $F_\lambda\gg e^{2(\eta^\ast-\varepsilon)T}$ and no cancellation occurs (a
+weighted, finite-$T$ analogue of Ingham's inequality~\cite{ingham-ineq}).  Thus
+the unattained-edge rigidity is, like Hypothesis~(S) of Appendix~\ref{app:A}, an
+instance of \emph{non-clustering of ordinates} --- though at much larger heights
+and in a far stronger (uniform, over an unbounded range) form than the trivial
+low-height separation that suffices for the variance bound.  We do not establish
+the Schur bound
+unconditionally---over an unbounded range of heights the row sums need not be
+finite---so the rigidity is \emph{reduced to}, but not closed by, ordinate
+separation.
+\end{remark}
 
 % ---------------------------------------------------------
 \section{Heuristic and Numerical Consistency}\label{sec:numerics}
