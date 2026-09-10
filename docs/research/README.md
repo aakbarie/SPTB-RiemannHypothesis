@@ -1,5 +1,7 @@
 # Developing the full-field confinement criterion
 
+The standalone [paper and numerical analysis](../../paper_amplitude/README.md) now provide a typeset manuscript, reproducible experiments, data, figures, and separate manuscript/numerical reviews.
+
 The revised [proof draft](complementary_spline_observations.md) states a precisely delimited equivalence for the **fixed full harmonic field**, alpha >= 1, and the exact canonical mesh `h(T) = kappa / log(T)`:
 
 1. Every zero has beta <= sigma.
