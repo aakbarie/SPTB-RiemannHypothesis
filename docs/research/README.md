@@ -1,28 +1,44 @@
-# Building out the Horocycle argument
+# Developing the full-field confinement criterion
 
-This folder contains a proposed proof for the **fixed full harmonic field** with the exact canonical mesh `Delta(T) = kappa / log(T)`. It is a research draft awaiting independent mathematical review, not an established theorem or an RH proof.
+The revised [proof draft](complementary_spline_observations.md) states a precisely delimited equivalence for the **fixed full harmonic field**, alpha >= 1, and the exact canonical mesh `h(T) = kappa / log(T)`:
 
-## Files
+1. Every zero has beta <= sigma.
+2. Full-field integrated squared amplitude is O(T).
+3. The blockwise affine amplitude residual E(T) is O(T).
+4. E(T) is O(T^p) for some fixed finite p.
 
-- [complementary_spline_observations.md](complementary_spline_observations.md): full argument, assumptions, source alignment, and review targets.
-- [check_complementary_mesh.py](check_complementary_mesh.py): exact rational polynomial checks of the local projection matrix and determinant, plus finite mesh-placement checks.
+The bounds are for every sufficiently large real T. The forward linear estimate is conditional on confinement. At sigma = 1/2, the theorem is an RH equivalence criterion; it does not independently establish any of its equivalent boundedness conditions.
 
-Run the checks from the repository root:
+## Review record
+
+Three separate AI agents developed/audited the mesh, spectral, and manuscript arguments. A fourth agent, without the preceding conversation, audited the assembled revision. This is AI-agent review, not independent human peer review or a formally verified proof.
+
+- [Mesh reconstruction audit](reviews/mesh_audit.md): coercivity, jump summation, affine drift, and counterexamples delimiting the assumptions.
+- [Spectral audit](reviews/spectral_audit.md): local L2 convergence at alpha = 1, primitive and pole argument, conditional O(T) estimate. Its optional full-energy limsup result is separate from the main criterion.
+- [Manuscript integration audit](reviews/manuscript_audit.md): exact source defects and a proposed consistent derivative-penalty variant. That optional variant is not part of the main theorem.
+- [Final referee report](reviews/final_referee.md): assessment of the assembled proof and its relation to the original conjecture.
+
+The reports found no fatal gap in the precisely stated full-field, exact-mesh argument. The original manuscript's broader canonical regime is **not automatically covered**: comparability to 1/log(T) alone does not supply the complementary observations. A premise uniform over all canonical choices would include the exact choice, but a premise for one arbitrary comparable mesh is not addressed.
+
+## Reproducible local checks
+
+[check_complementary_mesh.py](check_complementary_mesh.py) uses only the Python standard library. Run from the repository root:
 
 ```sh
 python3 docs/research/check_complementary_mesh.py
 ```
 
-The script uses only the Python standard library. Its finite checks do not certify the complete analytic argument.
+It verifies the local Gram matrix and determinant as exact rational polynomial identities, a hidden-step example, and finite mesh configurations. These computations supplement the analytic proof and do not certify the infinite-dimensional theorem.
 
-## Proposed paper development
+## Paper development sequence
 
-1. **Fix the statement and quantifiers in Part 1.** Specify the same full field at every observation horizon, its local L2 interpretation, the exact canonical mesh, and the bound for every sufficiently large real T. Distinguish truncation of the derivative penalty from truncation of the amplitude itself.
-2. **Review the complementary-mesh estimate.** Check the local step/hinge projection matrix, disjoint crossing blocks, and polynomial reconstruction of affine coefficients across overlapping intervals.
-3. **Review the infinite-field argument.** Check unit-bin zero-counting control, local L2 convergence at alpha = 1, convergence of the primitive, and the isolated-pole contradiction.
-4. **Integrate only after review.** Candidate material for Part 2: the complementary-observation lemma, polynomial-growth transfer, and full-field converse. Move detailed projection algebra and convergence arguments into appendices.
-5. **Reconcile existing statements.** Reassess the current finite-configuration and attained-edge claims against the reviewed result. A qualitative converse does not establish the manuscript's sharper exponential lower bounds.
-6. **Keep the RH premise explicit.** The argument assumes polynomial boundedness; it does not establish that bound independently. The variance-regime assumption cannot supply an unconditional RH proof.
-7. **Handle numerical cutoffs separately.** Existing finite-zero simulations do not test the full-field theorem. A moving amplitude cutoff needs an additional transfer estimate.
+1. State the general complementary-mesh reconstruction theorem for locally square-integrable functions, including the common fixed function and exact mesh.
+2. Establish the full zero field by the unit-bin convergence argument; remove the incorrect absolute-convergence assertion at alpha = 1.
+3. Prove the conditional uniform unit-window bound and hence full-field O(T) energy under confinement.
+4. Prove the primitive/pole implication and state the amplitude criterion.
+5. Repair the definition of the derivative penalty before claiming a result for the existing SPTB functional. Full-amplitude projection and truncated-derivative projection must be distinguished.
+6. Remove or repair the original false affine/derivative lower-bound lemmas and their dependent sharp detection claims. The new converse does not use them.
+7. Keep moving-cutoff simulations separate from the fixed-full-field theorem; a changing amplitude cutoff requires a transfer estimate.
+8. Seek independent human mathematical review and assess the related approximation-theory and analytic-number-theory literature before claiming publication readiness or novelty.
 
-The manuscript and compiled PDFs have not been edited as part of adding these research materials. No novelty claim is made.
+The main manuscript and compiled PDFs have not been revised in this research update. Source-location references in the reports describe the manuscript inspected during this review.

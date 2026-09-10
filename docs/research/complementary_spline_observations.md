@@ -1,8 +1,8 @@
-# Complementary spline observations and the full-field Horocycle converse
+# Complementary spline observations and a full-field confinement criterion
 
 **Research draft prepared for Akbar Esfahani, 10 September 2026.**
 
-**Status:** A proposed, self-contained proof of a precisely stated converse for the fixed full harmonic field. The argument has not been independently reviewed. Exact local algebra and finite mesh-placement checks accompany the analytic reasoning. This is not a proof of the Riemann Hypothesis and does not establish an unconditional SPTB upper bound.
+**Status:** Revised research draft. Three AI agents developed and audited the argument, and a fourth separately reviewed the assembled proof. No fatal gap was found within the exact scope stated below; the four reports are linked from the research README. Such review is not independent human peer review or formal proof verification. Exact local algebra and finite mesh-placement checks supplement the analytic reasoning. No unconditional boundedness assertion, RH proof, or novelty claim is made.
 
 ## 1. The statement being addressed
 
@@ -36,7 +36,16 @@ Partition \([0,T]\) at the multiples of \(h_T\), with the final interval shorten
 E_f(T)=\|f-P_Tf\|_{L^2(0,T)}^2. \tag{2}
 \]
 
-**Proposed theorem.** If, for some constants \(C,p\ge0\),
+**Confinement criterion (proposed theorem).** For the field and exact mesh above, the following are equivalent:
+
+1. Every nontrivial zero satisfies \(\beta\le\sigma\).
+2. \(\int_0^T|H_\sigma(t)|^2\,dt=O(T)\).
+3. \(E_{H_\sigma}(T)=O(T)\).
+4. \(E_{H_\sigma}(T)=O(T^p)\) for some fixed \(p\ge0\).
+
+All bounds concern every sufficiently large real \(T\). Sections 2-6 prove the substantive implication (4) to (1); Section 6.1 proves (1) to (2), and the remaining forward implications follow from orthogonal projection and inclusion of the linear bound among polynomial bounds.
+
+In particular, if, for some constants \(C,p\ge0\),
 
 \[
 E_{H_\sigma}(T)\le C(1+T)^p
@@ -54,7 +63,7 @@ F_\lambda(H_\sigma;T,h_T)\ll T\log T\log\log T
 
 Indeed, (4) implies (3), for example with \(p=2\). The derivative penalty is not used in this proposed converse.
 
-**Scope matters.** Both observations below must act on the same field. This proof does not automatically apply if the amplitude itself is replaced by \(H_\sigma^{(X(T))}\), if the hypothesis is known only on a sparse sequence of \(T\)'s, or if \(h_T\) is an arbitrary irregular choice merely comparable to \(1/\log T\). It does apply to the exact canonical mesh above. Truncating only a nonnegative derivative penalty does not affect the argument.
+**Scope matters.** Both observations below must act on the same field. This proof does not automatically apply if the amplitude itself is replaced by \(H_\sigma^{(X(T))}\), if the hypothesis is known only on a sparse sequence of \(T\)'s, or if \(h_T\) is an arbitrary irregular choice merely comparable to \(1/\log T\). It does apply to the exact canonical mesh above. The manuscript’s broader admissible mesh regime is covered only if its hypothesis includes this exact mesh, for example through a bound uniform over all admissible mesh choices. A hypothesis for one arbitrary comparable mesh is not established by this proof. Truncating only a nonnegative derivative penalty does not affect the argument.
 
 ## 2. The complementary observation
 
@@ -184,13 +193,13 @@ On a second-mesh block crossing a first-mesh knot, \(P\) has exactly two affine 
 \le C_1\mathcal E_T, \tag{12}
 \]
 
-where \(C_1\) is independent of \(T\) and \(f\).
+where \(C_1\) is independent of \(T\) and \(f\). All jump traces here belong to the finite piecewise-affine function \(P\), not to \(f\).
 
-Let \(\ell_T\) be the affine expression of \(P\) on the first first-mesh piece meeting \(J_T\). At almost every point of \(J_T\),
+Let \(\ell_T\) be the affine expression of \(P\) on the first first-mesh piece having positive-length intersection with \(J_T\). At almost every point of \(J_T\),
 
 \[
 P(t)-\ell_T(t)
-=\sum_{x_j<t}\{d_j+e_j(t-x_j)\}. \tag{13}
+=\sum_{x_j\in\operatorname{int}J_T,\ x_j<t}\{d_j+e_j(t-x_j)\}. \tag{13}
 \]
 
 There are at most \(C T/h\) such knots. Cauchy-Schwarz, \(|t-x_j|\le T\), and (12) therefore give
@@ -279,6 +288,8 @@ In particular, its primitive \(K(t)=\int_0^t f(u)\,du\) obeys
 \ll1+t^{(r+1)/2}. \tag{19}
 \]
 
+The constant in (18) may depend on the initial compact-interval norm and the initial affine coefficients of \(f\), as well as the residual-bound constants and mesh parameters. Residual observations alone cannot bound an arbitrary initial global affine component.
+
 Thus the uncontrolled affine pieces cannot accumulate into an exponentially growing full field when both complementary observations remain polynomially bounded.
 
 ## 5. Defining the full zero field at alpha = 1
@@ -298,7 +309,7 @@ A_k\ll \frac{\log(2+|k|)}{(1+|k|)^\alpha},
 \qquad \sum_k A_k^2<\infty\quad(\alpha\ge1). \tag{21}
 \]
 
-Fix a compact time interval and a smooth compactly supported function \(\chi\) equal to one on it. The parameters \(\eta_\rho\) lie in a bounded interval. Integration by parts twice therefore gives the uniform bound
+Fix a compact time interval and a real-valued smooth compactly supported function \(\chi\) equal to one on it. The parameters \(\eta_\rho\) lie in a bounded interval. Integration by parts twice therefore gives the uniform bound
 
 \[
 \left|\int \chi(t)^2 e^{(\eta_\rho+\eta_{\rho'})t}
@@ -368,6 +379,52 @@ But (3), Sections 3-4, and (25) imply polynomial growth of \(K\). Its Laplace tr
 
 Therefore there is no zero with \(\beta>\sigma\). This completes the proposed argument for the theorem in Section 1.
 
+## 6.1. The reverse implication and the linear bound
+
+Assume now that every zero satisfies \(\eta_\rho\le0\). Choose a fixed real-valued smooth cutoff \(\chi\) supported in \([-1,2]\), equal to one on \([0,1]\). For an integer \(n\ge0\), write each complex exponential in the cosine expansion at \(t=n+s\) as
+
+\[
+a_\rho e^{\eta_\rho n}e^{\pm i\gamma n}
+ e^{\eta_\rho s}e^{\pm i\gamma s}.
+\]
+
+The translated coefficients have magnitude at most \(a_\rho\). On the fixed support of \(\chi\), the derivatives used in (22) are uniformly bounded, independently of \(n\), because \(\eta_\rho\in[-\sigma,0]\). Applying the same unit-bin estimate (23) gives, first for every finite truncation and then by local \(L^2\) convergence,
+
+\[
+\int_n^{n+1}|H_\sigma(t)|^2\,dt
+\le C_{\alpha,\sigma}\sum_k A_k^2
+\le C'_{\alpha,\sigma}, \tag{28}
+\]
+
+uniformly in \(n\). Summing over unit intervals proves
+
+\[
+\int_0^T|H_\sigma(t)|^2\,dt\le C(1+T). \tag{29}
+\]
+
+Since an orthogonal projection cannot increase its squared residual beyond the original squared norm,
+
+\[
+E_{H_\sigma}(T)\le\int_0^T|H_\sigma(t)|^2\,dt=O(T).
+\]
+
+This proves the reverse direction and hence all four equivalences in Section 1. At \(\sigma=1/2\), the functional equation and conjugation symmetry identify confinement with RH. The criterion is an equivalence; this argument does not independently establish any of its equivalent conditions for the actual zeta field.
+
+## 6.2. Why the observation assumptions cannot simply be relaxed
+
+Consider the continuous piecewise-linear interpolation of \(f(n)=e^{n^2}\) at the nonnegative integers. It is locally square-integrable and grows faster than every polynomial. Yet its affine residual vanishes on every grid of width \(1/m\), because each grid block lies within an interval where \(f\) is affine.
+
+For the exact canonical mesh at sparse horizons \(T_m=e^{\kappa m}\), the width is \(1/m\). Thus \(E_f(T_m)=0\) at every such horizon, although full-field polynomial growth fails. Similarly, the irregular mesh
+
+\[
+\widetilde h_T=\frac{1}{\lceil(\log T)/\kappa\rceil}
+\sim\frac{\kappa}{\log T}
+\]
+
+has zero residual for this \(f\) at every large \(T\). These examples do not refute a zero-specific conjecture. They show why the general reconstruction lemma cannot be extended to arbitrary sparse horizons or arbitrary asymptotically equivalent meshes by assertion alone.
+
+The proof actually needs only the paired horizons \(T_n=(4/3)^nT_0\) and \(T_n+\kappa/2\), with their exact canonical meshes and uniform bounds. The all-real-\(T\) statement is the simpler sufficient hypothesis matching the intended criterion.
+
 ## 7. What the argument would establish, and what it does not
 
 For the specified full field and exact canonical mesh, the proposed implication is
@@ -399,11 +456,11 @@ The existing detection estimates and the attained-edge sketch in the manuscript 
 
 ## 8. Checks and review targets
 
-The local projection formula and determinant were independently recomputed from the moment integrals using exact rational polynomial arithmetic. The reproducible checks are in [check_complementary_mesh.py](check_complementary_mesh.py). The following checks passed:
+The local projection formula and determinant were recomputed from the moment integrals using exact rational polynomial arithmetic in [check_complementary_mesh.py](check_complementary_mesh.py). The following checks passed:
 
 1. All three entries of \(M(q)\) agree identically as polynomials with the direct Gram-projection calculation.
 2. The determinant identity (6) agrees identically as a rational polynomial.
-3. A unit step at the center of a block has exact affine residual \(1/16\), while it is exactly representable on a mesh split at that point.
+3. A unit step at the center of a block has exact squared affine residual \(1/16\), while it is exactly representable on a mesh split at that point.
 4. Nine finite configurations, using three values of \(\kappa\) and three values of \(T\), satisfy the mesh-placement inequalities and the coordinate identity (9).
 
 These finite checks do not validate the complete theorem. The proof above supplies the general arguments. Before treating this draft as a settled result, independent review should particularly examine:
@@ -413,7 +470,7 @@ These finite checks do not validate the complete theorem. The proof above suppli
 - the local convergence construction in Section 5 and the analytic-continuation argument in Section 6;
 - any intended replacement of the full amplitude by a \(T\)-dependent truncated amplitude.
 
-Adding this research note does not revise the manuscript or compiled PDFs. No R simulation was rerun. No computation of zeta zeros was used as proof evidence.
+The research materials do not revise the main manuscript or compiled PDFs. No R simulation was rerun. No computation of zeta zeros was used as proof evidence.
 
 ## 9. Source alignment
 
@@ -424,4 +481,4 @@ The target is the Horocycle Conjecture and harmonic-field definition in Akbar Es
 
 The complementary-output motivation comes from page 6, Sections 4.2-4.3, of the uploaded *A Geometric Semantics of the Fast Fourier Transform: Schedule Invariance and Structure*, dated 12 January 2026. Only its displayed butterfly matrix is needed here.
 
-Standard analytic inputs are the Riemann-von Mangoldt zero count with its classical logarithmic remainder, elementary finite-dimensional projection algebra, and Laplace-transform analyticity. [DLMF Section 25.10](https://dlmf.nist.gov/25.10) records the critical strip, zero symmetry, and zero-counting context. [DLMF Section 1.14(iii)](https://dlmf.nist.gov/1.14#iii) records the Laplace-transform framework. These references support the standard background, not the proposed complementary-mesh theorem.
+Standard analytic inputs are the Riemann-von Mangoldt zero count with its classical logarithmic remainder, elementary finite-dimensional projection algebra, and Laplace-transform analyticity. [DLMF Section 25.10](https://dlmf.nist.gov/25.10) records the critical strip, zero symmetry, and zero-counting context. [DLMF Section 1.14(iii)](https://dlmf.nist.gov/1.14#iii) records the Laplace-transform framework. For an explicit primary reference supporting the logarithmic zero-count remainder used in (20), see [Trudgian, Corollary 1](https://arxiv.org/pdf/1208.5846). These references support the standard background, not the proposed complementary-mesh theorem.
