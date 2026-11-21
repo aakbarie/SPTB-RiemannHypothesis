@@ -9,3 +9,4 @@ import StructuralSpectralRigidity
 #print axioms StructuralSpectralRigidity.two_observation_injective
 #print axioms StructuralSpectralRigidity.two_observation_positive
 #print axioms StructuralSpectralRigidity.three_observation_positive
+#print axioms StructuralSpectralRigidity.prime_power_nonalias
