@@ -250,4 +250,18 @@ theorem nonzero_radial_scaling_preserves_phase_distinction
     · rw [h₁]
     · rw [h₂]
 
+
+/-- Pointwise algebra for the passivity balance of the centered arithmetic
+Riesz-ramp transfer. If v' = input - 3/2 v and output = input - 2v,
+the supply rate input² - output² equals d(2v²)/dt + 2v².
+This verifies the algebraic step only; the differential equation,
+prime-sampling identity and integration are not formalized here. -/
+theorem arithmetic_ramp_passivity_pointwise
+    (input state stateDeriv : ℝ)
+    (hstate : stateDeriv = input - (3 / 2 : ℝ) * state) :
+    input ^ 2 - (input - 2 * state) ^ 2 =
+      4 * state * stateDeriv + 2 * state ^ 2 := by
+  rw [hstate]
+  ring
+
 end StructuralSpectralRigidity
