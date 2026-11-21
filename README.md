@@ -4,6 +4,17 @@
 **Contact**: akbar.esfahani@gmail.com
 **Date**: March 2026
 
+## Witness Functors revision (November 2026)
+
+The revised [Witness Functors manuscript](paper_witness/main.pdf),
+[LaTeX source](paper_witness/main.tex), and
+[claim-by-claim revision record](paper_witness/REVISION_NOTES.md) are in
+`paper_witness/`. The revision separates observational limits from model error,
+defines explicit categorical actions, and corrects the identification with SPTB.
+It does not rely on the all-spectrum detection and variance claims in the older
+SPTB text below. Those claims retain the analytic obligations documented in the
+revision. See [build and verification instructions](paper_witness/README.md).
+
 ---
 
 ## Abstract

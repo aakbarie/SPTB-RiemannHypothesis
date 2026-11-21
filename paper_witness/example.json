@@ -1,0 +1,8 @@
+{
+  "states": [1, 2, 3, 4],
+  "weights": ["1/4", "1/4", "1/4", "1/4"],
+  "observation": ["A", "A", "B", "B"],
+  "diagnostic": [0, 1, 0, 1],
+  "target": [0, 2, 0, 2],
+  "diagnostic_provenance": "Specified synthetic example; not inferred from the coarse observation."
+}
