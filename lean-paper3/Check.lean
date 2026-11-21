@@ -16,3 +16,5 @@ import StructuralSpectralRigidity
 #print axioms StructuralSpectralRigidity.nat_prime_log_ratio_nonalias
 
 #print axioms StructuralSpectralRigidity.nonzero_radial_scaling_preserves_phase_distinction
+
+#print axioms StructuralSpectralRigidity.arithmetic_ramp_passivity_pointwise
