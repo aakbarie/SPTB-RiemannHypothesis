@@ -190,4 +190,42 @@ theorem real_two_prime_frame_positive (s t x y : ℝ)
   · exact sub_ne_zero.mpr (real_two_prime_minor_nonzero s t hst)
   · exact hxy
 
+
+/-- An arithmetic logarithmic nonaliasing identity for the actual prime ratios.
+It excludes positive integer rational relations between the two log gaps,
+using the kernel-checked unique-factorization lemma above. -/
+theorem nat_log_prime_nonalias (m n : ℕ) (hn : 0 < n) :
+    (n : ℝ) * Real.log ((5 : ℝ) / 2) ≠
+      (m : ℝ) * Real.log ((3 : ℝ) / 2) := by
+  intro h
+  have hlogpow :
+      Real.log (((5 : ℝ) / 2) ^ n) =
+        Real.log (((3 : ℝ) / 2) ^ m) := by
+    simpa only [Real.log_pow] using h
+  have hpow : (((5 : ℝ) / 2) ^ n) = (((3 : ℝ) / 2) ^ m) := by
+    have hex := congrArg Real.exp hlogpow
+    rwa [Real.exp_log (by positivity), Real.exp_log (by positivity)] at hex
+  have hcross : (5 : ℝ) ^ n * (2 : ℝ) ^ m =
+      (3 : ℝ) ^ m * (2 : ℝ) ^ n := by
+    rw [div_pow, div_pow] at hpow
+    exact (div_eq_div_iff (by positivity) (by positivity)).mp hpow
+  have hNat : (5 : ℕ) ^ n * 2 ^ m = 3 ^ m * 2 ^ n := by
+    exact_mod_cast hcross
+  exact (prime_power_nonalias m n hn) hNat
+
+/-- The prime-log ratio cannot be any nonnegative rational with a positive
+natural denominator. This is the arithmetic half of the three-prime theorem. -/
+theorem nat_prime_log_ratio_nonalias (m n : ℕ) (hn : 0 < n) :
+    Real.log ((5 : ℝ) / 2) / Real.log ((3 : ℝ) / 2) ≠
+      (m : ℝ) / (n : ℝ) := by
+  intro h
+  have hd : Real.log ((3 : ℝ) / 2) ≠ 0 :=
+    ne_of_gt (Real.log_pos (by norm_num))
+  have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hn)
+  have hcross := (div_eq_div_iff hd hn0).mp h
+  have hh : (n : ℝ) * Real.log ((5 : ℝ) / 2) =
+      (m : ℝ) * Real.log ((3 : ℝ) / 2) := by
+    nlinarith [hcross]
+  exact nat_log_prime_nonalias m n hn hh
+
 end StructuralSpectralRigidity
