@@ -14,3 +14,5 @@ import StructuralSpectralRigidity
 #print axioms StructuralSpectralRigidity.real_two_prime_frame_positive
 #print axioms StructuralSpectralRigidity.nat_log_prime_nonalias
 #print axioms StructuralSpectralRigidity.nat_prime_log_ratio_nonalias
+
+#print axioms StructuralSpectralRigidity.nonzero_radial_scaling_preserves_phase_distinction
