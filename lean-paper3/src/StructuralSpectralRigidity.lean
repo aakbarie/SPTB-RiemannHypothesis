@@ -144,4 +144,21 @@ theorem three_observation_positive
   have hp := two_observation_positive a b c d x y hdet hxy
   nlinarith [sq_nonneg (e * x + f * y)]
 
+
+/-- Arithmetic input to three-prime sampling: after clearing denominators,
+a positive power of 5 cannot equal a product of powers of 2 and 3.
+This is a factorization statement, not yet the complex-phase theorem. -/
+theorem prime_power_nonalias (m n : ℕ) (hn : 0 < n) :
+    (5 : ℕ) ^ n * 2 ^ m ≠ 3 ^ m * 2 ^ n := by
+  intro heq
+  have hp : Nat.Prime 5 := by norm_num
+  have h5 : 5 ∣ (5 : ℕ) ^ n := dvd_pow_self 5 (by omega)
+  have hl : 5 ∣ (5 : ℕ) ^ n * 2 ^ m := dvd_mul_of_dvd_left h5 _
+  have hr : 5 ∣ (3 : ℕ) ^ m * 2 ^ n := heq ▸ hl
+  rcases (hp.dvd_mul).mp hr with h3 | h2
+  · have hprime : 5 ∣ (3 : ℕ) := hp.dvd_of_dvd_pow h3
+    norm_num at hprime
+  · have hprime : 5 ∣ (2 : ℕ) := hp.dvd_of_dvd_pow h2
+    norm_num at hprime
+
 end StructuralSpectralRigidity
