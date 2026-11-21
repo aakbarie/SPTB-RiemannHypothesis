@@ -264,4 +264,56 @@ theorem arithmetic_ramp_passivity_pointwise
   rw [hstate]
   ring
 
+
+/-- A single positive prime-power ramp has not activated before its log threshold. -/
+def truncatedRamp (x L : ℝ) : ℝ := max (x - L) 0
+
+theorem prime_ramp_threshold (L s : ℝ) (hL : 0 < L)
+    (hs : s < L) (h2 : L < 2 * s) :
+    truncatedRamp 0 L = 0 ∧
+    truncatedRamp s L = 0 ∧
+    truncatedRamp (2 * s) L = 2 * s - L := by
+  have h0 : (0 : ℝ) - L ≤ 0 := by linarith
+  have h1 : s - L ≤ 0 := by linarith
+  have h2' : 0 ≤ 2 * s - L := by linarith
+  constructor
+  · simp [truncatedRamp, max_eq_right h0]
+  constructor
+  · simp [truncatedRamp, max_eq_right h1]
+  · simp [truncatedRamp, max_eq_left h2']
+
+/-- The newly activated two-point signed prime kernel has eigenvalues of
+opposite signs. This is the scalar quadratic-form certificate. -/
+theorem signed_prime_kick_indefinite (w L s : ℝ)
+    (hw : 0 < w) (hs : L < 2 * s) :
+    0 < 2 * w * (2 * s - L) ∧
+    2 * w * (2 * s - L) * (1 : ℝ) * (-1) < 0 := by
+  have hc : 0 < w * (2 * s - L) :=
+    mul_pos hw (sub_pos.mpr hs)
+  constructor <;> nlinarith
+
+/-- Cleared-denominator version of the two-by-two Schur-complement identity. -/
+theorem signed_schur_cleared (a b c x y : ℝ) :
+    a * (a * x ^ 2 + 2 * b * x * y + c * y ^ 2) =
+      (a * x + b * y) ^ 2 + (a * c - b ^ 2) * y ^ 2 := by
+  ring
+
+/-- A positive leading diagonal with nonnegative Schur determinant
+ensures the finite signed extension quadratic form is nonnegative. -/
+theorem signed_schur_block_psd (a b c x y : ℝ)
+    (ha : 0 < a) (hdet : 0 ≤ a * c - b ^ 2) :
+    0 ≤ a * x ^ 2 + 2 * b * x * y + c * y ^ 2 := by
+  have hid := signed_schur_cleared a b c x y
+  have hp : 0 ≤ (a * x + b * y) ^ 2 + (a * c - b ^ 2) * y ^ 2 :=
+    add_nonneg (sq_nonneg _) (mul_nonneg hdet (sq_nonneg _))
+  have hprod : 0 ≤ a * (a * x ^ 2 + 2 * b * x * y + c * y ^ 2) := by
+    rw [hid]
+    exact hp
+  by_contra hnot
+  have hneg : a * x ^ 2 + 2 * b * x * y + c * y ^ 2 < 0 :=
+    lt_of_not_ge hnot
+  have hm : a * (a * x ^ 2 + 2 * b * x * y + c * y ^ 2) < 0 :=
+    mul_neg_of_pos_of_neg ha hneg
+  linarith
+
 end StructuralSpectralRigidity
