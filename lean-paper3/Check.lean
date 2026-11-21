@@ -18,3 +18,8 @@ import StructuralSpectralRigidity
 #print axioms StructuralSpectralRigidity.nonzero_radial_scaling_preserves_phase_distinction
 
 #print axioms StructuralSpectralRigidity.arithmetic_ramp_passivity_pointwise
+
+#print axioms StructuralSpectralRigidity.prime_ramp_threshold
+#print axioms StructuralSpectralRigidity.signed_prime_kick_indefinite
+#print axioms StructuralSpectralRigidity.signed_schur_cleared
+#print axioms StructuralSpectralRigidity.signed_schur_block_psd
