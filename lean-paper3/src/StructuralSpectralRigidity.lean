@@ -187,6 +187,7 @@ theorem real_two_prime_frame_positive (s t x y : ℝ)
     0 < (Real.exp (-s * Real.log 2) * x + Real.exp (-t * Real.log 2) * y) ^ 2
       + (Real.exp (-s * Real.log 3) * x + Real.exp (-t * Real.log 3) * y) ^ 2 := by
   apply two_observation_positive
-  exact sub_ne_zero.mpr (real_two_prime_minor_nonzero s t hst)
+  · exact sub_ne_zero.mpr (real_two_prime_minor_nonzero s t hst)
+  · exact hxy
 
 end StructuralSpectralRigidity
