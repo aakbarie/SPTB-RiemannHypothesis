@@ -277,7 +277,8 @@ theorem prime_ramp_threshold (L s : ℝ) (hL : 0 < L)
   have h1 : s - L ≤ 0 := by linarith
   have h2' : 0 ≤ 2 * s - L := by linarith
   constructor
-  · simp [truncatedRamp, max_eq_right h0]
+  · simp [truncatedRamp]
+    linarith
   constructor
   · simp [truncatedRamp, max_eq_right h1]
   · simp [truncatedRamp, max_eq_left h2']
