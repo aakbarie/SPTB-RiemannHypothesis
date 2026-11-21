@@ -6,3 +6,6 @@ import StructuralSpectralRigidity
 #print axioms StructuralSpectralRigidity.rotation_preserves_diagonal_metric
 #print axioms StructuralSpectralRigidity.critical_line_of_casimir_reality
 #print axioms StructuralSpectralRigidity.critical_line_from_compatible_phase_metric
+#print axioms StructuralSpectralRigidity.two_observation_injective
+#print axioms StructuralSpectralRigidity.two_observation_positive
+#print axioms StructuralSpectralRigidity.three_observation_positive
