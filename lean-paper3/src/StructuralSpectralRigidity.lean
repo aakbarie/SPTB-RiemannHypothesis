@@ -81,4 +81,67 @@ theorem critical_line_from_compatible_phase_metric
   have hreal : casimirImag beta gamma = 0 := by linarith
   exact critical_line_of_casimir_reality beta gamma hgamma hreal
 
+
+/-- If a two-observation real sampling minor is nonzero, the measurements
+separate every nonzero coefficient vector. This is generic finite-dimensional
+linear algebra; the number-theoretic nonzero minor for p=2,3,5 is separate. -/
+theorem two_observation_injective
+    (a b c d x y : ℝ)
+    (hdet : a * d - b * c ≠ 0)
+    (h1 : a * x + b * y = 0)
+    (h2 : c * x + d * y = 0) : x = 0 ∧ y = 0 := by
+  have hx : (a * d - b * c) * x = 0 := by
+    calc
+      (a * d - b * c) * x =
+          d * (a * x + b * y) - b * (c * x + d * y) := by ring
+      _ = 0 := by rw [h1, h2]; ring
+  have hy : (a * d - b * c) * y = 0 := by
+    calc
+      (a * d - b * c) * y =
+          a * (c * x + d * y) - c * (a * x + b * y) := by ring
+      _ = 0 := by rw [h1, h2]; ring
+  constructor
+  · rcases mul_eq_zero.mp hx with h | h
+    · exact False.elim (hdet h)
+    · exact h
+  · rcases mul_eq_zero.mp hy with h | h
+    · exact False.elim (hdet h)
+    · exact h
+
+/-- A nonzero observation minor yields positive squared-observation energy. -/
+theorem two_observation_positive
+    (a b c d x y : ℝ)
+    (hdet : a * d - b * c ≠ 0)
+    (hxy : x ≠ 0 ∨ y ≠ 0) :
+    0 < (a * x + b * y) ^ 2 + (c * x + d * y) ^ 2 := by
+  by_contra hnot
+  have hle : (a * x + b * y) ^ 2 + (c * x + d * y) ^ 2 ≤ 0 :=
+    le_of_not_gt hnot
+  have hsq1 : (a * x + b * y) ^ 2 = 0 := by
+    nlinarith [sq_nonneg (c * x + d * y)]
+  have hsq2 : (c * x + d * y) ^ 2 = 0 := by
+    nlinarith [sq_nonneg (a * x + b * y)]
+  have h1 : a * x + b * y = 0 := by
+    have hm : (a * x + b * y) * (a * x + b * y) = 0 := by
+      simpa [pow_two] using hsq1
+    rcases mul_eq_zero.mp hm with h | h <;> exact h
+  have h2 : c * x + d * y = 0 := by
+    have hm : (c * x + d * y) * (c * x + d * y) = 0 := by
+      simpa [pow_two] using hsq2
+    rcases mul_eq_zero.mp hm with h | h <;> exact h
+  obtain ⟨hx, hy⟩ := two_observation_injective a b c d x y hdet h1 h2
+  rcases hxy with h | h
+  · exact h hx
+  · exact h hy
+
+/-- Additional observations cannot erase a previously strict frame bound. -/
+theorem three_observation_positive
+    (a b c d e f x y : ℝ)
+    (hdet : a * d - b * c ≠ 0)
+    (hxy : x ≠ 0 ∨ y ≠ 0) :
+    0 < (a * x + b * y) ^ 2 + (c * x + d * y) ^ 2 +
+      (e * x + f * y) ^ 2 := by
+  have hp := two_observation_positive a b c d x y hdet hxy
+  nlinarith [sq_nonneg (e * x + f * y)]
+
 end StructuralSpectralRigidity
