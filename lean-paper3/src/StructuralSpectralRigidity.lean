@@ -228,4 +228,26 @@ theorem nat_prime_log_ratio_nonalias (m n : ℕ) (hn : 0 < n) :
     nlinarith [hcross]
   exact nat_log_prime_nonalias m n hn hh
 
+
+/-- Nonzero radial scaling of both complex phase observations preserves
+exact observational equality. This is one finite-dimensional input to
+the information-dimension discussion; it does not formalize entropy limits. -/
+theorem nonzero_radial_scaling_preserves_phase_distinction
+    (a b : ℝ) (ha : a ≠ 0) (hb : b ≠ 0)
+    (z₁ z₂ w₁ w₂ : ℂ) :
+    ((a : ℂ) * z₁ = (a : ℂ) * w₁ ∧
+     (b : ℂ) * z₂ = (b : ℂ) * w₂) ↔
+    (z₁ = w₁ ∧ z₂ = w₂) := by
+  have haC : (a : ℂ) ≠ 0 := by exact_mod_cast ha
+  have hbC : (b : ℂ) ≠ 0 := by exact_mod_cast hb
+  constructor
+  · rintro ⟨h₁, h₂⟩
+    constructor
+    · exact mul_left_cancel₀ haC h₁
+    · exact mul_left_cancel₀ hbC h₂
+  · rintro ⟨h₁, h₂⟩
+    constructor
+    · rw [h₁]
+    · rw [h₂]
+
 end StructuralSpectralRigidity
