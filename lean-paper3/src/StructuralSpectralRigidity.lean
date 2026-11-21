@@ -161,4 +161,32 @@ theorem prime_power_nonalias (m n : ℕ) (hn : 0 < n) :
   · have hprime : 5 ∣ (2 : ℕ) := hp.dvd_of_dvd_pow h2
     norm_num at hprime
 
+
+/-- Genuine prime-specific two-mode observability for real exponents.
+The 2- and 3-prime evaluation columns are linearly independent. -/
+theorem real_two_prime_minor_nonzero (s t : ℝ) (hst : s ≠ t) :
+    Real.exp (-s * Real.log 2) * Real.exp (-t * Real.log 3) ≠
+      Real.exp (-t * Real.log 2) * Real.exp (-s * Real.log 3) := by
+  intro heq
+  have heqExp :
+      Real.exp (-s * Real.log 2 + -t * Real.log 3) =
+        Real.exp (-t * Real.log 2 + -s * Real.log 3) := by
+    simpa only [Real.exp_add] using heq
+  have heqArg := Real.exp_injective heqExp
+  have hprod : (s - t) * (Real.log 3 - Real.log 2) = 0 := by
+    nlinarith [heqArg]
+  rcases mul_eq_zero.mp hprod with hst' | hlog
+  · exact hst (sub_eq_zero.mp hst')
+  · have hl : Real.log 2 < Real.log 3 := Real.log_lt_log (by norm_num) (by norm_num)
+    linarith
+
+/-- On the real-exponent two-mode subspace, two actual prime samples
+yield strictly positive observed energy. No RH-related fact is used. -/
+theorem real_two_prime_frame_positive (s t x y : ℝ)
+    (hst : s ≠ t) (hxy : x ≠ 0 ∨ y ≠ 0) :
+    0 < (Real.exp (-s * Real.log 2) * x + Real.exp (-t * Real.log 2) * y) ^ 2
+      + (Real.exp (-s * Real.log 3) * x + Real.exp (-t * Real.log 3) * y) ^ 2 := by
+  apply two_observation_positive
+  exact sub_ne_zero.mpr (real_two_prime_minor_nonzero s t hst)
+
 end StructuralSpectralRigidity
