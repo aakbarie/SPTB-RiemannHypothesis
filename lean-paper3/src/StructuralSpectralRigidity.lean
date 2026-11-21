@@ -64,4 +64,21 @@ theorem critical_line_of_casimir_reality
   · exact False.elim (hgamma hz)
   · linarith
 
+
+/-- Real part of the arithmetic Casimir eigenvalue rho*(1-rho). -/
+def casimirReal (beta gamma : ℝ) : ℝ := beta * (1 - beta) + gamma ^ 2
+
+/-- Conditional critical-line result: the existence of a positive
+compatible metric for the phase generator of rho*(1-rho) forces
+beta=1/2 when gamma is nonzero. This constructs no such metric. -/
+theorem critical_line_from_compatible_phase_metric
+    (beta gamma a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hgamma : gamma ≠ 0)
+    (h11 : defect11 (-casimirImag beta gamma) (casimirReal beta gamma) a c = 0)
+    (h22 : defect22 (-casimirImag beta gamma) (casimirReal beta gamma) b c = 0) :
+    beta = (1 : ℝ) / 2 := by
+  have hz := positive_metric_excludes_drift
+    (-casimirImag beta gamma) (casimirReal beta gamma) a b c ha hb h11 h22
+  have hreal : casimirImag beta gamma = 0 := by linarith
+  exact critical_line_of_casimir_reality beta gamma hgamma hreal
+
 end StructuralSpectralRigidity
