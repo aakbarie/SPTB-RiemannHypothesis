@@ -1,0 +1,7 @@
+import StructuralSpectralRigidity
+
+#print axioms StructuralSpectralRigidity.defect_trace
+#print axioms StructuralSpectralRigidity.positive_metric_excludes_drift
+#print axioms StructuralSpectralRigidity.quantitative_defect_bound
+#print axioms StructuralSpectralRigidity.rotation_preserves_diagonal_metric
+#print axioms StructuralSpectralRigidity.critical_line_of_casimir_reality
