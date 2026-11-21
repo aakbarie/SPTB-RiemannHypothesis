@@ -12,3 +12,5 @@ import StructuralSpectralRigidity
 #print axioms StructuralSpectralRigidity.prime_power_nonalias
 #print axioms StructuralSpectralRigidity.real_two_prime_minor_nonzero
 #print axioms StructuralSpectralRigidity.real_two_prime_frame_positive
+#print axioms StructuralSpectralRigidity.nat_log_prime_nonalias
+#print axioms StructuralSpectralRigidity.nat_prime_log_ratio_nonalias
