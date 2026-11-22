@@ -1,0 +1,924 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype,booktabs,array,xcolor,hyperref,enumitem}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black,citecolor=blue!55!black}
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newcommand{\HH}{\mathcal H}
+\newcommand{\MM}{\mathcal M}
+\newcommand{\WW}{\mathbb W}
+\newcommand{\LL}{\mathcal L}
+\newcommand{\PP}{\mathsf P}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\title{\textbf{Witness Functors}\\[3pt]\large Representational Limits, Approximation, and Certified Refinement}
+\author{Akbar Akbari Esfahani}
+\date{21 November 2026\\\small Revised research manuscript}
+\begin{document}
+\maketitle
+\begin{abstract}
+A representation determines which distinctions an inquiry can express. An approximation model imposes a further restriction within that representation. We separate these two limitations and develop a witness framework for examining them together. For finite observation systems, we characterize expressibility by constancy on observation fibers, construct quantitative certificates of inaccessible distinctions, and prove a universal property for the least refinement that makes a specified diagnostic observable. A weighted Hilbert realization separates observation loss from model error and gives an exact identity for the gain from refinement. For approximation witnesses we specify a category of contractions, prove functorial monotonicity, and construct a Lawvere-enriched distributor using unsquared distance and directed model excess. Squared discrepancy is an associated energy, not an additive metric. We then distinguish the penalized optimum from the original SPTB functional, give a corrected fixed-width spectral example, and retain phase information in refinement histories without identifying phase with scalar cost. These results support a proposed method for representing a scientific theory's own observational commitments as mathematical data. The projection, factorization, and metric constructions are standard; the contribution sought here is their explicit integration into a checkable framework. Developmental and contemplative interpretations motivate the question but are not consequences of the theorems.
+\end{abstract}
+\tableofcontents
+
+\section{The problem: observing a representation}
+A theory specifies more than statements about a system. It chooses observations, equivalence relations, admissible models, a notion of discrepancy, and transformations under which conclusions are expected to persist. A limitation of any one of these choices can remain invisible to the others. The question pursued here is how such limitations can become objects of mathematical investigation.
+
+There are two different failures. An observation may identify states that differ in a scientifically relevant quantity. Alternatively, the observation may retain that quantity while the chosen model class cannot reproduce it. Increasing model complexity addresses the second failure; it need not address the first. Consequently, small approximation error alone does not certify observational adequacy.
+
+The original Witness Functors manuscript \cite{witnessoriginal} proposed a universal enriched evaluator and used the Spline-Penalized Tail Bound (SPTB) as a rigorous anchor. It did not specify all enriched actions; its squared loss does not satisfy the additive metric law; and its identification with SPTB conflated two different projections. The present revision supplies precise replacements and restores the motivating question about the structure of representation. It does not infer a universal physical conservation law from invariance of a chosen loss.
+
+\paragraph{Contribution and antecedents.}
+Hilbert projection and duality are standard \cite{rudin}; generalized metric enrichment is due to Lawvere \cite{lawvere}, with the categorical background developed by Kelly \cite{kelly}. Fiber factorization and adjoining coordinates are elementary constructions. We make no priority claim for these ingredients. The paper organizes them into (i) a distinction between observation and model limitations, (ii) explicit certificates and refinement obligations, and (iii) a proposed specification for compiling scientific descriptions into checkable objects. A general automated compiler, a universal developmental mechanism, and an all-spectrum SPTB theorem are not established here.
+
+\section{Observation, indistinguishability, and refinement}\label{sec:observation}
+Let $X$ be a nonempty set of states or configurations. An observation is a map
+$O:X\to Y$. Replace $Y$ by $O(X)$ throughout, so $O$ is surjective. Define
+\[
+x\sim_O x' \quad\Longleftrightarrow\quad O(x)=O(x').
+\]
+The set $X$ is a specified comparison domain, not a claim that an observer has exhaustive access to underlying reality.
+
+\begin{definition}[Expressibility and obstruction]
+A diagnostic $q:X\to Z$ is \emph{expressible through $O$} if there is
+$\bar q:Y\to Z$ with $q=\bar q\circ O$. An \emph{obstruction pair} is
+$(x,x')$ such that $O(x)=O(x')$ but $q(x)\ne q(x')$.
+\end{definition}
+
+\begin{proposition}[Fiber criterion]\label{prop:fibers}
+A diagnostic is expressible through $O$ if and only if it is constant on each observation fiber. Equivalently, it is inexpressible if and only if it has an obstruction pair.
+\end{proposition}
+\begin{proof}
+A factorization forces equal diagnostic values on equal observations.
+Conversely, define $\bar q(y)$ as the common value of $q$ on $O^{-1}(y)$.
+Surjectivity and fiber constancy make this definition well-defined and unique.
+\end{proof}
+
+\begin{definition}[Refinement category]
+Fix $X$. Objects of $\mathsf{Obs}_X$ are surjective observations on $X$.
+There is an arrow $O_1\to O_0$ when a map $\pi:O_1(X)\to O_0(X)$ satisfies
+\begin{equation}\label{eq:refinement}
+O_0=\pi\circ O_1.
+\end{equation}
+Arrows point from finer to coarser observations. The map $\pi$ is unique,
+and identities and composition are those of functions.
+\end{definition}
+Uniqueness follows because every element of $O_1(X)$ is an observation value.
+Thus this is a thin category, a preorder; after quotienting observations by
+mutual factorization it is a partial order.
+
+\begin{proposition}[Refinement and retained distinctions]\label{prop:refineobs}
+An arrow $O_1\to O_0$ exists exactly when
+$\sim_{O_1}\,\subseteq\,\sim_{O_0}$. Every diagnostic expressible through $O_0$
+is then expressible through $O_1$.
+\end{proposition}
+\begin{proof}
+Apply Proposition~\ref{prop:fibers} to the diagnostic $O_0$. For the final
+claim, substitute \eqref{eq:refinement} into any factorization through $O_0$.
+\end{proof}
+This is a precise, limited sense of information preservation: old distinctions
+are recoverable. It does not imply preservation of a metric, probability,
+energy, entropy, or physical dynamics.
+
+\begin{theorem}[Least diagnostic refinement]\label{thm:augmentation}
+Given $O_0:X\to Y_0$ and $q:X\to Z$, define
+\[
+O_q(x)=(O_0(x),q(x)),\qquad Y_q=O_q(X).
+\]
+Then $O_q$ preserves $O_0$ and expresses $q$. If an observation $R:X\to Y_R$
+has $O_0=\pi_R R$ and $q=\bar q_R R$, there is a unique map
+$u:Y_R\to Y_q$ such that $O_q=uR$. Thus every observation preserving $O_0$
+and expressing $q$ refines $O_q$. The refinement is strict exactly when
+$q$ has an obstruction pair for $O_0$.
+\end{theorem}
+\begin{proof}
+Coordinate projections recover $O_0$ and $q$ from $O_q$.
+Set $u(y)=(\pi_R(y),\bar q_R(y))$. Surjectivity of $R$ shows that
+$u(y)\in Y_q$ and that any map with $O_q=uR$ has these values.
+Finally, adjoining $q$ splits an $O_0$ fiber exactly when $q$ is not
+constant on that fiber.
+\end{proof}
+
+\begin{proposition}[Postprocessing cannot recover a lost distinction]\label{prop:nofree}
+If $O_1=A\circ O_0$ and $O_0=\pi\circ O_1$, then
+$\sim_{O_1}=\sim_{O_0}$. In particular, deterministic postprocessing of
+$O_0$ alone cannot produce a strict refinement of $O_0$.
+\end{proposition}
+\begin{proof}
+Each factorization gives one inclusion between the fiber relations.
+\end{proof}
+Theorem~\ref{thm:augmentation} proves a universal property, not the availability
+of $q$. Obtaining $q$ may require new measurements, retained metadata, an
+intervention, or an externally justified calculation. No recursive operation
+on already collapsed observation values can distinguish their original
+preimages without such additional structure or assumptions.
+
+\section{Quantifying observational limits}\label{sec:finite}
+For this section let $X$ be finite, with weights $\mu(x)>0$ and
+$\sum_x\mu(x)=1$. Work in the real Hilbert space
+$\HH=L^2(X,\mu)$, with inner product
+$\langle f,g\rangle=\sum_x\mu(x)f(x)g(x)$.
+For an observation $O$, let
+\[
+V_O=\{a\circ O:a:O(X)\to\R\},\qquad
+P_O:\HH\to V_O
+\]
+be its observable subspace and orthogonal projection. For a specified
+target $h:X\to\R$, define the \emph{observation witness}
+\begin{equation}\label{eq:obswit}
+\mathcal B_O(h)=\|h-P_Oh\|^2.
+\end{equation}
+
+\begin{theorem}[Finite observation witness]\label{thm:obswit}
+On a fiber $F_y=O^{-1}(y)$,
+\[
+(P_Oh)(x)=\bar h_y
+=\frac{\sum_{u\in F_y}\mu(u)h(u)}{\sum_{u\in F_y}\mu(u)}
+\quad (x\in F_y).
+\]
+Consequently,
+\[
+\mathcal B_O(h)=\sum_y\sum_{x\in F_y}\mu(x)(h(x)-\bar h_y)^2,
+\]
+and $\mathcal B_O(h)=0$ exactly when $h$ is expressible through $O$.
+For any obstruction pair $x,x'$,
+\begin{equation}\label{eq:pairbound}
+\mathcal B_O(h)\ge
+\frac{|h(x)-h(x')|^2}{\mu(x)^{-1}+\mu(x')^{-1}}>0.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Minimization over one constant on each fiber gives its weighted mean.
+Every term is nonnegative, and positive weights give the stated zero
+criterion. The functional $\ell(v)=v(x)-v(x')$ annihilates $V_O$.
+Its Riesz vector has entries $\mu(x)^{-1}$ and $-\mu(x')^{-1}$ at the
+two distinct states, hence
+$\|\ell\|^2=\mu(x)^{-1}+\mu(x')^{-1}$.
+Cauchy--Schwarz applied to $\ell(h-P_Oh)$ gives \eqref{eq:pairbound}.
+\end{proof}
+
+\begin{theorem}[Observation loss and model error are different]\label{thm:twoloss}
+For every nonempty model family $\MM\subseteq V_O$,
+\begin{equation}\label{eq:twoloss}
+\inf_{m\in\MM}\|h-m\|^2
+=\mathcal B_O(h)+\inf_{m\in\MM}\|P_Oh-m\|^2.
+\end{equation}
+If $O_1$ refines $O_0$, then
+\begin{equation}\label{eq:obsgain}
+\mathcal B_{O_0}(h)-\mathcal B_{O_1}(h)
+=\|P_{O_1}h-P_{O_0}h\|^2.
+\end{equation}
+\end{theorem}
+\begin{proof}
+For $m\in V_O$, the decomposition
+$h-m=(h-P_Oh)+(P_Oh-m)$ is orthogonal. Taking the infimum proves the
+first identity, without requiring attainment in $\MM$.
+Refinement gives $V_{O_0}\subseteq V_{O_1}$; applying Pythagoras to the
+nested orthogonal projections proves the second identity.
+\end{proof}
+
+\begin{example}[A perfect observed fit can hide an entire target]\label{ex:four}
+Let $X=\{1,2,3,4\}$ with equal weights,
+$O_0=(A,A,B,B)$, and $h=(0,2,0,2)$. Then $P_{O_0}h=(1,1,1,1)$ and
+$\mathcal B_{O_0}(h)=1$. The constant model fits the observed target
+$P_{O_0}h$ exactly, with model error zero, while the observation witness
+is positive. Adjoining $q=(0,1,0,1)$ makes all four states distinguishable:
+$\mathcal B_{O_q}(h)=0$ and the gain in \eqref{eq:obsgain} is $1$.
+Either pair $(1,2)$ or $(3,4)$ certifies a lower bound $1/2$ in
+\eqref{eq:pairbound}. The computation requires access to the target
+values; those values cannot be recovered from $O_0$ alone.
+\end{example}
+
+The assignment $O\mapsto V_O$ sends fine-to-coarse arrows to inclusions
+in the reverse direction. For fixed $h$, $O\mapsto\mathcal B_O(h)$ is a
+functor from $\mathsf{Obs}_X$ to the ordinary ordered set $([0,\infty),\le)$:
+a fine-to-coarse arrow raises or preserves observation loss.
+This variance differs from the model-enlargement convention below.
+
+\section{Approximation within a specified observation space}
+Fix a real or complex Hilbert space $(\HH,\langle\cdot,\cdot\rangle)$, and let $\MM\subseteq\HH$ be a nonempty closed linear subspace. Nonlinear closed convex families are possible, but the strongest exact identities below are linear.
+
+\begin{definition}[Witness and residual]
+Define
+\begin{equation}\label{eq:witness}
+\WW_{\HH}(f,\MM)=\inf_{m\in\MM}\|f-m\|_{\HH}^2,
+\qquad r_{f,\MM}=f-\PP_{\MM}f,
+\end{equation}
+where $\PP_\MM$ is orthogonal projection. Thus $\WW_{\HH}(f,\MM)=\|r_{f,\MM}\|_{\HH}^2$.
+\end{definition}
+
+For interval observations, take $\HH=H^1(I)$, $\lambda>0$, with
+\[
+\|f\|_\lambda^2=\int_I|f(t)|^2\dd t+\lambda\int_I|f'(t)|^2\dd t.
+\]
+If $\lambda=0$, use $L^2(I)$ instead. A family of \emph{discontinuous blockwise} affine functions belongs naturally to the direct-sum space $\bigoplus_jH^1(I_j)$, not to global $H^1(I)$ unless matching traces are imposed.
+
+\begin{theorem}[Existence, monotonicity, and exact refinement gain]\label{thm:refine}
+For closed linear subspaces $\MM_1\subseteq\MM_2\subseteq\HH$ and $f\in\HH$,
+\begin{align}
+0\le\WW(f,\MM_2)&\le\WW(f,\MM_1),\\
+\WW(f,\MM_1)-\WW(f,\MM_2)&=\|\PP_{\MM_2}f-\PP_{\MM_1}f\|^2.\label{eq:gain}
+\end{align}
+\end{theorem}
+\begin{proof}
+The projection theorem gives the unique minimizing element $\PP_{\MM_i}f$. Since $\MM_1\subseteq\MM_2$, we have the orthogonal decomposition
+\[
+f-\PP_{\MM_1}f=(f-\PP_{\MM_2}f)+(\PP_{\MM_2}f-\PP_{\MM_1}f).
+\]
+The first summand is orthogonal to $\MM_2$, which contains the second. Pythagoras proves \eqref{eq:gain} and the inequalities.
+\end{proof}
+
+\begin{remark}[A witness is model-relative]
+High witness cost is not intrinsically high entropy, novel physics, or a phase transition. It means the signal lies far from a \emph{specified} model class under a \emph{specified} loss. Refining the model cannot raise its optimal in-sample cost; out-of-sample prediction error need not be monotone.
+\end{remark}
+
+\section{Morphisms: what functoriality actually requires}
+A declaration that \eqref{eq:witness} is a $([0,\infty],\ge,+,0)$-enriched profunctor is insufficient without specifying the systems' morphisms, their action on observations, and the variance of the model coordinate. The following is a fully typed replacement.
+
+\begin{definition}[Category of witness triples]
+Let $\mathsf{Wit}$ have objects $(\HH,\MM,f)$ and morphisms
+\[
+T:(\HH,\MM,f)\longrightarrow(\HH',\MM',f')
+\]
+given by linear contractions $T:\HH\to\HH'$ with $T\MM\subseteq\MM'$ and $Tf=f'$. Identities and compositions are the usual linear maps. Equip $[0,\infty]$ with the order $\ge$.
+\end{definition}
+
+\begin{theorem}[Data processing]\label{thm:dataprocess}
+The assignment $(\HH,\MM,f)\mapsto\WW_\HH(f,\MM)$ is order-preserving from $\mathsf{Wit}$ to the poset $([0,\infty],\ge)$: every witness morphism satisfies
+\[
+\WW_{\HH'}(Tf,\MM')\le\WW_\HH(f,\MM).
+\]
+If $T$ is unitary onto $\HH'$ and $T\MM=\MM'$, then equality holds.
+\end{theorem}
+\begin{proof}
+For any $m\in\MM$, $Tm\in\MM'$ and $\|Tf-Tm\|\le\|f-m\|$. Take the infimum. For unitary equivalence apply the same reasoning to $T^{-1}$.
+\end{proof}
+
+\begin{remark}[Enrichment and profunctors]
+The theorem gives an ordinary poset-valued functor, compatible with the Lawvere cost order. It does not establish a general enriched profunctor $\mathrm{Sys}^{op}\times\mathrm{Mod}\to\mathsf{Resp}$: such a claim needs separately defined enriched hom-objects and correctly directed actions on both coordinates. Section~\ref{sec:enriched} supplies a separate enriched construction for unsquared distance; it is not a profunctor on arbitrary dynamical systems.
+\end{remark}
+
+
+
+\section{A correctly typed enriched witness}\label{sec:enriched}
+The squared energy $\WW$ is useful analytically but is not a metric under
+addition. Already on $\R$, $|0-2|^2=4>1+1=|0-1|^2+|1-2|^2$.
+We therefore use the unsquared distance for metric enrichment.
+
+Let $(H,d)$ be a metric space (for example a fixed Hilbert observation space).
+Let $\mathcal A$ be a set of nonempty subsets of $H$, with directed excess
+\[
+e(M,N)=\sup_{m\in M}\inf_{n\in N}d(m,n)\in[0,\infty].
+\]
+It satisfies $e(M,M)=0$ and the triangle inequality, and defines a Lawvere
+category over $\mathbb V=([0,\infty],\ge,+,0)$ \cite{lawvere,kelly}.
+For closed $N$, $e(M,N)=0$ precisely when $M\subseteq N$.
+Distinct subsets with equal closure may have zero excess in both directions.
+
+\begin{theorem}[Distance distributor]\label{thm:distributor}
+Define $D(f,M)=\inf_{m\in M}d(f,m)$. In the convention that a distributor
+$H\nrightarrow\mathcal A$ has actions
+\[
+d(f',f)+D(f,M)\ge D(f',M),\qquad
+D(f,M)+e(M,N)\ge D(f,N),
+\]
+$D$ is a $\mathbb V$-enriched distributor. In particular,
+\begin{equation}\label{eq:module}
+d(f',f)+D(f,M)+e(M,N)\ge D(f',N).
+\end{equation}
+In a Hilbert space with a closed linear model $M$, $\WW(f,M)=D(f,M)^2$.
+\end{theorem}
+\begin{proof}
+The first action follows by applying the metric triangle inequality to
+$f',f,m$ and taking the infimum over $m\in M$.
+If $e(M,N)=+\infty$ the second action is automatic. Otherwise choose
+$m\in M$ within $\varepsilon$ of $D(f,M)$ and then $n\in N$ with
+$d(m,n)\le e(M,N)+\varepsilon$. This gives
+$D(f,N)\le D(f,M)+e(M,N)+2\varepsilon$; let $\varepsilon\downarrow0$.
+The same argument applied pointwise to $m\in M$ proves
+$e(M,P)\le e(M,N)+e(N,P)$, including infinite values.
+Identity actions follow from zero self-distance. Combining the two
+actions gives \eqref{eq:module}; the final assertion is the definition
+of the squared witness.
+\end{proof}
+
+For arbitrary nonempty models in a Hilbert space,
+\[
+|D(f,M)-D(g,M)|\le\|f-g\|.
+\]
+When $M,N$ have finite symmetric Hausdorff distance
+$d_H(M,N)=\max\{e(M,N),e(N,M)\}$, the actions also give
+$|D(f,M)-D(f,N)|\le d_H(M,N)$. Thus signal and model perturbations have
+explicit stability bounds. For unbounded linear subspaces, directed
+excess is often infinite outside inclusions; the theorem remains true,
+but useful quantitative model comparisons may require bounded model
+families.
+
+This construction gives enriched actions on specified observation and
+model spaces. An arbitrary smooth map intertwining two systems'
+dynamics need not induce a contraction, or even a map on the chosen
+observations. It is therefore not automatically a witness morphism.
+Likewise, an infimum formula by itself does not identify a right Kan
+extension: the indexing category, functors, and universal property must
+be given. The concrete universal property used here is
+Theorem~\ref{thm:augmentation}.
+
+\section{Covariance and local information}
+\begin{proposition}[Covariance under a transported metric and model]
+If $U:\HH\to\HH'$ is a surjective linear isometry, then
+$\WW_{\HH'}(Uf,U\MM)=\WW_\HH(f,\MM)$. A unitary group action preserving
+$\MM$ therefore preserves the witness along its orbits.
+\end{proposition}
+\begin{proof}
+The map $m\mapsto Um$ bijects the admissible models and preserves every
+candidate error, hence its infimum.
+\end{proof}
+Invertibility alone is insufficient. On $\R$ with $\MM=\{0\}$, the
+information-preserving coordinate change $U(x)=2x$ multiplies the
+squared witness by four if the original Euclidean metric is retained.
+A coordinate-invariant comparison must transport the metric as well
+as the observations and model. General affine, Galilean, or time-scale
+covariance of a receptive-field system does not by itself prove
+isometry for the particular $L^2+\lambda H^1$ loss. The original claim
+that a receptive-field theory is a strict subset of WF is therefore
+replaced by a requirement to exhibit this additional structure.
+
+\begin{proposition}[Independent blocks and constrained gluing]\label{prop:glue}
+Let $\HH=\bigoplus_{j=1}^k\HH_j$ and let
+$\MM_j\subseteq\HH_j$ be closed linear subspaces. With independent local
+models,
+\[
+\WW_{\HH}(f,\bigoplus_j\MM_j)=\sum_j\WW_{\HH_j}(f_j,\MM_j).
+\]
+If a global compatibility condition restricts models to a closed linear
+subspace $\mathcal G\subseteq\bigoplus_j\MM_j$, then
+\[
+\WW_{\HH}(f,\mathcal G)\ge\sum_j\WW_{\HH_j}(f_j,\MM_j).
+\]
+Equality holds exactly when the tuple of local projections belongs to
+$\mathcal G$.
+\end{proposition}
+\begin{proof}
+Independent projections minimize the direct-sum norm componentwise.
+Restriction cannot improve the minimum. The unrestricted minimizer is
+unique, so a restricted minimizer attains the same value exactly when
+that tuple is admissible.
+\end{proof}
+For $f(t)=t$ on $[0,2]$, a single constant gives error $2/3$;
+each unit interval has local constant-fit error $1/12$.
+Thus the global error need not be bounded by the maximum local error.
+A sheaf glues \emph{compatible} sections; it does not make independent
+best fits compatible or turn an integral loss into a maximum.
+Overlapping covers require separate gluing and norm estimates.
+
+Neither covariance nor gluing identifies squared error with Shannon
+information loss or thermodynamic entropy. Such identifications need
+a specified probabilistic or physical model.
+\section{Dual witnesses: a certificate of inaccessible structure}
+\begin{theorem}[Annihilating functional certificate]\label{thm:dual}
+Let $\ell\in\HH^*$ be a bounded linear functional such that $\ell(m)=0$ for all $m\in\MM$. If $\ell\ne0$, then
+\begin{equation}\label{eq:dual}
+\WW_\HH(f,\MM)\ge\frac{|\ell(f)|^2}{\|\ell\|_{\HH^*}^2}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+For every $m\in\MM$, $|\ell(f)|=|\ell(f-m)|\le\|\ell\|\|f-m\|$. Square and take the infimum.
+\end{proof}
+
+This is the appropriate mathematical meaning of a \emph{witness}: an observable that vanishes on admissible models but is nonzero on the system. No assumption about entropy, information dimension, or zeta zeros is required.
+
+\section{A spectral pole as an exact Fourier witness}
+Let $z_0\in\C$ and $R>0$. Parametrize the circle $z=z_0+Re^{i\theta}$. Equip the space of square-integrable boundary traces with normalized norm
+\[
+\|g\|_{\partial D}^2=\frac1{2\pi}\int_0^{2\pi}|g(\theta)|^2\dd\theta.
+\]
+Using the standard Hardy-space boundary decomposition \cite{duren}, let $\MM_+$ be the closed Hardy subspace of nonnegative Fourier frequencies $e^{in\theta}$, $n\ge0$, corresponding to analytic functions in the disk.
+
+\begin{theorem}[Exact simple-pole witness]\label{thm:pole}
+Suppose $F(z)=r/(z-z_0)+h(z)$, with $h$ analytic in a neighborhood of the closed disk and $r\in\C$. Then
+\begin{equation}\label{eq:pole}
+\WW_{L^2(\partial D)}(F|_{\partial D},\MM_+)=\frac{|r|^2}{R^2}.
+\end{equation}
+More generally, for a finite principal part $\sum_{k=1}^q r_k/(z-z_0)^k$ with an analytic remainder,
+\[
+\WW(F|_{\partial D},\MM_+)=\sum_{k=1}^q\frac{|r_k|^2}{R^{2k}}.
+\]
+\end{theorem}
+\begin{proof}
+On $\partial D$, the principal-part terms are $r_kR^{-k}e^{-ik\theta}$, orthogonal to all nonnegative Fourier modes. The analytic remainder lies in $\MM_+$. Parseval's identity gives exactly the sum of squared negative-frequency coefficients.
+\end{proof}
+
+\begin{remark}[Why this is stronger than an informal lower bound]
+The residue cannot be removed by any analytic model on the enclosed disk; it is a quantifiable component in an orthogonal complement. This says nothing about \emph{where} the pole must be, nor does the theorem itself assert RH. It supplies a rigorous visibility theorem once a genuine arithmetic function and a genuine pole have been identified.
+\end{remark}
+
+\subsection{Positive character families and noncancellation}
+For a finite collection of Dirichlet $L$-functions $L(s,\chi)$, let $c_\chi>0$ and set
+\[
+A(s)=-\sum_\chi c_\chi\frac{L'(s,\chi)}{L(s,\chi)}.
+\]
+Fix a disk around $\rho$ that contains no other zeros or poles of these $L$-functions. If $\rho$ is a zero of at least one $L(s,\chi)$ and none has a pole there, then
+\begin{equation}\label{eq:res}
+\operatorname{Res}_{s=\rho} A(s)=-\sum_\chi c_\chi m_\chi(\rho)\ne0,
+\end{equation}
+where $m_\chi(\rho)$ are nonnegative integer multiplicities.
+
+\begin{corollary}[Arithmetic noncancellation becomes a positive witness]\label{cor:arithmetic}
+For $A$ as in \eqref{eq:res}, its analytic-model boundary witness obeys
+\[
+\WW(A|_{\partial D},\MM_+)=\frac{\left(\sum_\chi c_\chi m_\chi(\rho)\right)^2}{R^2}>0.
+\]
+\end{corollary}
+\begin{proof}
+The logarithmic derivative has a simple pole of residue $m_\chi(\rho)$ at a zero of multiplicity $m_\chi(\rho)$. Positive coefficients preclude residue cancellation. Apply Theorem~\ref{thm:pole}.
+\end{proof}
+
+
+\section{SPTB as an application with explicit obligations}\label{sec:sptb}
+The repository's SPTB functional \cite{sptbrepo} uses the $L^2$-best affine
+fit on each block and then evaluates both value and derivative error
+against that fit. The original WF manuscript instead minimizes their
+weighted sum. These are different procedures even for a polynomial
+on a single interval.
+
+\subsection{The projection mismatch and its exact correction}
+Let $I=[0,\Delta]$, $\lambda>0$, $f\in H^1(I)$, and let $\operatorname{Aff}$
+be the affine subspace. Write $P_0$ for $L^2$ projection and $P_\lambda$
+for projection in the weighted $H^1$ inner product. Define
+\[
+F_\lambda^{L^2}(f)=\|f-P_0f\|_\lambda^2,\qquad
+W_\lambda(f)=\|f-P_\lambda f\|_\lambda^2.
+\]
+\begin{proposition}[Exact discrepancy between the functionals]\label{prop:gap}
+For every such $f$,
+\begin{equation}\label{eq:gap}
+F_\lambda^{L^2}(f)-W_\lambda(f)
+=\|P_0f-P_\lambda f\|_\lambda^2\ge0.
+\end{equation}
+Let $\bar f=\Delta^{-1}\int_0^\Delta f$ and
+$C_f=\int_0^\Delta(t-\Delta/2)f(t)\dd t$. The optimal slopes are
+\[
+b_0=\frac{C_f}{\Delta^3/12},\qquad
+b_\lambda=\frac{C_f+\lambda(f(\Delta)-f(0))}
+{\Delta^3/12+\lambda\Delta},
+\]
+with intercepts $\bar f-b_0\Delta/2$ and
+$\bar f-b_\lambda\Delta/2$, respectively.
+\end{proposition}
+\begin{proof}
+The weighted residual $f-P_\lambda f$ is orthogonal in $H^1_\lambda$
+to every affine function, including $P_\lambda f-P_0f$.
+Pythagoras gives \eqref{eq:gap}. In centered affine coordinates
+$a+b(t-\Delta/2)$, minimizing over $a$ gives $a=\bar f$.
+Differentiating the remaining quadratic in $b$ gives the displayed
+formulas; the weak derivative integrates to the trace difference.
+The formulas also hold for complex $f$ by complex Hilbert projection.
+\end{proof}
+For $f(t)=t^3$ on $[0,1]$ with $\lambda=1$, the slopes are
+$9/10$ and $129/130$, and $F_1^{L^2}-W_1=3/325>0$.
+The inequality $W_\lambda\le F_\lambda^{L^2}$ transfers an upper bound
+on SPTB to the optimized witness, but does \emph{not} transfer a lower
+bound in that direction. Identity \eqref{eq:gap} identifies the
+additional quantity that would have to be controlled.
+
+\subsection{A fixed-width spectral theorem}
+\begin{theorem}[Single exponential mode]\label{thm:mode}
+Fix $\Delta>0$, $\lambda>0$, $z=\eta+i\omega$ with $\eta>0$, and $c\ne0$.
+For $T\ge\Delta$ and $f(t)=c e^{zt}$ on $[T-\Delta,T]$, complex affine
+models satisfy
+\begin{align}
+W_\lambda(f)&=|c|^2 e^{2\eta(T-\Delta)}d_{z,\Delta,\lambda}^2,\\
+d_{z,\Delta,\lambda}^2
+&=\inf_{a,b\in\C}\int_0^\Delta
+\bigl(|e^{zu}-a-bu|^2+\lambda|ze^{zu}-b|^2\bigr)\dd u>0.
+\end{align}
+Moreover,
+\[
+d_{z,\Delta,\lambda}^2
+=\Delta\,E(z\Delta,\lambda/\Delta^2),
+\quad
+E(v,\tau)=\inf_{A,B\in\C}\int_0^1
+\bigl(|e^{vs}-A-Bs|^2+\tau|ve^{vs}-B|^2\bigr)\dd s.
+\]
+\end{theorem}
+\begin{proof}
+Translate by $T-\Delta$ and divide the affine model by the nonzero
+scalar $ce^{z(T-\Delta)}$. This proves the first identity.
+The affine space is closed; zero distance would imply $e^{zu}$
+is affine. Its second derivative is $z^2e^{zu}\ne0$, a contradiction.
+The substitution $u=\Delta s$ proves the dimensionless formula.
+\end{proof}
+At fixed width the growth rate is $2\eta$. If $\Delta=\Delta(T)$,
+the factor $E(z\Delta,\lambda/\Delta^2)$ must be bounded explicitly;
+it cannot be treated as a fixed constant.
+
+For comparison, the source's unrestricted real-mode lower bound
+$\inf_{a,b}\int_0^\Delta|e^{\eta t}\cos(\omega t)-a-bt|^2\dd t
+\ge C\eta^2\Delta$ for $|\omega|>1/\Delta$ fails by scaling:
+take $\eta=1/\Delta$, $\omega=2/\Delta$.
+The left side is $\Delta c_*$, where
+$c_*=\operatorname{dist}_{L^2(0,1)}(e^s\cos(2s),\operatorname{Aff})^2>0$,
+while the right side is $C/\Delta$. This contradicts a universal
+$C>0$ as $\Delta\downarrow0$.
+
+\begin{proposition}[What a multi-mode detection argument needs]\label{prop:remainder}
+For a closed linear model $\MM$ and $Q=I-P_\MM$, if $f=h+r$, then
+\[
+\sqrt{\WW(f,\MM)}
+\ge\max\{0,\sqrt{\WW(h,\MM)}-\|Qr\|\}.
+\]
+In particular, if $\|Qr\|\le\theta\sqrt{\WW(h,\MM)}$ for a proved
+$\theta<1$, then
+$\WW(f,\MM)\ge(1-\theta)^2\WW(h,\MM)$.
+\end{proposition}
+\begin{proof}
+Use $Qf=Qh+Qr$ and the reverse triangle inequality.
+\end{proof}
+The same projection must act on every term. An estimate on $h$
+against its own best fit cannot be replaced by an estimate involving
+the best fit of the full signal without justification. The remainder
+bound must be proved for the actual spectrum; cancellation is possible,
+as $r=-h$ immediately demonstrates.
+
+\subsection{A separate bound for a damped zero field}
+The external RH verification reports \cite{leancommunity,sutherland}
+concern zero locations. They do not certify SPTB's projection or
+interference estimates. To keep the logical dependence explicit, the
+next theorem states the zero-location hypothesis it uses.
+
+\begin{theorem}[Damped field under zero confinement]\label{thm:field}
+Let $\rho$ range over nontrivial zeta zeros with multiplicity, assume
+$\Re\rho=1/2$, and fix $\alpha>2$, $\sigma\in[1/2,1]$. Then
+\[
+H_{\sigma,\alpha}(t)=\sum_\rho|\rho|^{-\alpha}
+e^{(1/2-\sigma)t}\cos((\Im\rho)t)
+\]
+and its derivative converge absolutely and uniformly for $t\ge0$.
+For any closed linear $\MM_T\subseteq H^1(0,T)$ and $\lambda>0$,
+\[
+\WW_\lambda(H_{\sigma,\alpha},\MM_T)
+\le C_\alpha T(1+\lambda),
+\]
+uniformly in $T>0$ and $\sigma\in[1/2,1]$.
+\end{theorem}
+\begin{proof}
+Zero counting $N(U)=O(U\log U)$ \cite{mont} and partial summation give
+$\sum_\rho|\rho|^{-\alpha}<\infty$ for $\alpha>1$ and
+$\sum_\rho(1+|\Im\rho|)|\rho|^{-\alpha}<\infty$ for $\alpha>2$.
+The exponential factors have modulus at most one, and each derivative
+is bounded by $(1/2+|\Im\rho|)|\rho|^{-\alpha}$.
+Uniform convergence and boundedness follow. Choosing $m=0$ proves
+the witness bound.
+\end{proof}
+This does not handle the source's $\alpha=1$ regime. An infinite
+amplitude field and a separately truncated derivative are not
+automatically a single $H^1$ observation. A coherent field definition,
+uniform estimates on the chosen shrinking mesh, and a remainder
+certificate remain necessary for the intended SPTB application.
+
+\section{Making the representation itself examinable}\label{sec:compiler}
+The preceding mathematics permits a precise, limited version of the
+original recursive idea. Let $\Omega$ be a specified set of scientific
+configurations. A configuration can record a state, observation map,
+model family, loss, and transport rule. An observation
+$O_0:\Omega\to Y_0$ may suppress some of these choices. A diagnostic
+$q:\Omega\to Z$ could record which model was used, whether a proposed
+transport is isometric, or a computed residual certificate.
+Theorem~\ref{thm:augmentation} applies to this configuration space just
+as it applies to a state space.
+
+\begin{example}[The model choice becomes observable]\label{ex:meta}
+Let $\Omega=\{\omega_A,\omega_B\}$ consist of two configurations with
+the same signal $f=(1,0)\in\R^2$ and the same Euclidean loss.
+In $\omega_A$, $\MM_A=\operatorname{span}(1,0)$; in $\omega_B$,
+$\MM_B=\operatorname{span}(0,1)$.
+The observation $O_0(\omega)=f$ identifies the two configurations, but
+$q(\omega)=\WW(f,\MM_\omega)$ takes values $0$ and $1$.
+It cannot factor through $O_0$. Adjoining the model identifier, or
+adjoining $q$ itself, distinguishes them. The physical signal has not
+changed; the description now exposes a choice governing its evaluation.
+Computing $q$ requires the model metadata, not merely the signal.
+\end{example}
+
+This example captures an operational meaning of observing the
+representation. It does not establish consciousness, self-awareness,
+or a representation capable of recognizing every one of its own limits.
+A diagnostic may expose one omission while leaving many others intact.
+
+\subsection{A proposed compiler contract}
+A compiler for scientific representations would need to output explicit
+mathematical objects and obligations. The following is a specification,
+not a claim of a completed general-purpose implementation.
+\begin{center}
+\small
+\begin{tabular}{p{0.20\linewidth}p{0.32\linewidth}p{0.38\linewidth}}
+\toprule
+Component & Required data & Check or obligation\\
+\midrule
+Observation & $X,O$, image and fiber relation & Domain coverage and well-definedness\\
+Target & Diagnostic $q$ or $h$ & Provenance and accessibility\\
+Model & Ambient space and admissible family & Membership, closure if used, constraints\\
+Loss & Norm, weights, derivative domain & Positivity and metric/energy distinction\\
+Transport & Maps on signals and models & Composition and contraction or isometry\\
+Refinement & $O_1,\pi$ & $O_0=\pi O_1$ on the stated domain\\
+Certificate & Pair, functional, or residual & Annihilation and positive diagnostic value\\
+Claim & Hypotheses and conclusion & Proof, computation, or unverified status\\
+\bottomrule
+\end{tabular}
+\end{center}
+A parser's proposed extraction does not certify its own semantic
+correctness. Each extracted object must be traceable to the source;
+ambiguous definitions stay unresolved until supplied or reviewed.
+The finite checker accompanying this manuscript validates an explicit
+instance of Example~\ref{ex:four}. It does not parse papers, infer
+unrecorded measurements, or certify infinite-domain statements.
+
+For SPTB the compiler would have to distinguish $P_0$ from $P_\lambda$,
+record the field truncation, expose the mesh dependence, and attach
+the residual bound in Proposition~\ref{prop:remainder} as an obligation.
+This is more informative than assigning the paper a single scalar score.
+
+\subsection{Recursive refinement and its stopping problem}
+A sequence of justified diagnostics can generate
+$O_{k+1}=(O_k,q_k)$. Every step preserves the preceding observations,
+and a strict step splits at least one fiber. On a finite domain,
+there can be at most $|X|-|O_0(X)|$ strict steps, because the number
+of fibers increases by at least one each time. This is a combinatorial
+bound, not a prediction that refinement occurs or that any chosen
+diagnostic is scientifically useful. On infinite domains it gives
+no finite termination result. In either case, selecting and obtaining
+$q_k$ is a separate substantive task.
+
+A revision may also abandon an old distinction rather than preserve
+it. Such a change is not necessarily a refinement. Two incomparable
+observations always have the common refinement $(O_A,O_B)$ on a common
+domain, but retaining both may be costly or infeasible. The framework
+therefore does not equate every conceptual change with monotone growth.
+
+\section{Interpretation and empirical obligations}\label{sec:interpretation}
+The motivating connection to Kegan's subject--object account of
+development \cite{kegan} concerns the possibility that an organizing
+framework becomes examinable. Attar's \emph{Conference of the Birds}
+\cite{attar} offers a contemplative narrative in which the relationship
+between the seekers and what they seek is transformed.
+Here these are interpretive motivations for studying representations
+as objects. We identify neither developmental orders with refinement
+levels nor spiritual realization with a loss function. The formal
+model captures a selected relationship; it does not establish
+equivalence between these accounts.
+
+The earlier tea reflection likewise motivates examining the act of
+interpretation itself. A theory's capacity to describe cooling tea
+does not independently validate that theory. In the present terms,
+a diagnostic must have grounds beyond the interpretation whose
+adequacy it is meant to assess.
+
+For the broader UTRF research program, one possible hypothesis is that
+access to diagnostics of representational limitations promotes
+effective reorganization. To test this, a domain study must specify
+the initial observation, the additional diagnostic, the allowed
+revision, its cost, and an external outcome. A comparison could hold
+the initial observations fixed while varying access to the diagnostic,
+then evaluate whether the resulting revisions improve a prespecified
+held-out task. Better in-sample approximation alone is insufficient.
+
+Several distinctions govern empirical use:
+\begin{enumerate}[leftmargin=1.8em]
+\item Model inclusion guarantees monotonicity of the exact optimum
+under a fixed loss. It does not guarantee monotonicity of fitted
+algorithms or test error. A numerical violation first calls for
+checking nesting, optimization, data, and loss.
+\item Observation adequacy is relative to a specified target.
+A model residual cannot reveal every property the observation discarded.
+\item A residual increase is not automatically an early warning, a
+phase transition, an entropy increase, or an alignment failure.
+Those are separate hypotheses requiring calibrated comparisons.
+\item Isometric covariance is an identity under assumptions. A universal
+physical law would require a bridge from the mathematical structures
+to independently measured physical quantities.
+\end{enumerate}
+
+\section{Conclusion}
+Witnesses can identify both a target distinction collapsed by an
+observation and a component excluded by a model. These are different
+limitations with an exact decomposition in the finite Hilbert setting.
+Adjoining a diagnostic has a concrete universal property and preserves
+previous distinctions, but its availability cannot be deduced from that
+property. Approximation witnesses have explicit functorial monotonicity;
+unsquared distance admits a Lawvere-enriched distributor, while squared
+loss remains an energy. SPTB requires its own analytic estimates and
+cannot supply missing categorical structure.
+
+The resulting research program is to make the commitments through
+which a scientific description operates available for examination,
+and to certify specific changes in those commitments. Its central
+question concerns the structure of knowing through a representation.
+A universal mechanism of transformation remains a hypothesis to be
+formulated and tested, not a conclusion licensed by the terminology.
+
+\appendix
+\section{Refinement bridges: retaining phase rather than collapsing it into cost}\label{sec:bridge}
+The earlier \emph{Bridge Functors on Refinement Complexes} manuscript \cite{bridgeoriginal}
+introduces a useful intermediate construction between refinement histories and
+approximation witnesses. Its proposed quantity
+\begin{equation}\label{eq:oldbridge}
+B_\lambda(\gamma)=L_{\mathrm{ref}}(\gamma)
+      +\lambda d_G(1,\operatorname{Hol}_\Theta(\gamma))
+\end{equation}
+combines path length with a metric penalty on phase holonomy. We retain the
+construction as a \emph{path evaluator}, but not its originally asserted
+additivity or its uniform phase-separation axiom.
+
+\begin{proposition}[The scalar phase penalty is subadditive, not additive]
+Let $G$ be a group equipped with a bi-invariant metric $d_G$, and let
+$\Theta$ assign group labels to edges of a directed refinement graph $K$.
+For each path $\gamma$, set $L(\gamma)=\sum_{e\in\gamma}\ell(e)$,
+with $\ell(e)\ge0$, and let holonomy be the ordered product of its labels.
+Then $B_\lambda$ in \eqref{eq:oldbridge}, for $\lambda\ge0$, obeys
+\[
+B_\lambda(\gamma_2\circ\gamma_1)
+\le B_\lambda(\gamma_1)+B_\lambda(\gamma_2),
+\]
+but equality need not hold. Moreover $B_\lambda(\gamma)=B_\lambda(\gamma')$
+may hold for paths with distinct holonomy, even when $G$ is finite.
+\end{proposition}
+\begin{proof}
+Length is additive; the triangle inequality and bi-invariance give
+$d_G(1,gh)\le d_G(1,g)+d_G(1,h)$. For the failure of phase separation,
+consider the two branches of a directed diamond with equal edge lengths
+and $G=\mathbb Z/3\mathbb Z$ carrying its symmetric word metric.
+Assign one complete branch holonomy $1$ and the other $2$ (additive
+notation). Both are at distance one from the identity, so the
+scalar costs coincide even though the holonomies differ.
+\end{proof}
+
+A refinement category with only \emph{strictly increasing} partitions is
+acyclic; it has no nonidentity directed loops. Curvature of a diamond must
+therefore be compared across two parallel paths, or represented by a loop
+in a groupoid where edges can be traversed backwards. Further, an inequality
+$|B(\gamma)-B(\gamma')|\ge\delta$ does not entail
+$B(\gamma')\ge B(\gamma)+\delta$; the old paper's claimed strict
+curvature-cost increase is unjustified. Its capacity argument also reverses
+a logical direction: a \emph{lower} cost quantum per new distinction gives
+a \emph{lower} bound on the cost of $n$ distinctions, and a \emph{budget}
+then bounds $n$ from above, not arbitrary minimal bridge costs.
+
+\begin{definition}[Phase-lifted path category]\label{def:phaselift}
+Let $\mathsf P(K)$ be the free category of finite directed edge paths.
+Fix a group $G$ and edge labels $\Theta(e)\in G$.
+Define $\widetilde{\mathsf P}_\Theta(K)$ with objects $(P,g)$,
+where $P$ is a refinement state and $g\in G$.
+A lifted path $(\gamma,g)$ from $(P,g)$ to $(Q,h)$ is an ordinary
+path $\gamma:P\to Q$ with $h=\operatorname{Hol}_\Theta(\gamma)g$.
+Composition follows concatenation and group multiplication.
+Assume $G$ has a bi-invariant metric when a metric is used below.
+Define its \emph{additive cost} $c(\gamma,g)=\sum_{e\in\gamma}\ell(e)$.
+\end{definition}
+
+\begin{theorem}[A genuine compositional bridge and a phase witness]\label{thm:lift}
+The phase-lifted construction is a category. Its scalar cost is
+strictly additive under composition and vanishes on identities.
+The induced directed extended distance
+\begin{equation}\label{eq:liftmetric}
+D((P,g),(Q,h))
+=\inf_{\substack{\gamma:P\to Q\\
+       \operatorname{Hol}_\Theta(\gamma)g=h}}L(\gamma)
+\end{equation}
+satisfies the triangle inequality, with the infimum of an empty set equal
+to $+\infty$. In addition, if $G$ is finite with a genuine metric, then
+\[
+\operatorname{Hol}_\Theta(\gamma)\ne
+\operatorname{Hol}_\Theta(\gamma')
+\quad\Longrightarrow\quad
+ d_G(\operatorname{Hol}_\Theta(\gamma),
+      \operatorname{Hol}_\Theta(\gamma'))\ge\delta_G>0,
+\]
+where, for $|G|\ge2$, $\delta_G$ is the minimum distance between distinct group elements (the assertion is vacuous for the trivial group).
+This \emph{phase witness} does not assert any positive difference between
+the scalar path costs.
+\end{theorem}
+\begin{proof}
+The product law for holonomy makes concatenation of lifted arrows
+well-typed and associative. The empty path has identity holonomy and zero
+cost. Every edge of a concatenated path occurs exactly once, so cost is
+additive. Concatenating near-minimizing compatible lifted paths gives the
+triangle inequality in \eqref{eq:liftmetric}. For the final assertion,
+$G$ is finite and each distance between distinct elements is strictly
+positive, hence their minimum is positive.
+\end{proof}
+
+\begin{remark}[Gauge and flatness]
+If holonomies are globally endpoint-exact, they are path-independent,
+but they need not equal the identity. Exactness does not, by itself, make
+the second term of \eqref{eq:oldbridge} vanish. In the phase-lifted category,
+the correct target phase makes this distinction explicit. A comparison of
+two parallel-path holonomies is gauge-invariant under endpoint changes of
+trivialization when $d_G$ is bi-invariant.
+\end{remark}
+
+\begin{definition}[Bridge-conditioned approximation witness]\label{def:bridgewit}
+For each path $\gamma:P\to Q$, specify a bounded observation transport
+$T_\gamma:\HH_P\to\HH_Q$ satisfying
+$T_{\gamma_2\circ\gamma_1}=T_{\gamma_2}T_{\gamma_1}$ and $T_{\mathrm{id}_P}=I_{\HH_P}$.
+Given an input $f\in\HH_P$, initial phase $g$, target phase $h$,
+closed linear model class $\MM_Q\subseteq\HH_Q$, and nonnegative
+weights $\kappa,\eta$, define
+\begin{multline}\label{eq:bridgewit}
+\WW^{\mathrm{br}}(f;P,g\to Q,h,\MM_Q) :=\inf_{\gamma:P\to Q}\bigl\{
+L(\gamma)+\kappa d_G(\operatorname{Hol}_\Theta(\gamma)g,h)\\
++\eta\,\mathrm{dist}_{\HH_Q}(T_\gamma f,\MM_Q)^2\bigr\}.
+\end{multline}
+The three terms measure different quantities: refinement cost, phase mismatch,
+and terminal approximation discrepancy.
+\end{definition}
+
+\begin{proposition}[Monotone model refinement and compatible covariance]\label{prop:bridgewit}
+If $\MM_Q\subseteq\mathcal N_Q$ then
+$\WW^{\mathrm{br}}(f;\dots,\mathcal N_Q)\le
+ \WW^{\mathrm{br}}(f;\dots,\MM_Q)$.
+Suppose a change of coordinates acts by surjective linear isometries $U_P,U_Q$ on the
+observation Hilbert spaces and by endpoint multipliers $u_P,u_Q\in G$
+on the phase frames (so $g$ becomes $u_Pg$ and $h$ becomes $u_Qh$), transporting $T_\gamma$ to
+$U_QT_\gamma U_P^{-1}$, the model class to $U_Q\MM_Q$, and
+$\operatorname{Hol}_\Theta(\gamma)$ to
+$u_Q\operatorname{Hol}_\Theta(\gamma)u_P^{-1}$.
+If $d_G$ is bi-invariant and path lengths remain unchanged, the bridge
+witness is invariant under this simultaneous transformation.
+\end{proposition}
+\begin{proof}
+The model inclusion decreases each path's best approximation error,
+so it decreases the infimum. Under the prescribed change of coordinates,
+the phase mismatch becomes
+\[d_G(u_Q\operatorname{Hol}_\Theta(\gamma)g,u_Qh),\]
+which equals the original mismatch; isometries preserve distance to the
+transported model class, and lengths are invariant. Thus each path's
+summand is unchanged.
+\end{proof}
+
+\begin{remark}[What has and has not been established]
+The path length in Definition~\ref{def:phaselift} is a genuine additive
+functorial cost. The combined witness \eqref{eq:bridgewit} is a legitimate
+optimization problem and satisfies the stated monotonicity/covariance, but
+no unrestricted enriched profunctor law or triangle inequality for its
+\emph{terminal approximation term} is asserted. Positivity of a Fourier
+character witness, as in Theorem~\ref{thm:pole}, supplies an additional
+observable certificate; it is not implied by the bridge's scalar cost.
+\end{remark}
+
+
+\begin{thebibliography}{99}
+\raggedright
+\bibitem{witnessoriginal} A. A. Esfahani,
+\emph{Witness Functors: A Categorical Framework for Dynamic Information
+Conservation through Approximation Breakdown}, earlier ten-page manuscript,
+author-supplied PDF. The present text revises its claims.
+\bibitem{bridgeoriginal} A. A. Esfahani,
+\emph{Bridge Functors on Refinement Complexes: Cost, Coherence Penalties,
+and Variational Selection on Cut Networks}, earlier research manuscript.
+\bibitem{sptbrepo} A. A. Esfahani,
+\emph{SPTB-RiemannHypothesis}, source snapshot
+\texttt{14ba2b963ad4e2a81cdf8288507aae9da08e1f98},
+especially \texttt{paper\_clean/parts/part1.tex} and
+\texttt{paper\_clean/parts/part2.tex}.
+\url{https://github.com/aakbarie/SPTB-RiemannHypothesis}.
+\bibitem{rudin} W. Rudin, \emph{Functional Analysis}, second edition,
+McGraw--Hill, 1991.
+\bibitem{lawvere} F. W. Lawvere,
+\emph{Metric spaces, generalized logic, and closed categories},
+Rendiconti del Seminario Matematico e Fisico di Milano 43 (1973), 135--166;
+reprinted in Reprints in Theory and Applications of Categories 1 (2002).
+\url{https://www.tac.mta.ca/tac/reprints/articles/1/tr1abs.html}.
+\bibitem{kelly} G. M. Kelly, \emph{Basic Concepts of Enriched Category Theory},
+Cambridge University Press, 1982; reprinted in Reprints in Theory and
+Applications of Categories 10 (2005).
+\url{https://www.tac.mta.ca/tac/reprints/articles/10/tr10abs.html}.
+\bibitem{duren} P. Duren, \emph{Theory of $H^p$ Spaces}, Academic Press, 1970.
+\bibitem{mont} H. L. Montgomery and R. C. Vaughan,
+\emph{Multiplicative Number Theory I: Classical Theory},
+Cambridge University Press, 2007.
+\bibitem{leancommunity} Lean and Mathlib communities,
+\emph{Lean verification of the Riemann Hypothesis}, 21 November 2026.
+External verification report; accessed 21 November 2026.
+\url{https://leanprover-community.github.io/blog/posts/riemann-hypothesis/}.
+\bibitem{sutherland} A. Sutherland,
+\emph{Verification files for the Lean proof of the Riemann Hypothesis},
+MIT, report updated 21 November 2026, 12:55 UTC.
+\url{https://math.mit.edu/~drew/grh/}.
+\bibitem{kegan} R. Kegan, \emph{In Over Our Heads: The Mental Demands of
+Modern Life}, Harvard University Press, 1994.
+\bibitem{attar} Farid ud-Din Attar, \emph{The Conference of the Birds},
+translated by A. Darbandi and D. Davis, Penguin Classics, 1984.
+\end{thebibliography}
+\end{document}
