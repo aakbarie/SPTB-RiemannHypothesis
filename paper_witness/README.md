@@ -11,6 +11,10 @@ Hilbert witnesses, an explicit enriched distance distributor, and the proof
 obligations needed for SPTB and refinement bridges. Its interpretation concerns
 how the choices governing a representation can themselves become observable.
 
+## Euler product example
+
+Crossley’s constructed Euler products give an obstruction pair for the paper’s fibre criterion. Assuming RH for $\zeta$ and the critical-line property for the quadratic characters of conductors 5, 13 and 65, the model permits either a double zero at $1/2$ or two simple zeros at $1/2\pm i\delta$. Choose a circle $s=1/2+Re^{it}$ enclosing just those zeros, with $R>\delta$. In both cases the coefficient of $e^{-it}$ in $-L'/L$ is $-2/R$. Expanding the pole terms gives $0$ and $2\delta^2/R^3$, respectively, for the coefficient of $e^{-3it}$. That third coefficient distinguishes the two inputs. [Crossley, *A prime disagreement model with two prescribed zero patterns*](https://doi.org/10.5281/zenodo.24417708).
+
 ## Build
 
 With a working TeX Live installation containing latexmk, Latin Modern, AMS,
