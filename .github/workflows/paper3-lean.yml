@@ -1,0 +1,31 @@
+name: Paper 3 spectral metric verification
+on:
+  push:
+    branches: [paper3-lean-metric-rigidity]
+    paths:
+      - 'lean-paper3/**'
+      - '.github/workflows/paper3-lean.yml'
+  pull_request:
+    paths:
+      - 'lean-paper3/**'
+      - '.github/workflows/paper3-lean.yml'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch Mathlib cache
+        working-directory: lean-paper3
+        run: lake exe cache get
+      - name: Compile theorem module
+        working-directory: lean-paper3
+        run: lake build StructuralSpectralRigidity
+      - name: Audit theorem axioms
+        working-directory: lean-paper3
+        run: lake env lean Check.lean
